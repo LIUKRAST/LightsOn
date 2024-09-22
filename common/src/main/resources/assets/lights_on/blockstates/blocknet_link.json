@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "lights_on:block/blocknet_link"
+    }
+  }
+}
