@@ -32,7 +32,6 @@ public class LightBeamRenderer extends RenderType {
         int a = (int) (alpha * 255);
         Matrix4f m = stack.last().pose();
         float endMultiplier = beamEnd * 2.65f;
-        float endAlpha = 0;
         float length = beamLength * 0.77f;
 
         builder.addVertex(m, beamSize, beamSize, 0).setColor(r,g,b,a);
@@ -40,24 +39,24 @@ public class LightBeamRenderer extends RenderType {
         builder.addVertex(m, -beamSize, -beamSize, 0).setColor(r,g,b,a);
         builder.addVertex(m, -beamSize, beamSize, 0).setColor(r,g,b,a);
 
-        builder.addVertex(m, beamSize * endMultiplier, beamSize * endMultiplier, -length).setColor(r, g, b, endAlpha);
+        builder.addVertex(m, beamSize * endMultiplier, beamSize * endMultiplier, -length).setColor(r, g, b,0);
         builder.addVertex(m, beamSize, beamSize, 0).setColor(r, g, b, a);
         builder.addVertex(m, beamSize, -beamSize, 0).setColor(r, g, b, a);
-        builder.addVertex(m, beamSize * endMultiplier, -beamSize * endMultiplier, -length).setColor(r, g, b, endAlpha);
+        builder.addVertex(m, beamSize * endMultiplier, -beamSize * endMultiplier, -length).setColor(r, g, b,0);
 
-        builder.addVertex(m, -beamSize * endMultiplier, -beamSize * endMultiplier, -length).setColor(r, g, b, endAlpha);
+        builder.addVertex(m, -beamSize * endMultiplier, -beamSize * endMultiplier, -length).setColor(r, g, b,0);
         builder.addVertex(m, -beamSize, -beamSize, 0).setColor(r, g, b, a);
         builder.addVertex(m, -beamSize, beamSize, 0).setColor(r, g, b, a);
-        builder.addVertex(m, -beamSize * endMultiplier, beamSize * endMultiplier, -length).setColor(r, g, b, endAlpha);
+        builder.addVertex(m, -beamSize * endMultiplier, beamSize * endMultiplier, -length).setColor(r, g, b,0);
 
-        builder.addVertex(m, -beamSize * endMultiplier, beamSize * endMultiplier, -length).setColor(r, g, b, endAlpha);
+        builder.addVertex(m, -beamSize * endMultiplier, beamSize * endMultiplier, -length).setColor(r, g, b,0);
         builder.addVertex(m, -beamSize, beamSize, 0).setColor(r, g, b, a);
         builder.addVertex(m, beamSize, beamSize, 0).setColor(r, g, b, a);
-        builder.addVertex(m, beamSize * endMultiplier, beamSize * endMultiplier, -length).setColor(r, g, b, endAlpha);
+        builder.addVertex(m, beamSize * endMultiplier, beamSize * endMultiplier, -length).setColor(r, g, b,0);
 
-        builder.addVertex(m, beamSize * endMultiplier, -beamSize * endMultiplier, -length).setColor(r, g, b, endAlpha);
+        builder.addVertex(m, beamSize * endMultiplier, -beamSize * endMultiplier, -length).setColor(r, g, b,0);
         builder.addVertex(m, beamSize, -beamSize, 0).setColor(r, g, b, a);
         builder.addVertex(m, -beamSize, -beamSize, 0).setColor(r, g, b, a);
-        builder.addVertex(m, -beamSize * endMultiplier, -beamSize * endMultiplier, -length).setColor(r, g, b, endAlpha);
+        builder.addVertex(m, -beamSize * endMultiplier, -beamSize * endMultiplier, -length).setColor(r, g, b,0);
     }
 }

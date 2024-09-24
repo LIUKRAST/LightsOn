@@ -2,7 +2,7 @@
 	"credit": "Made by LiukRast",
 	"texture_size": [128, 128],
 	"textures": {
-		"0": "lights_on:block/light_beam"
+		"0": "lights_on:entity/light_beam"
 	},
 	"elements": [
 		{

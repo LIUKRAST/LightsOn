@@ -1,0 +1,8 @@
+{
+  "sources": [
+    {
+      "type": "single",
+      "resource": "lights_on:entity/light_beam"
+    }
+  ]
+}

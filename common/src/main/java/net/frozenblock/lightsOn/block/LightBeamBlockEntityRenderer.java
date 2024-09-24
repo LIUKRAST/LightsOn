@@ -15,7 +15,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public class LightBeamBlockEntityRenderer implements BlockEntityRenderer<LightBeamBlockEntity> {
-    public static final ResourceLocation TEXTURE = LightsOnConstants.id("textures/block/light_beam.png");
+    public static final ResourceLocation TEXTURE = LightsOnConstants.id("textures/entity/light_beam.png");
     public static final LightBeamBlockEntityModel MODEL = new LightBeamBlockEntityModel(LightBeamBlockEntityModel.create().bakeRoot());
 
     public LightBeamBlockEntityRenderer(BlockEntityRendererProvider.Context ignored) {}

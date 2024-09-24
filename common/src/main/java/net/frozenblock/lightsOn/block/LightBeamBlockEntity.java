@@ -4,9 +4,6 @@ import net.frozenblock.lib.blockEntity.CoolBlockEntity;
 import net.frozenblock.lightsOn.registry.RegisterBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.IntArrayTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -65,12 +62,7 @@ public class LightBeamBlockEntity extends CoolBlockEntity implements IAmNetworkO
         nbt.putFloat("OldLength", oldLength);
         nbt.putFloat("Size", size);
         nbt.putFloat("OldSize",oldSize);
-        ListTag inputs = new ListTag();
-        for(BlockPos pos : this.inputs) {
-            final IntArrayTag posTag = new IntArrayTag(new int[]{pos.getX(), pos.getY(), pos.getZ()});
-            inputs.add(posTag);
-        }
-        nbt.put(INPUT_KEY, inputs);
+        BNLBlockEntity.saveBlockPosList(nbt, inputs, INPUT_KEY);
     }
 
     @Override
@@ -88,17 +80,7 @@ public class LightBeamBlockEntity extends CoolBlockEntity implements IAmNetworkO
         this.length = nbt.getFloat("Length");
         this.oldLength = nbt.getFloat("OldLength");
         this.inputs.clear();
-        if(nbt.contains(INPUT_KEY)) {
-            for(Tag iat : nbt.getList(INPUT_KEY, Tag.TAG_INT_ARRAY)) {
-                final var asList = ((IntArrayTag)iat);
-                BlockPos pos = new BlockPos(
-                        asList.get(0).getAsInt(),
-                        asList.get(1).getAsInt(),
-                        asList.get(2).getAsInt()
-                );
-                inputs.add(pos);
-            }
-        }
+        BNLBlockEntity.loadBlockPosList(nbt, inputs, INPUT_KEY);
     }
 
     public int calculateColor(float age) {

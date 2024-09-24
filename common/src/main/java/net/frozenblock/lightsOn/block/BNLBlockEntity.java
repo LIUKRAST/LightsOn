@@ -31,44 +31,36 @@ public class BNLBlockEntity extends CoolBlockEntity implements IAmNetworkInput, 
 
     @Override
     public void save(CompoundTag tag) {
-        ListTag outputs = new ListTag();
-        for(BlockPos pos : this.outputs) {
+        saveBlockPosList(tag, this.outputs, OUTPUT_KEY);
+        saveBlockPosList(tag, this.inputs, INPUT_KEY);
+    }
+
+    public static void saveBlockPosList(CompoundTag tag, List<BlockPos> blockPosList, String key) {
+        ListTag outList = new ListTag();
+        for(BlockPos pos : blockPosList) {
             final IntArrayTag posTag = new IntArrayTag(new int[]{pos.getX(), pos.getY(), pos.getZ()});
-            outputs.add(posTag);
+            outList.add(posTag);
         }
-        tag.put(OUTPUT_KEY, outputs);
-        ListTag inputs = new ListTag();
-        for(BlockPos pos : this.inputs) {
-            final IntArrayTag posTag = new IntArrayTag(new int[]{pos.getX(), pos.getY(), pos.getZ()});
-            inputs.add(posTag);
-        }
-        tag.put(INPUT_KEY, inputs);
+        tag.put(key, outList);
     }
 
     @Override
     public void load(CompoundTag tag) {
-        this.outputs.clear();
-        if(tag.contains(OUTPUT_KEY)) {
-            for(Tag iat : tag.getList(OUTPUT_KEY, Tag.TAG_INT_ARRAY)) {
+        loadBlockPosList(tag, this.outputs, OUTPUT_KEY);
+        loadBlockPosList(tag, this.inputs, INPUT_KEY);
+    }
+
+    public static void loadBlockPosList(CompoundTag tag, List<BlockPos> blockPosList, String key) {
+        blockPosList.clear();
+        if(tag.contains(key)) {
+            for(Tag iat : tag.getList(key, Tag.TAG_INT_ARRAY)) {
                 final var asList = ((IntArrayTag)iat);
                 BlockPos pos = new BlockPos(
                         asList.get(0).getAsInt(),
                         asList.get(1).getAsInt(),
                         asList.get(2).getAsInt()
                 );
-                outputs.add(pos);
-            }
-        }
-        this.inputs.clear();
-        if(tag.contains(INPUT_KEY)) {
-            for(Tag iat : tag.getList(INPUT_KEY, Tag.TAG_INT_ARRAY)) {
-                final var asList = ((IntArrayTag)iat);
-                BlockPos pos = new BlockPos(
-                        asList.get(0).getAsInt(),
-                        asList.get(1).getAsInt(),
-                        asList.get(2).getAsInt()
-                );
-                inputs.add(pos);
+                blockPosList.add(pos);
             }
         }
     }

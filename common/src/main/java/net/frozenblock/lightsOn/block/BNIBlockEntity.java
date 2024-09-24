@@ -7,7 +7,6 @@ import net.frozenblock.lightsOn.registry.RegisterBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntArrayTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -37,29 +36,13 @@ public class BNIBlockEntity extends CoolBlockEntity implements IAmNetworkInput {
     @Override
     public void save(CompoundTag tag) {
         tag.put(DATA_KEY, data);
-        ListTag outputs = new ListTag();
-        for(BlockPos pos : this.outputs) {
-            final IntArrayTag posTag = new IntArrayTag(new int[]{pos.getX(), pos.getY(), pos.getZ()});
-            outputs.add(posTag);
-        }
-        tag.put(OUTPUT_KEY, outputs);
+        BNLBlockEntity.saveBlockPosList(tag, outputs, OUTPUT_KEY);
     }
 
     @Override
     public void load(CompoundTag tag) {
         this.data = tag.contains(DATA_KEY) ? tag.getCompound(DATA_KEY) : new CompoundTag();
-        this.outputs.clear();
-        if(tag.contains(OUTPUT_KEY)) {
-            for(Tag iat : tag.getList(OUTPUT_KEY, Tag.TAG_INT_ARRAY)) {
-                final var asList = ((IntArrayTag)iat);
-                BlockPos pos = new BlockPos(
-                        asList.get(0).getAsInt(),
-                        asList.get(1).getAsInt(),
-                        asList.get(2).getAsInt()
-                );
-                outputs.add(pos);
-            }
-        }
+        BNLBlockEntity.loadBlockPosList(tag, outputs, OUTPUT_KEY);
     }
 
     public void askForSync() {
