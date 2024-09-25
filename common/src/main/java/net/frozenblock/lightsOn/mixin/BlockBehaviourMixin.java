@@ -16,6 +16,7 @@ public class BlockBehaviourMixin {
 
     @Inject(at = @At("HEAD"), method = "onRemove")
     private void inject(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston, CallbackInfo ci) {
+        if(state.is(newState.getBlock())) return;
         final var be = level.getBlockEntity(pos);
         if(be instanceof IAmNetworkInput input) {
             for(BlockPos tempPos : input.getOutputs()) {

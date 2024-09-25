@@ -23,6 +23,7 @@ public class BlockNetInterfaceScreen extends Screen {
     private final int loadingTime = 20;
     private int currentTime = 0;
     private static final ResourceLocation INTERFACE = LightsOnConstants.id("textures/gui/blocknet_interface.png");
+    private static final ResourceLocation UTIL_WINDOW = LightsOnConstants.id("textures/gui/blocknet/util_window.png");
     final BNIBlockEntity blockEntity;
 
     private BlockPos output = null;
@@ -59,7 +60,10 @@ public class BlockNetInterfaceScreen extends Screen {
                 .bounds(this.leftPos, topPos, 20, 10)
                 .build();
         fileNew = Button
-                .builder(Component.translatable("blocknet.file.new"), b -> {})
+                .builder(Component.translatable("blocknet.file.new"), b -> {
+                    openFileMenu(false);
+                    openCreateMenu(true);
+                })
                 .bounds(this.leftPos, topPos + 10, 50, 10)
                 .build();
         fileOpen = Button
@@ -93,6 +97,10 @@ public class BlockNetInterfaceScreen extends Screen {
         fileOpen.visible = open;
         fileImport.visible = open;
         fileSaveAs.visible = open;
+    }
+
+    private void openCreateMenu(boolean open) {
+        file.active = false;
     }
 
     @Override
@@ -141,6 +149,7 @@ public class BlockNetInterfaceScreen extends Screen {
             } else if(isInBounds(mouseX - i, mouseY - j, 247, 1, 254, 8)) {
                 guiGraphics.blit(INTERFACE, i + 246, j, 40, 144, 10, 10);
             }
+            guiGraphics.blit(UTIL_WINDOW, i + 36, j + 20, 0, 0, 184, 104);
         }
     }
 

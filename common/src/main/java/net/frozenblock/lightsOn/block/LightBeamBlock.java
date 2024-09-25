@@ -79,7 +79,6 @@ public class LightBeamBlock extends BaseEntityBlock {
             if (flag != world.hasNeighborSignal(pos)) {
                 world.setBlock(pos, state.cycle(POWERED), 2);
             }
-
         }
     }
 
