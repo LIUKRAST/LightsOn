@@ -6,7 +6,6 @@ import net.frozenblock.lightsOn.packet.LightBeamUpdatePacket;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
-@SuppressWarnings("unused")
 public class RegisterNetworking {
     @SubscribeEvent
     public static void register(final RegisterPayloadHandlersEvent event) {

@@ -8,6 +8,7 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public class WrenchLinkModel extends Model {
@@ -39,11 +40,11 @@ public class WrenchLinkModel extends Model {
         main.render(poseStack, vertexConsumer, packedLight, packedOverlay);
     }
 
-    public void animate(BlockPos input, BlockPos output) {
-        float yaw = (float) ((float) Math.atan2(input.getZ() - output.getZ(), input.getX() - output.getX()) - Math.PI/2f);
-        float hL = (float) Math.sqrt(Math.pow(input.getX() - output.getX(), 2) + Math.pow(input.getZ() - output.getZ(), 2));
-        float length = (float) Math.sqrt(Math.pow(hL, 2) + Math.pow(input.getY() - output.getY(), 2)) * 4;
-        float pitch = (float) Math.atan2(input.getY() - output.getY(), hL);
+    public void animate(Vec3 input, Vec3 output) {
+        float yaw = (float) ((float) Math.atan2(input.z - output.z, input.x - output.x) - Math.PI/2f);
+        float hL = (float) Math.sqrt(Math.pow(input.x - output.x, 2) + Math.pow(input.z - output.z, 2));
+        float length = (float) Math.sqrt(Math.pow(hL, 2) + Math.pow(input.y - output.y, 2)) * 4;
+        float pitch = (float) Math.atan2(input.y - output.y, hL);
         main.yRot = yaw;
         main_1.xRot = pitch;
         main_2.z = 2-length*2;

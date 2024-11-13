@@ -1,0 +1,39 @@
+license = "${license}"
+loaderVersion = "${neoforge_loader_version_range}"
+modLoader = "javafml"
+
+[[accessTransformers]]
+file = "src/main/resources/META-INF/accesstransformer.cfg"
+
+[[mixins]]
+config = "${mod_id}.mixins.json"
+
+[[mods]]
+authors = "${mod_author}"
+credits = "${credits}"
+description = "${description}"
+displayName = "${mod_name}"
+displayURL = "https://frozenblock.net"
+logoFile = "${mod_id}_banner.png"
+modId = "${mod_id}"
+version = "${version}"
+
+[mods.frozenlib.entrypoints]
+"frozenlib:example" = ["net.frozenblock.lightsOn.FrozenEntryPoint"]
+
+[mods.frozenlib.registry]
+mod_protocol = 1
+
+[["dependencies.${mod_id}"]]
+modId = "neoforge"
+ordering = "NONE"
+side = "BOTH"
+type = "required"
+versionRange = "[${neoforge_version},)"
+
+[["dependencies.${mod_id}"]]
+modId = "minecraft"
+ordering = "NONE"
+side = "BOTH"
+type = "required"
+versionRange = "${minecraft_version_range}"

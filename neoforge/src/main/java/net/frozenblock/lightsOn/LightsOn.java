@@ -1,18 +1,13 @@
 package net.frozenblock.lightsOn;
 
-import net.frozenblock.lightsOn.datagen.LOLangProvider;
 import net.frozenblock.lightsOn.registry.*;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.RegisterEvent;
-
-import java.util.concurrent.CompletableFuture;
 
 @SuppressWarnings("unused")
 @Mod(LightsOnConstants.MOD_ID)
@@ -35,15 +30,5 @@ public class LightsOn {
         event.register(BuiltInRegistries.CREATIVE_MODE_TAB.key(), helper -> RegisterCreativeModeTabs.register());
         event.register(BuiltInRegistries.ITEM.key(), helper -> RegisterItems.register());
         event.register(BuiltInRegistries.DATA_COMPONENT_TYPE.key(), helper -> RegisterDataComponents.register());
-    }
-
-    @SubscribeEvent
-    public void gatherData(GatherDataEvent event) {
-        var fileHelper = event.getExistingFileHelper();
-        var generator = event.getGenerator();
-        var packOutput = event.getGenerator().getPackOutput();
-        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
-
-        generator.addProvider(event.includeServer(), new LOLangProvider(packOutput));
     }
 }

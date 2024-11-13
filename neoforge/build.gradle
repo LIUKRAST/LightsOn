@@ -1,6 +1,17 @@
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.moandjiezana.toml.TomlWriter
+
+buildscript {
+    dependencies {
+        classpath 'com.fasterxml.jackson.core:jackson-databind:2.13.4'
+        classpath 'com.moandjiezana.toml:toml4j:0.7.2'
+    }
+}
+
 plugins {
     id 'multiloader-loader'
     id 'net.neoforged.moddev'
+    id 'java'
 }
 
 neoForge {
@@ -38,6 +49,27 @@ neoForge {
             sourceSet sourceSets.main
         }
     }
+}
+
+tasks.register('json2toml') {
+    def jsonFile = file('src/main/resources/META-INF/neoforge.mods.json')
+    def tomlFile = file('src/main/generated/META-INF/neoforge.mods.toml')
+
+    tomlFile.parentFile.mkdirs()
+
+    def mapper = new ObjectMapper()
+    def jsonData = mapper.readValue(jsonFile, Map)
+
+    def writer = new TomlWriter()
+    writer.write(jsonData, tomlFile)
+}
+
+//We let the json2toml function run when processing resources
+processResources.dependsOn(json2toml)
+
+//Make sure to exclude the json file when exporting the mod
+processResources {
+    exclude 'META-INF/neoforge.mods.json'
 }
 
 sourceSets.main.resources { srcDir 'src/main/generated' }
