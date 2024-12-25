@@ -91,7 +91,6 @@ public class LightBeamSetupScreen extends Screen {
     protected void init() {
         //if(minecraft != null) this.minecraft.keyboardHandler.setSendRepeatsToGui(true); TODO: Check this
 
-        @SuppressWarnings("unused")
         CycleButton<ColorInput> colorButton = this.addRenderableWidget(CycleButton.builder(ColorInput::getName).withValues(ColorInput.values()).withInitialValue(ColorInput.RGB).displayOnlyValue()
                 .create(this.width / 2 - 153, 20, 30, 20, COLOR_LABEL, this::reloadColor));
 
