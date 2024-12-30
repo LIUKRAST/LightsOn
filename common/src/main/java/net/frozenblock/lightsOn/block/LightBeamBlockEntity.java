@@ -3,6 +3,7 @@ package net.frozenblock.lightsOn.block;
 import net.frozenblock.lib.blockEntity.CoolBlockEntity;
 import net.frozenblock.lightsOn.registry.RegisterBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -49,7 +50,7 @@ public class LightBeamBlockEntity extends CoolBlockEntity implements IAmNetworkO
     }
 
     @Override
-    public void save(CompoundTag nbt) {
+    public void save(CompoundTag nbt, HolderLookup.Provider registries) {
         nbt.putInt("Color", color);
         nbt.putInt("OldColor", oldColor);
         nbt.putFloat("Pitch", pitch);
@@ -66,7 +67,7 @@ public class LightBeamBlockEntity extends CoolBlockEntity implements IAmNetworkO
     }
 
     @Override
-    public void load(CompoundTag nbt) {
+    public void load(CompoundTag nbt, HolderLookup.Provider registries) {
         this.color = nbt.getInt("Color");
         this.oldColor = nbt.getInt("OldColor");
         this.pitch = nbt.getFloat("Pitch");

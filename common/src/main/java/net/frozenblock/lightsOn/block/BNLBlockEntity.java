@@ -3,6 +3,7 @@ package net.frozenblock.lightsOn.block;
 import net.frozenblock.lib.blockEntity.CoolBlockEntity;
 import net.frozenblock.lightsOn.registry.RegisterBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntArrayTag;
 import net.minecraft.nbt.ListTag;
@@ -30,7 +31,7 @@ public class BNLBlockEntity extends CoolBlockEntity implements IAmNetworkInput, 
     }
 
     @Override
-    public void save(CompoundTag tag) {
+    public void save(CompoundTag tag, HolderLookup.Provider registries) {
         saveBlockPosList(tag, this.outputs, OUTPUT_KEY);
         saveBlockPosList(tag, this.inputs, INPUT_KEY);
     }
@@ -45,7 +46,7 @@ public class BNLBlockEntity extends CoolBlockEntity implements IAmNetworkInput, 
     }
 
     @Override
-    public void load(CompoundTag tag) {
+    public void load(CompoundTag tag, HolderLookup.Provider registries) {
         loadBlockPosList(tag, this.outputs, OUTPUT_KEY);
         loadBlockPosList(tag, this.inputs, INPUT_KEY);
     }

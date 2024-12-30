@@ -14,29 +14,29 @@ public abstract class CoolBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.Provider registries) {
+    protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider registries) {
         super.saveAdditional(tag, registries);
-        save(tag);
+        save(tag, registries);
     }
 
     @Override
     public @NotNull CompoundTag getUpdateTag(HolderLookup.@NotNull Provider registries) {
         CompoundTag tag = super.getUpdateTag(registries);
-        save(tag);
+        save(tag, registries);
         return tag;
     }
 
     @Override
     protected void loadAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider registries) {
         super.loadAdditional(tag, registries);
-        load(tag);
+        load(tag, registries);
     }
 
     @SuppressWarnings("unused")
     public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        load(tag);
+        load(tag, lookupProvider);
     }
 
-    public abstract void save(CompoundTag tag);
-    public abstract void load(CompoundTag tag);
+    public abstract void save(CompoundTag tag, HolderLookup.Provider registries);
+    public abstract void load(CompoundTag tag, HolderLookup.Provider registries);
 }

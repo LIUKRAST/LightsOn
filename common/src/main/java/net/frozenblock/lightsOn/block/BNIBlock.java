@@ -3,11 +3,15 @@ package net.frozenblock.lightsOn.block;
 import com.mojang.serialization.MapCodec;
 import net.frozenblock.lib.voxel.VoxelShapes;
 import net.frozenblock.lightsOn.item.BlockNetWrench;
+import net.frozenblock.lightsOn.registry.RegisterItems;
 import net.frozenblock.lightsOn.screen.BlockNetInterfaceScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -77,6 +81,13 @@ public class BNIBlock extends BaseEntityBlock {
         if(stack.getItem() instanceof BlockNetWrench) {
             return InteractionResult.PASS;
         } else if(blockEntity instanceof BNIBlockEntity blockNetInterface) {
+            if(stack.getItem() == RegisterItems.FLOPPY_DISK) {
+                ItemStack copy = stack.copy();
+                copy.setCount(1);
+                stack.shrink(1);
+                blockNetInterface.setItem(copy);
+                return InteractionResult.PASS;
+            }
             if(world.isClientSide()) {
                 final Runnable runnable = () -> Minecraft.getInstance().setScreen(new BlockNetInterfaceScreen(blockNetInterface));
                 runnable.run();
