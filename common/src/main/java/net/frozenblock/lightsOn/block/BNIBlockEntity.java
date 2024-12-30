@@ -95,7 +95,8 @@ public class BNIBlockEntity extends CoolBlockEntity implements IAmNetworkInput {
 
     public void setItem(ItemStack stack) {
         if(!this.stack.isEmpty()) {
-            final var pos = this.getBlockPos().getCenter();
+            final var pos = this.getBlockPos().relative(getBlockState().getValue(BNIBlock.FACING)).getCenter();
+            assert level != null;
             ItemEntity itemEntity = new ItemEntity(level, pos.x, pos.y, pos.z, this.stack);
             itemEntity.setPickUpDelay(10);
             level.addFreshEntity(itemEntity);
