@@ -76,23 +76,31 @@ public class BNIBlock extends BaseEntityBlock {
     protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level world, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult result) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         final var stack = player.getMainHandItem();
-        if(stack.getItem() instanceof BlockNetWrench) {
+        if (stack.getItem() instanceof BlockNetWrench) {
             return InteractionResult.PASS;
-        } else if(blockEntity instanceof BNIBlockEntity blockNetInterface) {
-            if(stack.getItem() == RegisterItems.FLOPPY_DISK) {
+        } else if (blockEntity instanceof BNIBlockEntity blockNetInterface) {
+            if (stack.getItem() == RegisterItems.FLOPPY_DISK) {
                 ItemStack copy = stack.copy();
                 copy.setCount(1);
                 stack.shrink(1);
                 blockNetInterface.setItem(copy);
                 return InteractionResult.PASS;
             }
-            if(world.isClientSide()) {
+            if (world.isClientSide()) {
                 final Runnable runnable = () -> Minecraft.getInstance().setScreen(new BlockNetInterfaceScreen(blockNetInterface));
                 runnable.run();
             }
             return InteractionResult.sidedSuccess(world.isClientSide());
         } else {
             return InteractionResult.PASS;
+        }
+    }
+
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        super.onRemove(state, level, pos, newState, movedByPiston);
+        if(level.getBlockEntity(pos) instanceof BNIBlockEntity bni) {
+            bni.dropStack();
         }
     }
 
