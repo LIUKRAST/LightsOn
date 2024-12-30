@@ -19,6 +19,7 @@
   "item.blocknet_wrench.error": "§c§lConnection failed",
   "item.blocknet_wrench.unbindable": "§c§lThis block is not linkable",
   "item.lights_on.blocknet_wrench": "BlockNet Wrench",
+  "item.lights_on.floppy_disk": "Floppy Disk",
   "itemGroup.lights_on_tab": "Lights On",
   "light_beam.color": "Color: §8[0->16777216]",
   "light_beam.duration": "Transition duration: §8[Ticks]",

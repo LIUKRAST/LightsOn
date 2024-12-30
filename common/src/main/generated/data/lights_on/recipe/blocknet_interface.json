@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "K": {
+      "item": "lights_on:blocknet_link"
+    },
+    "X": {
+      "item": "minecraft:iron_ingot"
+    },
+    "Y": {
+      "item": "minecraft:glass_pane"
+    },
+    "Z": {
+      "item": "minecraft:redstone_block"
+    }
+  },
+  "pattern": [
+    "XXX",
+    "YZK",
+    "XXX"
+  ],
+  "result": {
+    "count": 1,
+    "id": "lights_on:blocknet_interface"
+  }
+}

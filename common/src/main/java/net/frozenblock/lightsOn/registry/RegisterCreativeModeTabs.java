@@ -19,6 +19,7 @@ public class RegisterCreativeModeTabs {
                 output.accept(RegisterBlocks.BLOCKNET_INTERFACE);
                 output.accept(RegisterBlocks.BLOCKNET_LINK);
                 output.accept(RegisterItems.BLOCKNET_WRENCH);
+                output.accept(RegisterItems.FLOPPY_DISK);
             })
             .build();
 

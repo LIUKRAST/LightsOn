@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "X": {
+      "item": "minecraft:chain"
+    },
+    "Y": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "pattern": [
+    " X ",
+    "XYX",
+    " X "
+  ],
+  "result": {
+    "count": 4,
+    "id": "lights_on:blocknet_link"
+  }
+}

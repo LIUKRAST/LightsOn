@@ -19,6 +19,7 @@
   "item.blocknet_wrench.error": "§c§lConnessione fallita",
   "item.blocknet_wrench.unbindable": "§c§lQuesto blocco non può essere connesso",
   "item.lights_on.blocknet_wrench": "Chiave a pappagallo di BlockNet",
+  "item.lights_on.floppy_disk": "Dischetto Floppy",
   "itemGroup.lights_on_tab": "Lights On",
   "light_beam.color": "Colore: §8[0->16777216]",
   "light_beam.duration": "Durata transizione: §8[Ticks]",
