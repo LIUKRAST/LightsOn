@@ -8,8 +8,10 @@ import net.minecraft.world.item.Item;
 
 public class RegisterItems {
     public static final Item BLOCKNET_WRENCH = new BlockNetWrench(new Item.Properties().stacksTo(1));
+    public static final Item FLOPPY_DISK = new Item(new Item.Properties().stacksTo(16));
 
     public static void register() {
         Registry.register(BuiltInRegistries.ITEM, LightsOnConstants.id("blocknet_wrench"), BLOCKNET_WRENCH);
+        Registry.register(BuiltInRegistries.ITEM, LightsOnConstants.id("floppy_disk"), FLOPPY_DISK);
     }
 }

@@ -25,6 +25,7 @@ public class ITLangGenerator extends LanguageProvider {
         add(RegisterItems.BLOCKNET_WRENCH, "Chiave a pappagallo di BlockNet");
         add(RegisterBlocks.BLOCKNET_INTERFACE, "Interfaccia BlockNet");
         add(RegisterBlocks.BLOCKNET_LINK, "Link BlockNet");
+        add(RegisterItems.FLOPPY_DISK, "Dischetto Floppy");
         add("blocknet.file", "File");
         add("blocknet.file.new", "Nuovo");
         add("blocknet.file.open", "Apri");

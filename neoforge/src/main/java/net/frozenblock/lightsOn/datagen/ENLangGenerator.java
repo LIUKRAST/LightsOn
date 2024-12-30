@@ -25,6 +25,7 @@ public class ENLangGenerator extends LanguageProvider {
         add(RegisterItems.BLOCKNET_WRENCH, "BlockNet Wrench");
         add(RegisterBlocks.BLOCKNET_INTERFACE, "BlockNet Interface");
         add(RegisterBlocks.BLOCKNET_LINK, "BlockNet Link");
+        add(RegisterItems.FLOPPY_DISK, "Floppy Disk");
         add("blocknet.file", "File");
         add("blocknet.file.new", "New");
         add("blocknet.file.open", "Open");
