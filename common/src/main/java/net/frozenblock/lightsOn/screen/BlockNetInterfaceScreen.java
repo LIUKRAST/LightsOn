@@ -24,7 +24,11 @@ public class BlockNetInterfaceScreen extends Screen {
     private static final ResourceLocation TEXTURE = LightsOnConstants.id("textures/gui/blocknet_interface.png");
 
     private final ActionBarButton[] actionBar = {
-            new ActionBarButton("File", new ActionBarSubButton[]{}),
+            new ActionBarButton("File",
+                    new ActionBarSubButton[]{
+                            new ActionBarSubButton(Component.translatable("blocknet.file.save"), () -> {})
+                    }
+            ),
             new ActionBarButton("Edit", new ActionBarSubButton[]{}),
             new ActionBarButton("Select", new ActionBarSubButton[]{}),
             new ActionBarButton("Tools", new ActionBarSubButton[]{}),
@@ -34,7 +38,7 @@ public class BlockNetInterfaceScreen extends Screen {
                             new ActionBarSubButton(Component.translatable("blocknet.file.wiki"), () -> {}),
                             new ActionBarSubButton(Component.translatable("blocknet.help.issue"), () -> {})
                     }
-            ) //TODO: Replace with lang entry
+            )
     };
 
     private boolean fullScreen = false;
