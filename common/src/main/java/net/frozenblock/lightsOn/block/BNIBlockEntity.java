@@ -7,15 +7,10 @@ import net.frozenblock.lightsOn.registry.RegisterBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.IntArrayTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.Container;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
@@ -94,7 +89,7 @@ public class BNIBlockEntity extends CoolBlockEntity implements IAmNetworkInput {
     }
 
     public void setItem(ItemStack stack) {
-        dropStack();
+        popOutTheItem();
         this.stack = stack;
         setChanged();
     }
@@ -110,7 +105,7 @@ public class BNIBlockEntity extends CoolBlockEntity implements IAmNetworkInput {
         return false;
     }
 
-    public void dropStack() {
+    public void popOutTheItem() {
         if(!this.stack.isEmpty()) {
             final var pos = this.getBlockPos().relative(getBlockState().getValue(BNIBlock.FACING)).getCenter();
             assert level != null;

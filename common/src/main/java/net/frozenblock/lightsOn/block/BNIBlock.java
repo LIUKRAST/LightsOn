@@ -7,7 +7,9 @@ import net.frozenblock.lightsOn.registry.RegisterItems;
 import net.frozenblock.lightsOn.screen.BlockNetInterfaceScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -24,11 +26,14 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.lwjgl.system.NonnullDefault;
 
+/**
+ * BlockNet Interface block
+ * @since 1.0
+ * */
+@NonnullDefault
 public class BNIBlock extends BaseEntityBlock {
-
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
     public BNIBlock(Properties properties) {
@@ -36,22 +41,23 @@ public class BNIBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected @NotNull MapCodec<? extends BaseEntityBlock> codec() {
+    protected MapCodec<? extends BaseEntityBlock> codec() {
         return simpleCodec(BNIBlock::new);
     }
 
     @Override
-    public @Nullable BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new BNIBlockEntity(pos, state);
     }
 
+
     @Override
-    protected void createBlockStateDefinition(StateDefinition.@NotNull Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
     }
 
     @Override
-    protected @NotNull VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull BlockGetter blockGetter, @NotNull BlockPos pos, @NotNull CollisionContext ctx) {
+    protected VoxelShape getCollisionShape(BlockState state, BlockGetter blockGetter, BlockPos pos, CollisionContext ctx) {
         return defineShape(state);
     }
 
@@ -63,50 +69,54 @@ public class BNIBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return defineShape(state);
     }
 
     @Override
-    public @Nullable BlockState getStateForPlacement(@NotNull BlockPlaceContext ctx) {
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
         return defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
     }
 
     @Override
-    protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level world, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult result) {
-        BlockEntity blockEntity = world.getBlockEntity(pos);
-        final var stack = player.getMainHandItem();
-        if (stack.getItem() instanceof BlockNetWrench) {
-            return InteractionResult.PASS;
-        } else if (blockEntity instanceof BNIBlockEntity blockNetInterface) {
-            if (stack.getItem() == RegisterItems.FLOPPY_DISK) {
-                ItemStack copy = stack.copy();
-                copy.setCount(1);
-                stack.shrink(1);
-                blockNetInterface.setItem(copy);
-                return InteractionResult.PASS;
-            }
+    protected InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result) {
+        if(world.getBlockEntity(pos) instanceof  BNIBlockEntity bni) {
             if (world.isClientSide()) {
-                final Runnable runnable = () -> Minecraft.getInstance().setScreen(new BlockNetInterfaceScreen(blockNetInterface));
+                final Runnable runnable = () -> Minecraft.getInstance().setScreen(new BlockNetInterfaceScreen(bni));
                 runnable.run();
             }
             return InteractionResult.sidedSuccess(world.isClientSide());
-        } else {
-            return InteractionResult.PASS;
         }
+        return InteractionResult.PASS;
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        ItemStack itemStack = player.getItemInHand(hand);
+        if(itemStack.getItem() instanceof BlockNetWrench) {
+            return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
+            //TODO: Replace == with instanceof, create a custom class for floppy disk item
+        } else if(itemStack.getItem() == RegisterItems.FLOPPY_DISK && level.getBlockEntity(pos) instanceof BNIBlockEntity bni) {
+            ItemStack copy = itemStack.copy();
+            copy.setCount(1);
+            itemStack.shrink(1);
+            bni.setItem(copy);
+            return ItemInteractionResult.CONSUME;
+        }
+        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         super.onRemove(state, level, pos, newState, movedByPiston);
         if(level.getBlockEntity(pos) instanceof BNIBlockEntity bni) {
-            bni.dropStack();
+            bni.popOutTheItem();
         }
     }
 
     @Override
     @SuppressWarnings("deprecation")
-    protected @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
+    protected RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
 }
