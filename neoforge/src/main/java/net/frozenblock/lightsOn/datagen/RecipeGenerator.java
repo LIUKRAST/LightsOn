@@ -86,5 +86,14 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
                 .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
                 .unlockedBy("has_paper", has(Items.PAPER))
                 .save(recipeOutput, LightsOnConstants.id("floppy_disk_2"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, RegisterBlocks.WORKLIGHT_STAND)
+                .pattern("X X")
+                .pattern("YYY")
+                .pattern(" Y ")
+                .define('X', Items.COPPER_BULB)
+                .define('Y', Items.STICK)
+                .unlockedBy("has_copper_bulb", has(Items.COPPER_BULB))
+                .save(recipeOutput);
     }
 }
