@@ -3,6 +3,10 @@
     {
       "type": "single",
       "resource": "lights_on:entity/light_beam"
+    },
+    {
+      "type": "single",
+      "resource": "lights_on:entity/worklight_stand"
     }
   ]
 }
