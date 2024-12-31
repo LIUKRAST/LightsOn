@@ -6,6 +6,7 @@ import net.frozenblock.lightsOn.packet.EjectDiskPacket;
 import net.frozenblock.lightsOn.platform.Services;
 import net.frozenblock.lightsOn.screen.util.ActionBarButton;
 import net.frozenblock.lightsOn.screen.util.ActionBarSubButton;
+import net.minecraft.Util;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -51,7 +52,7 @@ public class BlockNetInterfaceScreen extends Screen {
             ),
             new ActionBarButton("Help",
                     new ActionBarSubButton[]{
-                            new ActionBarSubButton(Component.translatable("blocknet.help.wiki"), () -> {}),
+                            new ActionBarSubButton(Component.translatable("blocknet.help.wiki"), () -> Util.getPlatform().openUri("https://github.com/LIUKRAST/LightsOn/wiki/BlockNet-Interface")),
                             new ActionBarSubButton(Component.translatable("blocknet.help.issue"), () -> {})
                     }
             )
@@ -117,6 +118,15 @@ public class BlockNetInterfaceScreen extends Screen {
                 return true;
             } else if(mouseX >= width/2+getHalfWindowWidth()-10 && mouseX < width/2+getHalfWindowWidth()) {
                 this.onClose();
+                return true;
+            }
+        }
+
+        for(ActionBarButton actionBarButton : actionBar) {
+            if(!actionBarButton.isHovered()) continue;
+            for(ActionBarSubButton subButton : actionBarButton.getSubs()) {
+                if(!subButton.isHovered()) continue;
+                subButton.onClicked();
                 return true;
             }
         }

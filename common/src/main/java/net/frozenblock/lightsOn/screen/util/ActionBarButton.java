@@ -14,6 +14,10 @@ public class ActionBarButton {
         this.subButtons = subButtons;
     }
 
+    public ActionBarSubButton[] getSubs() {
+        return subButtons;
+    }
+
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, int xOffset, BlockNetInterfaceScreen screen, Font font, boolean isHoveredY) {
         int w = getWidth(font);
         boolean isHoveredX = mouseX >= screen.width/2 - screen.getHalfWindowWidth() + xOffset && mouseX < screen.width/2 - screen.getHalfWindowWidth() + w + xOffset;
@@ -48,5 +52,9 @@ public class ActionBarButton {
 
     public int getWidth(Font font) {
         return font.width(text) + 3;
+    }
+
+    public boolean isHovered() {
+        return hovered;
     }
 }
