@@ -37,6 +37,17 @@ public class ENLangGenerator extends LanguageProvider {
 
         //BLOCKNET
         add("blocknet.file.save", "Save");
+        add("blocknet.file.project", "Project");
+        add("blocknet.file.settings", "Settings");
+
+        add("blocknet.edit.undo", "Undo");
+        add("blocknet.edit.redo", "Redo");
+
+        add("blocknet.select.all", "Select All");
+        add("blocknet.select.deselect", "Deselect");
+
+        add("blocknet.view.fullscreen", "Fullscreen");
+
         add("blocknet.help.wiki", "Open the Wiki");
         add("blocknet.help.issue", "Report an Issue");
     }
