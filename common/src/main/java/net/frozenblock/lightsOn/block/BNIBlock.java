@@ -110,7 +110,7 @@ public class BNIBlock extends BaseEntityBlock {
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         super.onRemove(state, level, pos, newState, movedByPiston);
         if(level.getBlockEntity(pos) instanceof BNIBlockEntity bni) {
-            bni.popOutTheItem();
+            bni.ejectDisk();
         }
     }
 

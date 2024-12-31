@@ -34,7 +34,6 @@ public record BNIDataUpdatePacket(BlockPos pos, CompoundTag tag) implements Cust
     public static void handle(BNIDataUpdatePacket packet, Player ctx) {
         ServerPlayer player = (ServerPlayer) ctx;
         if(player != null) {
-            @SuppressWarnings("all")
             ServerLevel world = (ServerLevel) player.level();
             BlockEntity be = world.getBlockEntity(packet.pos);
             if (be instanceof BNIBlockEntity blockNetInterface)

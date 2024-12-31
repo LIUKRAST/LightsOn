@@ -89,7 +89,7 @@ public class BNIBlockEntity extends CoolBlockEntity implements IAmNetworkInput {
     }
 
     public void setItem(ItemStack stack) {
-        popOutTheItem();
+        ejectDisk();
         this.stack = stack;
         setChanged();
     }
@@ -105,13 +105,15 @@ public class BNIBlockEntity extends CoolBlockEntity implements IAmNetworkInput {
         return false;
     }
 
-    public void popOutTheItem() {
+    public void ejectDisk() {
         if(!this.stack.isEmpty()) {
             final var pos = this.getBlockPos().relative(getBlockState().getValue(BNIBlock.FACING)).getCenter();
             assert level != null;
             ItemEntity itemEntity = new ItemEntity(level, pos.x, pos.y, pos.z, this.stack);
             itemEntity.setPickUpDelay(10);
             level.addFreshEntity(itemEntity);
+            this.stack = ItemStack.EMPTY;
+            setChanged();
         }
     }
 }

@@ -26,21 +26,16 @@ public class ENLangGenerator extends LanguageProvider {
         add(RegisterBlocks.BLOCKNET_INTERFACE, "BlockNet Interface");
         add(RegisterBlocks.BLOCKNET_LINK, "BlockNet Link");
         add(RegisterItems.FLOPPY_DISK, "Floppy Disk");
-        add("blocknet.file", "File");
-        add("blocknet.file.new", "New");
-        add("blocknet.file.open", "Open");
-        add("blocknet.file.import", "Import");
-        add("blocknet.file.save", "Save");
-        add("blocknet.file.saveAs", "Save As");
-        add("blocknet.no_project", "Create a new project,\nopen or import one\nto begin");
-        add("blocknet.no_output", "No b device\nselected");
-        add("blocknet.warning", "§cWarning: Auto-Save\nData is immediately\nsent to the block\n§lNo undo function");
-        add("blocknet.info", "§cClick to access the\n§9§nOfficial Wiki");
         add("item.blocknet_wrench.binding_tooltip", "Linking pos: [%s]");
         add("item.blocknet_wrench.binding", "§e§lBlock selected for connection");
         add("item.blocknet_wrench.unbindable", "§c§lThis block is not linkable");
         add("item.blocknet_wrench.error", "§c§lConnection failed");
         add("item.blocknet_wrench.connected", "§a§lConnection established");
         add("item.blocknet_wrench.already_bound", "§e§lBlocks already bound");
+
+
+        //BLOCKNET
+        add("blocknet.file.save", "Save");
+        add("blocknet.file.save", "Save");
     }
 }

@@ -2,10 +2,16 @@ package net.frozenblock.lightsOn.screen;
 
 import net.frozenblock.lightsOn.LightsOnConstants;
 import net.frozenblock.lightsOn.block.BNIBlockEntity;
+import net.frozenblock.lightsOn.packet.EjectDiskPacket;
+import net.frozenblock.lightsOn.platform.Services;
+import net.frozenblock.lightsOn.screen.util.ActionBarButton;
+import net.frozenblock.lightsOn.screen.util.ActionBarSubButton;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import org.lwjgl.system.NonnullDefault;
 
 /**
@@ -17,18 +23,33 @@ public class BlockNetInterfaceScreen extends Screen {
 
     private static final ResourceLocation TEXTURE = LightsOnConstants.id("textures/gui/blocknet_interface.png");
 
-    private boolean fullScreen = false;
+    private final ActionBarButton[] actionBar = {
+            new ActionBarButton("File", new ActionBarSubButton[]{}),
+            new ActionBarButton("Edit", new ActionBarSubButton[]{}),
+            new ActionBarButton("Select", new ActionBarSubButton[]{}),
+            new ActionBarButton("Tools", new ActionBarSubButton[]{}),
+            new ActionBarButton("View", new ActionBarSubButton[]{}),
+            new ActionBarButton("Help",
+                    new ActionBarSubButton[]{
+                            new ActionBarSubButton(Component.literal("Open the Wiki"), () -> {}),
+                            new ActionBarSubButton(Component.literal("Report an Issue"), () -> {})
+                    }
+            ) //TODO: Replace with lang entry
+    };
 
+    private boolean fullScreen = false;
+    private final BlockEntity blockEntity;
     public BlockNetInterfaceScreen(final BNIBlockEntity blockEntity) {
         super(GameNarrator.NO_TITLE);
+        this.blockEntity = blockEntity;
         blockEntity.askForSync();
     }
 
-    private int getHalfWindowWidth() {
+    public int getHalfWindowWidth() {
         return fullScreen ? this.width/2 : 128;
     }
 
-    private int getHalfWindowHeight() {
+    public int getHalfWindowHeight() {
         return fullScreen ? this.height/2 : 72;
     }
 
@@ -41,13 +62,22 @@ public class BlockNetInterfaceScreen extends Screen {
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         super.render(guiGraphics, mouseX, mouseY, partialTick);
-        boolean yForFullAndExit = mouseY >= height/2-getHalfWindowHeight() && mouseY < height/2-getHalfWindowHeight()+10;
-        boolean hoverFullScreenButton = mouseX >= width/2+getHalfWindowWidth()-20 && mouseX < width/2+getHalfWindowWidth()-10 && yForFullAndExit;
-        boolean hoverExitButton = mouseX >= width/2+getHalfWindowWidth()-10 && mouseX < width/2+getHalfWindowWidth() && yForFullAndExit;
-        guiGraphics.blit(TEXTURE, width/2+getHalfWindowWidth()-20, height/2-getHalfWindowHeight(), 0, hoverFullScreenButton ? 10 : 0, 10, 10);
-        guiGraphics.blit(TEXTURE, width-10, height-10, 0, 0, 10, 10);
-        guiGraphics.blit(TEXTURE, width/2+getHalfWindowWidth()-10, height/2-getHalfWindowHeight(), 10, hoverExitButton ? 10 : 0, 10, 10);
+        boolean yForWindowButtons = mouseY >= height/2-getHalfWindowHeight() && mouseY < height/2-getHalfWindowHeight()+10;
+        boolean hoverEjectButton = mouseX >= width/2+getHalfWindowWidth()-30 && mouseX < width/2+getHalfWindowWidth()-20 && yForWindowButtons;
+        boolean hoverFullScreenButton = mouseX >= width/2+getHalfWindowWidth()-20 && mouseX < width/2+getHalfWindowWidth()-10 && yForWindowButtons;
+        boolean hoverExitButton = mouseX >= width/2+getHalfWindowWidth()-10 && mouseX < width/2+getHalfWindowWidth() && yForWindowButtons;
+        guiGraphics.blit(TEXTURE, width/2+getHalfWindowWidth()-30, height/2-getHalfWindowHeight(), 20, hoverEjectButton ? 10 : 0, 10, 10);
+        guiGraphics.blit(TEXTURE, width/2+getHalfWindowWidth()-20, height/2-getHalfWindowHeight(), 10, hoverFullScreenButton ? 10 : 0, 10, 10);
+        guiGraphics.blit(TEXTURE, width/2+getHalfWindowWidth()-10, height/2-getHalfWindowHeight(), 0, hoverExitButton ? 10 : 0, 10, 10);
+
+        boolean yForActionBar = mouseY >= height/2-getHalfWindowHeight() && mouseY < height/2-getHalfWindowHeight()+12;
+        int xOffset = 0;
+        for(ActionBarButton button : actionBar) {
+            button.render(guiGraphics, mouseX, mouseY, xOffset, this, this.font, yForActionBar);
+            xOffset+=button.getWidth(this.font)+1;
+        }
     }
+
 
     @Override
     public boolean isPauseScreen() {
@@ -58,7 +88,11 @@ public class BlockNetInterfaceScreen extends Screen {
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if(mouseY >= height/2-getHalfWindowHeight() && mouseY < height/2-getHalfWindowHeight()+10) {
-            if(mouseX >= width/2+getHalfWindowWidth()-20 && mouseX < width/2+getHalfWindowWidth()-10) {
+            if(mouseX >= width/2+getHalfWindowWidth()-30 && mouseX < width/2+getHalfWindowWidth()-20) {
+                Services.PACKET_HELPER.send2S(new EjectDiskPacket(blockEntity.getBlockPos()));
+                this.onClose();
+                return true;
+            } else if(mouseX >= width/2+getHalfWindowWidth()-20 && mouseX < width/2+getHalfWindowWidth()-10) {
                 fullScreen = !fullScreen;
                 return true;
             } else if(mouseX >= width/2+getHalfWindowWidth()-10 && mouseX < width/2+getHalfWindowWidth()) {

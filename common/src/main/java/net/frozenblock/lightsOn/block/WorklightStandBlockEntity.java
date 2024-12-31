@@ -10,9 +10,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class WorkLightQuadripodBlockEntity extends CoolBlockEntity implements IAmNetworkOutput {
-    public WorkLightQuadripodBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
-        super(RegisterBlockEntities.WORKLIGHT_QUADRIPOD, pos, state);
+public class WorklightStandBlockEntity extends CoolBlockEntity implements IAmNetworkOutput {
+    public WorklightStandBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
+        super(RegisterBlockEntities.WORKLIGHT_STAND, pos, state);
     }
 
     @Override
