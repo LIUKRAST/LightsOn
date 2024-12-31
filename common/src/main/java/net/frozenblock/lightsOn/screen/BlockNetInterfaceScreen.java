@@ -31,8 +31,8 @@ public class BlockNetInterfaceScreen extends Screen {
             new ActionBarButton("View", new ActionBarSubButton[]{}),
             new ActionBarButton("Help",
                     new ActionBarSubButton[]{
-                            new ActionBarSubButton(Component.literal("Open the Wiki"), () -> {}),
-                            new ActionBarSubButton(Component.literal("Report an Issue"), () -> {})
+                            new ActionBarSubButton(Component.translatable("blocknet.file.wiki"), () -> {}),
+                            new ActionBarSubButton(Component.translatable("blocknet.help.issue"), () -> {})
                     }
             ) //TODO: Replace with lang entry
     };
