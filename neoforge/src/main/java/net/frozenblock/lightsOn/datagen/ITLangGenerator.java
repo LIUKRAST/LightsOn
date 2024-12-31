@@ -36,6 +36,17 @@ public class ITLangGenerator extends LanguageProvider {
 
         //BLOCKNET
         add("blocknet.file.save", "Salva");
+        add("blocknet.file.project", "Progetto");
+        add("blocknet.file.settings", "Impostazioni");
+
+        add("blocknet.edit.undo", "Undo");
+        add("blocknet.edit.redo", "Redo");
+
+        add("blocknet.select.all", "Seleziona tutto");
+        add("blocknet.select.deselect", "Deseleziona");
+
+        add("blocknet.view.fullscreen", "Schermo Intero");
+
         add("blocknet.help.wiki", "Apri la Wiki");
         add("blocknet.help.issue", "Segnala un Problema");
     }

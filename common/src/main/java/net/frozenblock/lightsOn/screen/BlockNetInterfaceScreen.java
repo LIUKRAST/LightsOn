@@ -24,17 +24,37 @@ public class BlockNetInterfaceScreen extends Screen {
     private static final ResourceLocation TEXTURE = LightsOnConstants.id("textures/gui/blocknet_interface.png");
 
     private final ActionBarButton[] actionBar = {
-            new ActionBarButton("File", new ActionBarSubButton[]{}),
-            new ActionBarButton("Edit", new ActionBarSubButton[]{}),
-            new ActionBarButton("Select", new ActionBarSubButton[]{}),
+            new ActionBarButton("File",
+                    new ActionBarSubButton[]{
+                            new ActionBarSubButton(Component.translatable("blocknet.file.save"), () -> {}),
+                            new ActionBarSubButton(Component.translatable("blocknet.file.project"), () -> {}),
+                            new ActionBarSubButton(Component.translatable("blocknet.file.settings"), () -> {})
+                    }
+            ),
+            new ActionBarButton("Edit",
+                    new ActionBarSubButton[]{
+                            new ActionBarSubButton(Component.translatable("blocknet.edit.undo"), () -> {}),
+                            new ActionBarSubButton(Component.translatable("blocknet.edit.redo"), () -> {})
+                    }
+            ),
+            new ActionBarButton("Select",
+                    new ActionBarSubButton[]{
+                            new ActionBarSubButton(Component.translatable("blocknet.select.all"), () -> {}),
+                            new ActionBarSubButton(Component.translatable("blocknet.select.deselect"), () -> {})
+                    }
+            ),
             new ActionBarButton("Tools", new ActionBarSubButton[]{}),
-            new ActionBarButton("View", new ActionBarSubButton[]{}),
+            new ActionBarButton("View",
+                    new ActionBarSubButton[]{
+                            new ActionBarSubButton(Component.translatable("blocknet.view.fullscreen"), () -> {})
+                    }
+            ),
             new ActionBarButton("Help",
                     new ActionBarSubButton[]{
-                            new ActionBarSubButton(Component.translatable("blocknet.file.wiki"), () -> {}),
+                            new ActionBarSubButton(Component.translatable("blocknet.help.wiki"), () -> {}),
                             new ActionBarSubButton(Component.translatable("blocknet.help.issue"), () -> {})
                     }
-            ) //TODO: Replace with lang entry
+            )
     };
 
     private boolean fullScreen = false;
