@@ -26,21 +26,14 @@ public class ITLangGenerator extends LanguageProvider {
         add(RegisterBlocks.BLOCKNET_INTERFACE, "Interfaccia BlockNet");
         add(RegisterBlocks.BLOCKNET_LINK, "Link BlockNet");
         add(RegisterItems.FLOPPY_DISK, "Dischetto Floppy");
-        add("blocknet.file", "File");
-        add("blocknet.file.new", "Nuovo");
-        add("blocknet.file.open", "Apri");
-        add("blocknet.file.import", "Importa");
-        add("blocknet.file.save", "Salva");
-        add("blocknet.file.saveAs", "Salva come");
-        add("blocknet.no_project", "Crea un nuovo progetto,\naprine o importane uno\nper iniziare");
-        add("blocknet.no_output", "Nessun dispositivo b\nselezionato");
-        add("blocknet.warning", "§cAttenzione: Salvataggio-Automatico\nLe informazioni sono\nmandate immediatamente al blocco\n§lNessuna funzione annulla");
-        add("blocknet.info", "§cClicca per aprire la \n§9§nWiki ufficiale");
         add("item.blocknet_wrench.binding_tooltip", "Link della posizione: [%s]");
         add("item.blocknet_wrench.binding", "§e§lBlocco selezionato per la connessione");
         add("item.blocknet_wrench.unbindable", "§c§lQuesto blocco non può essere connesso");
         add("item.blocknet_wrench.error", "§c§lConnessione fallita");
         add("item.blocknet_wrench.connected", "§a§lConnessione stabilita");
         add("item.blocknet_wrench.already_bound", "§e§lBlocchi già connessi");
+
+        //BLOCKNET
+        add("blocknet.file.save", "Salva");
     }
 }
