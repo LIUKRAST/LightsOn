@@ -35,5 +35,7 @@ public class ITLangGenerator extends LanguageProvider {
 
         //BLOCKNET
         add("blocknet.file.save", "Salva");
+        add("blocknet.help.wiki", "Apri la Wiki");
+        add("blocknet.help.issue", "Segnala un Problema");
     }
 }
