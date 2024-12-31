@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "X": {
+      "item": "minecraft:copper_bulb"
+    },
+    "Y": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "X X",
+    "YYY",
+    " Y "
+  ],
+  "result": {
+    "count": 1,
+    "id": "lights_on:worklight_stand"
+  }
+}

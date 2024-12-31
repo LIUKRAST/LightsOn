@@ -25,6 +25,7 @@ public class BlockLootGenerator extends BlockLootSubProvider {
         dropSelf(RegisterBlocks.BLOCKNET_INTERFACE);
         dropSelf(RegisterBlocks.BLOCKNET_LINK);
         dropSelf(RegisterBlocks.LIGHT_BEAM);
+        dropSelf(RegisterBlocks.WORKLIGHT_STAND);
     }
 
     @Override
