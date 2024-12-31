@@ -2,7 +2,7 @@
 	"credit": "Made by LiukRast",
 	"texture_size": [64, 64],
 	"textures": {
-		"particle": "lights_on:block/blocknet_interface",
+		"particle": "lights_on:block/blocknet_interface_particle",
 		"texture": "lights_on:block/blocknet_interface"
 	},
 	"elements": [
