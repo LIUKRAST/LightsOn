@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "lights_on:floppy_disk_1"
+        "recipe": "lights_on:red_floppy_disk_2"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -37,7 +37,7 @@
   ],
   "rewards": {
     "recipes": [
-      "lights_on:floppy_disk_1"
+      "lights_on:red_floppy_disk_2"
     ]
   }
 }

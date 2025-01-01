@@ -6,10 +6,10 @@
       "item": "minecraft:iron_ingot"
     },
     "Y": {
-      "item": "minecraft:paper"
+      "item": "minecraft:red_dye"
     },
     "Z": {
-      "item": "minecraft:blue_dye"
+      "item": "minecraft:paper"
     }
   },
   "pattern": [
@@ -19,6 +19,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "lights_on:floppy_disk"
+    "id": "lights_on:red_floppy_disk"
   }
 }

@@ -65,7 +65,7 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
                 .unlockedBy("has_stick", has(Items.STICK))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterItems.FLOPPY_DISK)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterItems.BLUE_FLOPPY_DISK)
                 .pattern(" X ")
                 .pattern(" Y ")
                 .pattern(" Z ")
@@ -74,9 +74,9 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
                 .define('Z', Items.BLUE_DYE)
                 .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
                 .unlockedBy("has_paper", has(Items.PAPER))
-                .save(recipeOutput, LightsOnConstants.id("floppy_disk_1"));
+                .save(recipeOutput, LightsOnConstants.id("blue_floppy_disk_1"));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterItems.FLOPPY_DISK)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterItems.BLUE_FLOPPY_DISK)
                 .pattern(" X ")
                 .pattern(" Y ")
                 .pattern(" Z ")
@@ -85,7 +85,7 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
                 .define('Z', Items.PAPER)
                 .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
                 .unlockedBy("has_paper", has(Items.PAPER))
-                .save(recipeOutput, LightsOnConstants.id("floppy_disk_2"));
+                .save(recipeOutput, LightsOnConstants.id("blue_floppy_disk_2"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, RegisterBlocks.WORKLIGHT_STAND)
                 .pattern("X X")
@@ -95,5 +95,49 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
                 .define('Y', Items.STICK)
                 .unlockedBy("has_copper_bulb", has(Items.COPPER_BULB))
                 .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterItems.RED_FLOPPY_DISK)
+                .pattern(" X ")
+                .pattern(" Y ")
+                .pattern(" Z ")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', Items.PAPER)
+                .define('Z', Items.RED_DYE)
+                .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
+                .unlockedBy("has_paper", has(Items.PAPER))
+                .save(recipeOutput, LightsOnConstants.id("red_floppy_disk_1"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterItems.RED_FLOPPY_DISK)
+                .pattern(" X ")
+                .pattern(" Y ")
+                .pattern(" Z ")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', Items.RED_DYE)
+                .define('Z', Items.PAPER)
+                .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
+                .unlockedBy("has_paper", has(Items.PAPER))
+                .save(recipeOutput, LightsOnConstants.id("red_floppy_disk_2"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterItems.YELLOW_FLOPPY_DISK)
+                .pattern(" X ")
+                .pattern(" Y ")
+                .pattern(" Z ")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', Items.PAPER)
+                .define('Z', Items.YELLOW_DYE)
+                .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
+                .unlockedBy("has_paper", has(Items.PAPER))
+                .save(recipeOutput, LightsOnConstants.id("yellow_floppy_disk_1"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterItems.YELLOW_FLOPPY_DISK)
+                .pattern(" X ")
+                .pattern(" Y ")
+                .pattern(" Z ")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', Items.YELLOW_DYE)
+                .define('Z', Items.PAPER)
+                .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
+                .unlockedBy("has_paper", has(Items.PAPER))
+                .save(recipeOutput, LightsOnConstants.id("yellow_floppy_disk_2"));
     }
 }

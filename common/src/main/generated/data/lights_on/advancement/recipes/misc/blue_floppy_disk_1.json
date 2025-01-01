@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_iron_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:iron_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_paper": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:paper"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "lights_on:blue_floppy_disk_1"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_iron_ingot",
+      "has_paper"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "lights_on:blue_floppy_disk_1"
+    ]
+  }
+}

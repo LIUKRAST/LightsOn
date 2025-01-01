@@ -25,7 +25,9 @@ public class ENLangGenerator extends LanguageProvider {
         add(RegisterItems.BLOCKNET_WRENCH, "BlockNet Wrench");
         add(RegisterBlocks.BLOCKNET_INTERFACE, "BlockNet Interface");
         add(RegisterBlocks.BLOCKNET_LINK, "BlockNet Link");
-        add(RegisterItems.FLOPPY_DISK, "Floppy Disk");
+        add(RegisterItems.BLUE_FLOPPY_DISK, "Blue Floppy Disk");
+        add(RegisterItems.RED_FLOPPY_DISK, "Red Floppy Disk");
+        add(RegisterItems.YELLOW_FLOPPY_DISK, "Yellow Floppy Disk");
         add(RegisterBlocks.WORKLIGHT_STAND, "Worklight Stand");
         add("item.blocknet_wrench.binding_tooltip", "Linking pos: [%s]");
         add("item.blocknet_wrench.binding", "§e§lBlock selected for connection");

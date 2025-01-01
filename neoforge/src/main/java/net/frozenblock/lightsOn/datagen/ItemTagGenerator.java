@@ -2,6 +2,7 @@ package net.frozenblock.lightsOn.datagen;
 
 import net.frozenblock.lightsOn.LightsOnConstants;
 import net.frozenblock.lightsOn.item.BlockNetWrenchUtils;
+import net.frozenblock.lightsOn.item.FloppyDisksUtils;
 import net.frozenblock.lightsOn.registry.RegisterItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -21,5 +22,10 @@ public class ItemTagGenerator extends ItemTagsProvider {
     protected void addTags(HolderLookup.@NotNull Provider provider) {
         tag(BlockNetWrenchUtils.WRENCH_TAG)
                 .add(RegisterItems.BLOCKNET_WRENCH);
+
+        tag(FloppyDisksUtils.FLOPPY_TAG)
+                .add(RegisterItems.BLUE_FLOPPY_DISK)
+                .add(RegisterItems.YELLOW_FLOPPY_DISK)
+                .add(RegisterItems.RED_FLOPPY_DISK);
     }
 }

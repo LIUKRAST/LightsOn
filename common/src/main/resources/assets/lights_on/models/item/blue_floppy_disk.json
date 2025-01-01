@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "lights_on:item/blue_floppy_disk"
+  }
+}

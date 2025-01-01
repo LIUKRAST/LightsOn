@@ -3,6 +3,7 @@ package net.frozenblock.lightsOn.block;
 import com.mojang.serialization.MapCodec;
 import net.frozenblock.lib.voxel.VoxelShapes;
 import net.frozenblock.lightsOn.item.BlockNetWrench;
+import net.frozenblock.lightsOn.item.FloppyDisksUtils;
 import net.frozenblock.lightsOn.registry.RegisterItems;
 import net.frozenblock.lightsOn.screen.BlockNetInterfaceScreen;
 import net.minecraft.client.Minecraft;
@@ -95,8 +96,8 @@ public class BNIBlock extends BaseEntityBlock {
         ItemStack itemStack = player.getItemInHand(hand);
         if(itemStack.getItem() instanceof BlockNetWrench) {
             return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
-            //TODO: Replace == with instanceof, create a custom class for floppy disk item
-        } else if(itemStack.getItem() == RegisterItems.FLOPPY_DISK && level.getBlockEntity(pos) instanceof BNIBlockEntity bni) {
+            //TODO: boh avevi scritto di controllare istanceof tipo (i'm just a silly boy)
+        } else if(player.getMainHandItem().is(FloppyDisksUtils.FLOPPY_TAG) && level.getBlockEntity(pos) instanceof BNIBlockEntity bni) {
             ItemStack copy = itemStack.copy();
             copy.setCount(1);
             itemStack.shrink(1);
