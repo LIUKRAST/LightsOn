@@ -3,7 +3,7 @@ package net.frozenblock.lightsOn.block;
 import com.mojang.serialization.MapCodec;
 import net.frozenblock.lib.voxel.VoxelShapes;
 import net.frozenblock.lightsOn.item.BlockNetWrench;
-import net.frozenblock.lightsOn.item.FloppyDisksUtils;
+import net.frozenblock.lightsOn.item.FloppyDiskItem;
 import net.frozenblock.lightsOn.screen.BlockNetInterfaceScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -34,6 +35,7 @@ import org.lwjgl.system.NonnullDefault;
  * */
 @NonnullDefault
 public class BNIBlock extends BaseEntityBlock {
+    public static final BooleanProperty CONTAINS_FLOPPY = BooleanProperty.create("contains_floppy");
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
     public BNIBlock(Properties properties) {
@@ -53,7 +55,7 @@ public class BNIBlock extends BaseEntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+        builder.add(FACING).add(CONTAINS_FLOPPY);
     }
 
     @Override
@@ -95,12 +97,12 @@ public class BNIBlock extends BaseEntityBlock {
         ItemStack itemStack = player.getItemInHand(hand);
         if(itemStack.getItem() instanceof BlockNetWrench) {
             return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
-            //TODO: boh avevi scritto di controllare istanceof tipo (i'm just a silly boy)
-        } else if(player.getMainHandItem().is(FloppyDisksUtils.FLOPPY_TAG) && level.getBlockEntity(pos) instanceof BNIBlockEntity bni) {
+        } else if(player.getMainHandItem().getItem() instanceof FloppyDiskItem && level.getBlockEntity(pos) instanceof BNIBlockEntity bni) {
             ItemStack copy = itemStack.copy();
             copy.setCount(1);
             itemStack.shrink(1);
             bni.setItem(copy);
+            level.setBlock(pos, state.setValue(CONTAINS_FLOPPY, true), 3);
             return ItemInteractionResult.CONSUME;
         }
         return super.useItemOn(stack, state, level, pos, player, hand, hitResult);

@@ -19,6 +19,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static net.frozenblock.lightsOn.block.BNIBlock.CONTAINS_FLOPPY;
 import static net.frozenblock.lightsOn.block.BNLBlockEntity.OUTPUT_KEY;
 
 public class BNIBlockEntity extends CoolBlockEntity implements IAmNetworkInput {
@@ -109,6 +110,7 @@ public class BNIBlockEntity extends CoolBlockEntity implements IAmNetworkInput {
         if(!this.stack.isEmpty()) {
             final var pos = this.getBlockPos().relative(getBlockState().getValue(BNIBlock.FACING)).getCenter();
             assert level != null;
+            level.setBlock(getBlockPos(), getBlockState().setValue(CONTAINS_FLOPPY, true), 3);
             ItemEntity itemEntity = new ItemEntity(level, pos.x, pos.y, pos.z, this.stack);
             itemEntity.setPickUpDelay(10);
             level.addFreshEntity(itemEntity);
