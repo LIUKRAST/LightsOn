@@ -4,7 +4,6 @@ import com.mojang.serialization.MapCodec;
 import net.frozenblock.lib.voxel.VoxelShapes;
 import net.frozenblock.lightsOn.item.BlockNetWrench;
 import net.frozenblock.lightsOn.item.FloppyDisksUtils;
-import net.frozenblock.lightsOn.registry.RegisterItems;
 import net.frozenblock.lightsOn.screen.BlockNetInterfaceScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
