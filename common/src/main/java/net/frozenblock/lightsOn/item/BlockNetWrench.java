@@ -52,6 +52,10 @@ public class BlockNetWrench extends Item {
                 } else sendMessage(player, UNBINDABLE);
             } else if(block1 instanceof BlockNetPole pole1) {
                 sendMessage(player, SUCCESS);
+                if(pos.equals(data.pole())) {
+                    sendMessage(player, UNBINDABLE);
+                    return InteractionResult.CONSUME;
+                }
                 if(pole1.hasPole(pos) || pole2.hasPole(data.pole())) sendMessage(player, ALREADY_BOUND);
                 pole1.addPole(pos);
                 pole2.addPole(data.pole());

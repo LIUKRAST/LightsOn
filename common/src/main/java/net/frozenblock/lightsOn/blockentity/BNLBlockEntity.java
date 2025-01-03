@@ -34,7 +34,6 @@ public class BNLBlockEntity extends ClientSyncedBlockEntity implements BlockNetP
 
     @Override
     public void addPole(BlockPos input) {
-        if(input == this.getBlockPos()) return;
         this.poles.add(input);
     }
 
@@ -45,7 +44,6 @@ public class BNLBlockEntity extends ClientSyncedBlockEntity implements BlockNetP
 
     @Override
     public void removePole(BlockPos pos) {
-        if (pos == this.getBlockPos()) return;
         this.poles.remove(pos);
     }
 

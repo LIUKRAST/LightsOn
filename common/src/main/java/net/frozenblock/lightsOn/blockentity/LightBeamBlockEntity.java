@@ -182,7 +182,6 @@ public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements Blo
 
     @Override
     public void addPole(BlockPos input) {
-        if(input == getBlockPos()) return;
         this.poles.add(input);
     }
 
@@ -193,7 +192,6 @@ public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements Blo
 
     @Override
     public void removePole(BlockPos pos) {
-        if(pos == getBlockPos()) return;
         this.poles.remove(pos);
     }
 }

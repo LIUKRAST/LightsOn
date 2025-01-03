@@ -77,7 +77,6 @@ public class BNIBlockEntity extends ClientSyncedBlockEntity implements BlockNetP
 
     @Override
     public void addPole(BlockPos input) {
-        if(input == this.getBlockPos()) return;
         this.poles.add(input);
     }
 

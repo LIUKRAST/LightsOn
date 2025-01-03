@@ -45,11 +45,6 @@ public class LightBeamBlockEntityRenderer implements BlockEntityRenderer<LightBe
     }
 
     @Override
-    public boolean shouldRender(@NotNull LightBeamBlockEntity blockEntity, @NotNull Vec3 cameraPos) {
-        return Vec3.atCenterOf(blockEntity.getBlockPos()).multiply(1.0, 0.0, 1.0).closerThan(cameraPos.multiply(1.0, 0.0, 1.0), this.getViewDistance());
-    }
-
-    @Override
     public int getViewDistance() {
         return 256;
     }
