@@ -1,7 +1,7 @@
 package net.frozenblock.lightsOn.mixin;
 
-import net.frozenblock.lightsOn.block.IAmNetworkInput;
-import net.frozenblock.lightsOn.block.IAmNetworkOutput;
+import net.frozenblock.lightsOn.LightsOnConstants;
+import net.frozenblock.lightsOn.blocknet.BlockNetPole;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -16,28 +16,12 @@ public class BlockBehaviourMixin {
 
     @Inject(at = @At("HEAD"), method = "onRemove")
     private void inject(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston, CallbackInfo ci) {
-        if(state.is(newState.getBlock())) return;
-        final var be = level.getBlockEntity(pos);
-        if(be instanceof IAmNetworkInput input) {
-            for(BlockPos tempPos : input.getOutputs()) {
-                final var be2 = level.getBlockEntity(tempPos);
-                if(be2 instanceof IAmNetworkOutput output) {
-                    output.removeInput(pos);
-                    be2.setChanged();
-                    level.sendBlockUpdated(tempPos, state, state, 2);
-                }
+        if(movedByPiston || state.is(newState.getBlock())) return;
+        if(level.getBlockEntity(pos) instanceof BlockNetPole element) {
+            for(BlockPos pole : element.getPoles()) {
+                if(level.getBlockEntity(pole) instanceof BlockNetPole element1) element1.removePole(pos);
+                else LightsOnConstants.LOGGER.error("Tried to search for pole BlockNetElement, but found pole pole not instance of {}", BlockNetPole.class);
             }
         }
-        if(be instanceof IAmNetworkOutput output) {
-            for(BlockPos tempPos : output.getInputs()) {
-                final var be2 = level.getBlockEntity(tempPos);
-                if(be2 instanceof IAmNetworkInput input) {
-                    input.removeOutput(pos);
-                    be2.setChanged();
-                    level.sendBlockUpdated(tempPos, state, state, 2);
-                }
-            }
-        }
-
     }
 }

@@ -1,6 +1,7 @@
 package net.frozenblock.lightsOn.block;
 
-import net.frozenblock.lib.blockEntity.CoolBlockEntity;
+import net.frozenblock.lib.blockEntity.ClientSyncedBlockEntity;
+import net.frozenblock.lightsOn.blocknet.BlockNetPole;
 import net.frozenblock.lightsOn.registry.RegisterBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -10,17 +11,13 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static net.frozenblock.lightsOn.block.BNLBlockEntity.INPUT_KEY;
+public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements BlockNetPole {
 
-public class LightBeamBlockEntity extends CoolBlockEntity implements IAmNetworkOutput {
-
-    @NotNull private final List<BlockPos> inputs = new ArrayList<>();
+    private final List<BlockPos> poles = new ArrayList<>();
 
     private int color = 16777215; //CHANNEL 0
     private int oldColor = color;
@@ -63,7 +60,7 @@ public class LightBeamBlockEntity extends CoolBlockEntity implements IAmNetworkO
         nbt.putFloat("OldLength", oldLength);
         nbt.putFloat("Size", size);
         nbt.putFloat("OldSize",oldSize);
-        BNLBlockEntity.saveBlockPosList(nbt, inputs, INPUT_KEY);
+        saveBlockPosList(nbt, poles, POLE_KEY);
     }
 
     @Override
@@ -80,8 +77,8 @@ public class LightBeamBlockEntity extends CoolBlockEntity implements IAmNetworkO
         this.oldSize = nbt.getFloat("OldSize");
         this.length = nbt.getFloat("Length");
         this.oldLength = nbt.getFloat("OldLength");
-        this.inputs.clear();
-        BNLBlockEntity.loadBlockPosList(nbt, inputs, INPUT_KEY);
+        this.poles.clear();
+        loadBlockPosList(nbt, poles, POLE_KEY);
     }
 
     public int calculateColor(float age) {
@@ -176,7 +173,6 @@ public class LightBeamBlockEntity extends CoolBlockEntity implements IAmNetworkO
         return (float) Math.pow(x, 2);
     }
 
-    @Nullable
     @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
@@ -184,29 +180,25 @@ public class LightBeamBlockEntity extends CoolBlockEntity implements IAmNetworkO
 
 
     @Override
-    public boolean addInput(BlockPos input) {
+    public void addPole(BlockPos input) {
         if(input == this.getBlockPos())
-            return false;
-        if(!this.inputs.contains(input)) {
-            this.inputs.add(input);
-            return true;
+            return;
+        if(!this.poles.contains(input)) {
+            this.poles.add(input);
         }
-        return false;
     }
 
     @Override
-    public @NotNull List<BlockPos> getInputs() {
-        return inputs;
+    public List<BlockPos> getPoles() {
+        return poles;
     }
 
     @Override
-    public boolean removeInput(BlockPos pos) {
+    public void removePole(BlockPos pos) {
         if(pos == this.getBlockPos())
-            return false;
-        if(this.inputs.contains(pos)) {
-            this.inputs.remove(pos);
-            return true;
+            return;
+        if(this.poles.contains(pos)) {
+            this.poles.remove(pos);
         }
-        return false;
     }
 }

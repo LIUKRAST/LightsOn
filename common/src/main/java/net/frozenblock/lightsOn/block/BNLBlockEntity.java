@@ -1,30 +1,22 @@
 package net.frozenblock.lightsOn.block;
 
-import net.frozenblock.lib.blockEntity.CoolBlockEntity;
+import net.frozenblock.lib.blockEntity.ClientSyncedBlockEntity;
+import net.frozenblock.lightsOn.blocknet.BlockNetPole;
 import net.frozenblock.lightsOn.registry.RegisterBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.IntArrayTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BNLBlockEntity extends CoolBlockEntity implements IAmNetworkInput, IAmNetworkOutput {
+public class BNLBlockEntity extends ClientSyncedBlockEntity implements BlockNetPole {
 
-    public static final String OUTPUT_KEY = "NetworkOutputs";
-    public static final String INPUT_KEY = "NetworkInputs";
-
-    @NotNull private final List<BlockPos> outputs = new ArrayList<>();
-    @NotNull private final List<BlockPos> inputs = new ArrayList<>();
+    private final List<BlockPos> poles = new ArrayList<>();
 
     public BNLBlockEntity(BlockPos pos, BlockState state) {
         super(RegisterBlockEntities.BLOCKNET_LINK, pos, state);
@@ -32,95 +24,37 @@ public class BNLBlockEntity extends CoolBlockEntity implements IAmNetworkInput, 
 
     @Override
     public void save(CompoundTag tag, HolderLookup.Provider registries) {
-        saveBlockPosList(tag, this.outputs, OUTPUT_KEY);
-        saveBlockPosList(tag, this.inputs, INPUT_KEY);
-    }
-
-    public static void saveBlockPosList(CompoundTag tag, List<BlockPos> blockPosList, String key) {
-        ListTag outList = new ListTag();
-        for(BlockPos pos : blockPosList) {
-            final IntArrayTag posTag = new IntArrayTag(new int[]{pos.getX(), pos.getY(), pos.getZ()});
-            outList.add(posTag);
-        }
-        tag.put(key, outList);
+        saveBlockPosList(tag, this.poles, POLE_KEY);
     }
 
     @Override
     public void load(CompoundTag tag, HolderLookup.Provider registries) {
-        loadBlockPosList(tag, this.outputs, OUTPUT_KEY);
-        loadBlockPosList(tag, this.inputs, INPUT_KEY);
-    }
-
-    public static void loadBlockPosList(CompoundTag tag, List<BlockPos> blockPosList, String key) {
-        blockPosList.clear();
-        if(tag.contains(key)) {
-            for(Tag iat : tag.getList(key, Tag.TAG_INT_ARRAY)) {
-                final var asList = ((IntArrayTag)iat);
-                BlockPos pos = new BlockPos(
-                        asList.get(0).getAsInt(),
-                        asList.get(1).getAsInt(),
-                        asList.get(2).getAsInt()
-                );
-                blockPosList.add(pos);
-            }
-        }
+        loadBlockPosList(tag, this.poles, POLE_KEY);
     }
 
     @Override
-    public boolean addOutput(BlockPos input) {
+    public void addPole(BlockPos input) {
         if(input == this.getBlockPos())
-            return false;
-        if(!this.outputs.contains(input)) {
-            this.outputs.add(input);
-            return true;
+            return;
+        if(!this.poles.contains(input)) {
+            this.poles.add(input);
         }
-        return false;
     }
 
     @Override
-    public @NotNull List<BlockPos> getOutputs() {
-        return outputs;
+    public List<BlockPos> getPoles() {
+        return poles;
     }
 
     @Override
-    public boolean removeOutput(BlockPos pos) {
-        if(pos == this.getBlockPos())
-            return false;
-        if(this.outputs.contains(pos)) {
-            this.outputs.remove(pos);
-            return true;
+    public void removePole(BlockPos pos) {
+        if (pos == this.getBlockPos())
+            return;
+        if (this.poles.contains(pos)) {
+            this.poles.remove(pos);
         }
-        return false;
     }
 
-    @Override
-    public boolean addInput(BlockPos input) {
-        if(input == this.getBlockPos())
-            return false;
-        if(!this.inputs.contains(input)) {
-            this.inputs.add(input);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public @NotNull List<BlockPos> getInputs() {
-        return inputs;
-    }
-
-    @Override
-    public boolean removeInput(BlockPos pos) {
-        if(pos == this.getBlockPos())
-            return false;
-        if(this.inputs.contains(pos)) {
-            this.inputs.remove(pos);
-            return true;
-        }
-        return false;
-    }
-
-    @Nullable
     @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);

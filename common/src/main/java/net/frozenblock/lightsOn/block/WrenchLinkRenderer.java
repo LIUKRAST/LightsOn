@@ -3,6 +3,7 @@ package net.frozenblock.lightsOn.block;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.frozenblock.lightsOn.LightsOnConstants;
+import net.frozenblock.lightsOn.blocknet.BlockNetPole;
 import net.frozenblock.lightsOn.item.BlockNetWrenchUtils;
 import net.frozenblock.lightsOn.item.WrenchConnection;
 import net.frozenblock.lightsOn.registry.RegisterDataComponents;
@@ -30,48 +31,42 @@ public class WrenchLinkRenderer implements BlockEntityRenderer<BlockEntity> {
 
     @Override
     public void render(@NotNull BlockEntity blockEntity, float v, @NotNull PoseStack poseStack, @NotNull MultiBufferSource multiBufferSource, int packedLight, int packedOverlay) {
-        if(blockEntity instanceof IAmNetworkInput input) {
-            var player = Minecraft.getInstance().player;
-            if(player != null) {
-                final var mainHand = (player.getMainHandItem());
-                final var offHand = (player.getOffhandItem());
-                final var stack = mainHand.is(BlockNetWrenchUtils.WRENCH_TAG) ? mainHand :
-                        offHand.is(BlockNetWrenchUtils.WRENCH_TAG) ? offHand : null;
-                if(stack != null) {
-                    poseStack.pushPose();
-                    poseStack.scale(-1, -1, 1);
-                    poseStack.translate(-0.5d, -0.5d, 0.5d);
-                    final RenderType rt = MODEL.renderType(TEXTURE);
-                    final VertexConsumer vertexConsumer = multiBufferSource.getBuffer(rt);
-                    final BlockPos that = blockEntity.getBlockPos();
-                    for (BlockPos pos : input.getOutputs()) {
-                        final BlockEntity be = blockEntity.getLevel().getBlockEntity(pos);
-                        if ((!(blockEntity instanceof IAmNetworkOutput) && be instanceof IAmNetworkInput) || be instanceof IAmNetworkOutput) {
-                            if(hasPriority(that, pos)) continue;
-                            poseStack.translate(0, 0.01, 0);
-                            MODEL.animate(createVector(that), createVector(pos), WrenchLinkModel.State.FINE);
-                            MODEL.renderToBuffer(poseStack, vertexConsumer, 15728880, packedOverlay);
-                        }
-                    }
-                    final var hitResult = Minecraft.getInstance().hitResult;
-                    final BlockPos blockPos = hitResult != null && hitResult.getType() != HitResult.Type.MISS
-                            && hitResult instanceof BlockHitResult ? ((BlockHitResult)hitResult).getBlockPos() : null;
-                    final Vec3 pos = blockPos == null ? player.position() : Vec3.atLowerCornerOf(blockPos);
-                    WrenchLinkModel.State state = blockPos != null ? (isValid(blockEntity.getLevel().getBlockEntity(blockPos)) ? WrenchLinkModel.State.FINE : WrenchLinkModel.State.ERR) : WrenchLinkModel.State.WARN;
-                    renderPlayerBinding(stack, that, pos, state, poseStack, vertexConsumer, packedOverlay);
-                    poseStack.popPose();
-                }
-            }
+        if(!(blockEntity instanceof BlockNetPole blockNetPole)) return;
+        var player = Minecraft.getInstance().player;
+        if(player == null) return;
+        final var mainHand = player.getMainHandItem();
+        final var offHand = player.getOffhandItem();
+        final var stack = mainHand.is(BlockNetWrenchUtils.WRENCH_TAG) ? mainHand :
+                offHand.is(BlockNetWrenchUtils.WRENCH_TAG) ? offHand : null;
+        if(stack == null) return;
+        poseStack.pushPose();
+        poseStack.scale(-1, -1, 1);
+        poseStack.translate(-0.5d, -0.5d, 0.5d);
+        final RenderType rt = MODEL.renderType(TEXTURE);
+        final VertexConsumer vertexConsumer = multiBufferSource.getBuffer(rt);
+        final BlockPos that = blockEntity.getBlockPos();
+        var level = blockEntity.getLevel();
+        if(level == null) return;
+        for (BlockPos pos : blockNetPole.getPoles()) {
+            if(level.getBlockEntity(pos) instanceof BlockNetPole) {
+                if(hasPriority(that, pos)) continue;
+                poseStack.translate(0, 0.01, 0);
+                MODEL.animate(createVector(that), createVector(pos), WrenchLinkModel.State.FINE);
+                MODEL.renderToBuffer(poseStack, vertexConsumer, 15728880, packedOverlay);
+            } else LightsOnConstants.LOGGER.error("Tried to search for pole BlockNetElement, but found pole pole not instance of {}", BlockNetPole.class);
         }
-    }
-
-    private static boolean isValid(BlockEntity blockEntity) {
-        return blockEntity instanceof IAmNetworkInput || blockEntity instanceof IAmNetworkOutput;
+        final var hitResult = Minecraft.getInstance().hitResult;
+        final BlockPos blockPos = hitResult != null && hitResult.getType() != HitResult.Type.MISS
+                && hitResult instanceof BlockHitResult ? ((BlockHitResult)hitResult).getBlockPos() : null;
+        final Vec3 pos = blockPos == null ? player.position() : Vec3.atLowerCornerOf(blockPos);
+        WrenchLinkModel.State state = blockPos != null ? (level.getBlockEntity(blockPos) instanceof BlockNetPole ? WrenchLinkModel.State.FINE : WrenchLinkModel.State.ERR) : WrenchLinkModel.State.WARN;
+        renderPlayerBinding(stack, that, pos, state, poseStack, vertexConsumer, packedOverlay);
+        poseStack.popPose();
     }
 
     public static void renderPlayerBinding(ItemStack stack, BlockPos pos, Vec3 playerPos, WrenchLinkModel.State state, PoseStack poseStack, VertexConsumer vertexConsumer, int packedOverlay) {
         final var data = stack.getOrDefault(RegisterDataComponents.WRENCH_CONNECTION, new WrenchConnection(null));
-        if(pos.equals(data.a())) {
+        if(pos.equals(data.pole())) {
             MODEL.animate(createVector(pos), playerPos, state);
             MODEL.renderToBuffer(poseStack, vertexConsumer, 15728880, packedOverlay);
         }

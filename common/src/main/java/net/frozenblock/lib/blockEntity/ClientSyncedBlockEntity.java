@@ -8,8 +8,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class CoolBlockEntity extends BlockEntity {
-    public CoolBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
+public abstract class ClientSyncedBlockEntity extends BlockEntity {
+    public ClientSyncedBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
     }
 

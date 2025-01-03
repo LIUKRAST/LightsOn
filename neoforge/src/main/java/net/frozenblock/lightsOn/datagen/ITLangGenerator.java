@@ -22,19 +22,23 @@ public class ITLangGenerator extends LanguageProvider {
         add("light_beam.size", "Dimensione: §8[0->100]");
         add("light_beam.length", "Lunghezza: §8[0->100]");
         add("light_beam.start", "Inizio");
-        add(RegisterItems.BLOCKNET_WRENCH, "Chiave a pappagallo di BlockNet");
+        add(RegisterItems.BLOCKNET_WRENCH, "Chiave pole pappagallo di BlockNet");
         add(RegisterBlocks.BLOCKNET_INTERFACE, "Interfaccia BlockNet");
         add(RegisterBlocks.BLOCKNET_LINK, "Link BlockNet");
         add(RegisterItems.BLUE_FLOPPY_DISK, "Dischetto floppy blu");
         add(RegisterItems.RED_FLOPPY_DISK, "Dischetto floppy rosso");
         add(RegisterItems.YELLOW_FLOPPY_DISK, "Dischetto floppy giallo");
         add(RegisterBlocks.WORKLIGHT_STAND, "Faro da lavoro con supporto");
-        add("item.blocknet_wrench.binding_tooltip", "Link della posizione: [%s]");
-        add("item.blocknet_wrench.binding", "§e§lBlocco selezionato per la connessione");
-        add("item.blocknet_wrench.unbindable", "§c§lQuesto blocco non può essere connesso");
-        add("item.blocknet_wrench.error", "§c§lConnessione fallita");
-        add("item.blocknet_wrench.connected", "§a§lConnessione stabilita");
+
+
+
+        add("item.blocknet_wrench.unbindable", "§c§lQuesto blocco non è linkabile");
+        add("item.blocknet_wrench.binding", "§e§lCollegando le posizioni %s");
+        add("item.blocknet_wrench.failed", "§c§lConnessione fallita");
+        add("item.blocknet_wrench.success", "§pole§lConnessione stabilita");
         add("item.blocknet_wrench.already_bound", "§e§lBlocchi già connessi");
+
+
 
         //BLOCKNET
         add("blocknet.file.save", "Salva");

@@ -1,6 +1,7 @@
 package net.frozenblock.lightsOn.block;
 
-import net.frozenblock.lib.blockEntity.CoolBlockEntity;
+import net.frozenblock.lib.blockEntity.ClientSyncedBlockEntity;
+import net.frozenblock.lightsOn.blocknet.BlockNetPole;
 import net.frozenblock.lightsOn.packet.BNIUpdatePacket;
 import net.frozenblock.lightsOn.platform.Services;
 import net.frozenblock.lightsOn.registry.RegisterBlockEntities;
@@ -20,18 +21,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static net.frozenblock.lightsOn.block.BNIBlock.CONTAINS_FLOPPY;
-import static net.frozenblock.lightsOn.block.BNLBlockEntity.OUTPUT_KEY;
 
-public class BNIBlockEntity extends CoolBlockEntity implements IAmNetworkInput {
+public class BNIBlockEntity extends ClientSyncedBlockEntity implements BlockNetPole {
 
     public static final String DATA_KEY = "ProjectData";
     public static final String ITEM_KEY = "Item";
+
     @NotNull
     private CompoundTag data = new CompoundTag();
     private ItemStack stack = ItemStack.EMPTY;
 
     @NotNull
-    private final List<BlockPos> outputs = new ArrayList<>();
+    private final List<BlockPos> poles = new ArrayList<>();
 
     public BNIBlockEntity(BlockPos pos, BlockState state) {
         super(RegisterBlockEntities.BLOCKNET_INTERFACE, pos, state);
@@ -40,11 +41,11 @@ public class BNIBlockEntity extends CoolBlockEntity implements IAmNetworkInput {
     @Override
     public void save(CompoundTag tag, HolderLookup.Provider registries) {
         tag.put(DATA_KEY, data);
-        BNLBlockEntity.saveBlockPosList(tag, outputs, OUTPUT_KEY);
         if(!stack.isEmpty()) {
             CompoundTag itemTag = new CompoundTag();
             tag.put(ITEM_KEY, stack.save(registries, itemTag));
         }
+        saveBlockPosList(tag, poles, POLE_KEY);
     }
 
     @Override
@@ -54,7 +55,7 @@ public class BNIBlockEntity extends CoolBlockEntity implements IAmNetworkInput {
             CompoundTag itemTag = tag.getCompound(ITEM_KEY);
             stack = ItemStack.parse(registries, itemTag).orElse(ItemStack.EMPTY);
         }
-        BNLBlockEntity.loadBlockPosList(tag, outputs, OUTPUT_KEY);
+        loadBlockPosList(tag, poles, POLE_KEY);
     }
 
     public void askForSync() {
@@ -74,19 +75,14 @@ public class BNIBlockEntity extends CoolBlockEntity implements IAmNetworkInput {
     }
 
     @Override
-    public boolean addOutput(BlockPos input) {
-        if(input == this.getBlockPos())
-            return false;
-        if(!this.outputs.contains(input)) {
-            this.outputs.add(input);
-            return true;
-        }
-        return false;
+    public void addPole(BlockPos input) {
+        if(input == this.getBlockPos()) return;
+        if(!this.poles.contains(input)) this.poles.add(input);
     }
 
     @Override
-    public @NotNull List<BlockPos> getOutputs() {
-        return outputs;
+    public @NotNull List<BlockPos> getPoles() {
+        return poles;
     }
 
     public void setItem(ItemStack stack) {
@@ -96,14 +92,8 @@ public class BNIBlockEntity extends CoolBlockEntity implements IAmNetworkInput {
     }
 
     @Override
-    public boolean removeOutput(BlockPos pos) {
-        if(pos == this.getBlockPos())
-            return false;
-        if(this.outputs.contains(pos)) {
-            this.outputs.remove(pos);
-            return true;
-        }
-        return false;
+    public void removePole(BlockPos pos) {
+        this.poles.remove(pos);
     }
 
     public void ejectDisk() {

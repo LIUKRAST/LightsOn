@@ -35,6 +35,7 @@ import org.lwjgl.system.NonnullDefault;
  * */
 @NonnullDefault
 public class BNIBlock extends BaseEntityBlock {
+    public static final MapCodec<BNIBlock> CODEC = simpleCodec(BNIBlock::new);
     public static final BooleanProperty CONTAINS_FLOPPY = BooleanProperty.create("contains_floppy");
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
@@ -44,7 +45,7 @@ public class BNIBlock extends BaseEntityBlock {
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
-        return simpleCodec(BNIBlock::new);
+        return CODEC;
     }
 
     @Override

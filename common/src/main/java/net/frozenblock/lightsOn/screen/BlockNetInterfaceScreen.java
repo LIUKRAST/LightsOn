@@ -47,7 +47,7 @@ public class BlockNetInterfaceScreen extends Screen {
             new ActionBarButton("Tools", new ActionBarSubButton[]{}),
             new ActionBarButton("View",
                     new ActionBarSubButton[]{
-                            new ActionBarSubButton(Component.translatable("blocknet.view.fullscreen"), () -> {})
+                            new ActionBarSubButton(Component.translatable("blocknet.view.fullscreen"), () -> this.fullScreen = !this.fullScreen)
                     }
             ),
             new ActionBarButton("Help",

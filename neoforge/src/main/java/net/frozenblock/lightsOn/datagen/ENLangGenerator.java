@@ -29,11 +29,11 @@ public class ENLangGenerator extends LanguageProvider {
         add(RegisterItems.RED_FLOPPY_DISK, "Red Floppy Disk");
         add(RegisterItems.YELLOW_FLOPPY_DISK, "Yellow Floppy Disk");
         add(RegisterBlocks.WORKLIGHT_STAND, "Worklight Stand");
-        add("item.blocknet_wrench.binding_tooltip", "Linking pos: [%s]");
-        add("item.blocknet_wrench.binding", "§e§lBlock selected for connection");
+
         add("item.blocknet_wrench.unbindable", "§c§lThis block is not linkable");
-        add("item.blocknet_wrench.error", "§c§lConnection failed");
-        add("item.blocknet_wrench.connected", "§a§lConnection established");
+        add("item.blocknet_wrench.binding", "§e§lBinding BlockPos %s");
+        add("item.blocknet_wrench.failed", "§c§lConnection failed");
+        add("item.blocknet_wrench.success", "§pole§lConnection established");
         add("item.blocknet_wrench.already_bound", "§e§lBlocks already bound");
 
 
