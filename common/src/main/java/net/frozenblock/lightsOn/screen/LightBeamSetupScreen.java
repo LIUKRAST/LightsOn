@@ -1,6 +1,6 @@
 package net.frozenblock.lightsOn.screen;
 
-import net.frozenblock.lightsOn.block.LightBeamBlockEntity;
+import net.frozenblock.lightsOn.blockentity.LightBeamBlockEntity;
 import net.frozenblock.lightsOn.packet.LightBeamUpdatePacket;
 import net.frozenblock.lightsOn.platform.Services;
 import net.minecraft.client.GameNarrator;

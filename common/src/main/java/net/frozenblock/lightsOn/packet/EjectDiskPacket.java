@@ -1,13 +1,11 @@
 package net.frozenblock.lightsOn.packet;
 
 import net.frozenblock.lightsOn.LightsOnConstants;
-import net.frozenblock.lightsOn.block.BNIBlockEntity;
+import net.frozenblock.lightsOn.blockentity.BNIBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.lwjgl.system.NonnullDefault;

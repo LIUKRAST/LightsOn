@@ -17,7 +17,6 @@ public class BlockNetWrenchUtils {
     public static final TagKey<Item> WRENCH_TAG = TagKey.create(BuiltInRegistries.ITEM.key(), ResourceLocation.parse("c:tools/wrenches"));
 
     public static final Component UNBINDABLE = Component.translatable("item.blocknet_wrench.unbindable");
-    public static final Component BINDING = Component.translatable("item.blocknet_wrench.binding");
     public static final Component FAILED = Component.translatable("item.blocknet_wrench.failed");
     public static final Component SUCCESS = Component.translatable("item.blocknet_wrench.success");
     public static final Component ALREADY_BOUND = Component.translatable("item.blocknet_wrench.already_bound");
@@ -34,11 +33,8 @@ public class BlockNetWrenchUtils {
         serverPlayer.connection.send(new ClientboundSetActionBarTextPacket(component));
     }
 
-    public static void reset(ItemStack stack, Boolean error, final Player player) {
-
-        if(error != null && player instanceof ServerPlayer serverPlayer)
-            serverPlayer.connection.send(new ClientboundSetActionBarTextPacket(
-                    error ? Component.translatable("item.blocknet_wrench.connected")
-                            : Component.translatable("item.blocknet_wrench.error")));
+    public static void sendBinding(Player player, BlockPos pos) {
+        if(!(player instanceof ServerPlayer serverPlayer)) return;
+        serverPlayer.connection.send(new ClientboundSetActionBarTextPacket(Component.translatable("item.blocknet_wrench.binding", pos.toShortString())));
     }
 }

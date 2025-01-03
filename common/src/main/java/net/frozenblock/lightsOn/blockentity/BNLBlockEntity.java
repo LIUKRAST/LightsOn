@@ -1,4 +1,4 @@
-package net.frozenblock.lightsOn.block;
+package net.frozenblock.lightsOn.blockentity;
 
 import net.frozenblock.lib.blockEntity.ClientSyncedBlockEntity;
 import net.frozenblock.lightsOn.blocknet.BlockNetPole;
@@ -11,12 +11,12 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class BNLBlockEntity extends ClientSyncedBlockEntity implements BlockNetPole {
 
-    private final List<BlockPos> poles = new ArrayList<>();
+    private final Set<BlockPos> poles = new HashSet<>();
 
     public BNLBlockEntity(BlockPos pos, BlockState state) {
         super(RegisterBlockEntities.BLOCKNET_LINK, pos, state);
@@ -24,35 +24,29 @@ public class BNLBlockEntity extends ClientSyncedBlockEntity implements BlockNetP
 
     @Override
     public void save(CompoundTag tag, HolderLookup.Provider registries) {
-        saveBlockPosList(tag, this.poles, POLE_KEY);
+        saveBlockPosList(tag, this.poles);
     }
 
     @Override
     public void load(CompoundTag tag, HolderLookup.Provider registries) {
-        loadBlockPosList(tag, this.poles, POLE_KEY);
+        loadBlockPosList(tag, this.poles);
     }
 
     @Override
     public void addPole(BlockPos input) {
-        if(input == this.getBlockPos())
-            return;
-        if(!this.poles.contains(input)) {
-            this.poles.add(input);
-        }
+        if(input == this.getBlockPos()) return;
+        this.poles.add(input);
     }
 
     @Override
-    public List<BlockPos> getPoles() {
+    public Set<BlockPos> getPoles() {
         return poles;
     }
 
     @Override
     public void removePole(BlockPos pos) {
-        if (pos == this.getBlockPos())
-            return;
-        if (this.poles.contains(pos)) {
-            this.poles.remove(pos);
-        }
+        if (pos == this.getBlockPos()) return;
+        this.poles.remove(pos);
     }
 
     @Override

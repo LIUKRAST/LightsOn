@@ -7,33 +7,34 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 
 import java.util.List;
+import java.util.Set;
 
 /**
- * Defines the block entity is pole block net usable element.
+ * Defines the block entity is pole blocknet usable element.
  * Allows to be connected with other blocknet elements
  * */
 public interface BlockNetPole {
 
     String POLE_KEY = "NetworkPoles";
 
-    List<BlockPos> getPoles();
+    Set<BlockPos> getPoles();
 
     void addPole(BlockPos pole);
     void removePole(BlockPos pole);
 
-    default void saveBlockPosList(CompoundTag tag, List<BlockPos> blockPosList, String key) {
+    default void saveBlockPosList(CompoundTag tag, Set<BlockPos> blockPosList) {
         ListTag outList = new ListTag();
         for(BlockPos pos : blockPosList) {
             final IntArrayTag posTag = new IntArrayTag(new int[]{pos.getX(), pos.getY(), pos.getZ()});
             outList.add(posTag);
         }
-        tag.put(key, outList);
+        tag.put(POLE_KEY, outList);
     }
 
-    default void loadBlockPosList(CompoundTag tag, List<BlockPos> blockPosList, String key) {
+    default void loadBlockPosList(CompoundTag tag, Set<BlockPos> blockPosList) {
         blockPosList.clear();
-        if(tag.contains(key)) {
-            for(Tag iat : tag.getList(key, Tag.TAG_INT_ARRAY)) {
+        if(tag.contains(POLE_KEY)) {
+            for(Tag iat : tag.getList(POLE_KEY, Tag.TAG_INT_ARRAY)) {
                 final var asList = ((IntArrayTag)iat);
                 BlockPos pos = new BlockPos(
                         asList.get(0).getAsInt(),

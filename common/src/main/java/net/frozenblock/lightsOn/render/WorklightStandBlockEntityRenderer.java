@@ -1,4 +1,4 @@
-package net.frozenblock.lightsOn.block;
+package net.frozenblock.lightsOn.render;
 
 public class WorklightStandBlockEntityRenderer {
 }

@@ -33,26 +33,34 @@ public class BlockNetWrench extends Item {
         final var world = context.getLevel();
         final var block = world.getBlockEntity(pos);
         final var player = context.getPlayer();
+        if(player == null) return InteractionResult.FAIL;
         final var stack = context.getItemInHand();
-        final var data = stack.getOrDefault(RegisterDataComponents.WRENCH_CONNECTION, new WrenchConnection(null));
+        final var data = stack.get(RegisterDataComponents.WRENCH_CONNECTION);
 
-        if(data.pole() == null) {
+        if(data == null) {
             if(block instanceof BlockNetPole) {
                 stack.set(RegisterDataComponents.WRENCH_CONNECTION, new WrenchConnection(pos));
-                sendMessage(player, BINDING);
+                sendBinding(player, pos);
             } else sendMessage(player, UNBINDABLE);
         } else {
             final var block1 = world.getBlockEntity(data.pole());
-            if(!(block1 instanceof BlockNetPole pole2)) sendMessage(player, UNBINDABLE);
-            else if(block instanceof BlockNetPole pole1) {
+            if(!(block instanceof BlockNetPole pole2)) {
+                if(player.isCrouching()) {
+                    sendMessage(player, FAILED);
+                    stack.remove(RegisterDataComponents.WRENCH_CONNECTION);
+                    return InteractionResult.CONSUME;
+                } else sendMessage(player, UNBINDABLE);
+            } else if(block1 instanceof BlockNetPole pole1) {
                 sendMessage(player, SUCCESS);
-                if(pole1.hasPole(data.pole()) || pole2.hasPole(pos)) sendMessage(player, ALREADY_BOUND);
-                pole1.addPole(data.pole());
-                pole2.addPole(pos);
-                stack.set(RegisterDataComponents.WRENCH_CONNECTION, new WrenchConnection(null));
+                if(pole1.hasPole(pos) || pole2.hasPole(data.pole())) sendMessage(player, ALREADY_BOUND);
+                pole1.addPole(pos);
+                pole2.addPole(data.pole());
+                update(world, data.pole());
+                update(world, pos);
+                stack.remove(RegisterDataComponents.WRENCH_CONNECTION);
             } else {
                 sendMessage(player, FAILED);
-                stack.set(RegisterDataComponents.WRENCH_CONNECTION, new WrenchConnection(null));
+                stack.remove(RegisterDataComponents.WRENCH_CONNECTION);
             }
         }
         return InteractionResult.SUCCESS;

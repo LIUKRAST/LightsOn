@@ -1,9 +1,10 @@
-package net.frozenblock.lightsOn.block;
+package net.frozenblock.lightsOn.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.frozenblock.lib.blockEntity.BlockEntityModel;
-import net.frozenblock.lightsOn.render.LightBeamRenderer;
+import net.frozenblock.lightsOn.block.LightBeamBlock;
+import net.frozenblock.lightsOn.blockentity.LightBeamBlockEntity;
 import net.frozenblock.lightsOn.screen.ColorInput;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;

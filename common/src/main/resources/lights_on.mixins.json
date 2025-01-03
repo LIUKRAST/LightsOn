@@ -8,6 +8,7 @@
     "BlockBehaviourMixin"
   ],
   "client": [
+    "BlockEntityRenderDispatcherMixin"
   ],
   "server": [],
   "injectors": {

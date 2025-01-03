@@ -1,7 +1,7 @@
 package net.frozenblock.lightsOn;
 
-import net.frozenblock.lightsOn.block.WrenchLinkRenderer;
-import net.frozenblock.lightsOn.block.LightBeamBlockEntityRenderer;
+import net.frozenblock.lightsOn.render.WrenchLinkRenderer;
+import net.frozenblock.lightsOn.render.LightBeamBlockEntityRenderer;
 import net.frozenblock.lightsOn.registry.RegisterBlockEntities;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;

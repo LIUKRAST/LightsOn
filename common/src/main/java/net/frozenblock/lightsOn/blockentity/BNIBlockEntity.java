@@ -1,6 +1,7 @@
-package net.frozenblock.lightsOn.block;
+package net.frozenblock.lightsOn.blockentity;
 
 import net.frozenblock.lib.blockEntity.ClientSyncedBlockEntity;
+import net.frozenblock.lightsOn.block.BNIBlock;
 import net.frozenblock.lightsOn.blocknet.BlockNetPole;
 import net.frozenblock.lightsOn.packet.BNIUpdatePacket;
 import net.frozenblock.lightsOn.platform.Services;
@@ -17,8 +18,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import static net.frozenblock.lightsOn.block.BNIBlock.CONTAINS_FLOPPY;
 
@@ -32,7 +33,7 @@ public class BNIBlockEntity extends ClientSyncedBlockEntity implements BlockNetP
     private ItemStack stack = ItemStack.EMPTY;
 
     @NotNull
-    private final List<BlockPos> poles = new ArrayList<>();
+    private final Set<BlockPos> poles = new HashSet<>();
 
     public BNIBlockEntity(BlockPos pos, BlockState state) {
         super(RegisterBlockEntities.BLOCKNET_INTERFACE, pos, state);
@@ -45,7 +46,7 @@ public class BNIBlockEntity extends ClientSyncedBlockEntity implements BlockNetP
             CompoundTag itemTag = new CompoundTag();
             tag.put(ITEM_KEY, stack.save(registries, itemTag));
         }
-        saveBlockPosList(tag, poles, POLE_KEY);
+        saveBlockPosList(tag, poles);
     }
 
     @Override
@@ -55,7 +56,7 @@ public class BNIBlockEntity extends ClientSyncedBlockEntity implements BlockNetP
             CompoundTag itemTag = tag.getCompound(ITEM_KEY);
             stack = ItemStack.parse(registries, itemTag).orElse(ItemStack.EMPTY);
         }
-        loadBlockPosList(tag, poles, POLE_KEY);
+        loadBlockPosList(tag, poles);
     }
 
     public void askForSync() {
@@ -77,11 +78,11 @@ public class BNIBlockEntity extends ClientSyncedBlockEntity implements BlockNetP
     @Override
     public void addPole(BlockPos input) {
         if(input == this.getBlockPos()) return;
-        if(!this.poles.contains(input)) this.poles.add(input);
+        this.poles.add(input);
     }
 
     @Override
-    public @NotNull List<BlockPos> getPoles() {
+    public @NotNull Set<BlockPos> getPoles() {
         return poles;
     }
 

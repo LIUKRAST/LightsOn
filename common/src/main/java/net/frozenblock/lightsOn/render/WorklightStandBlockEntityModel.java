@@ -1,8 +1,9 @@
-package net.frozenblock.lightsOn.block;
+package net.frozenblock.lightsOn.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.frozenblock.lib.blockEntity.BlockEntityModel;
+import net.frozenblock.lightsOn.blockentity.WorklightStandBlockEntity;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 

@@ -1,6 +1,7 @@
-package net.frozenblock.lightsOn.block;
+package net.frozenblock.lightsOn.blockentity;
 
 import net.frozenblock.lib.blockEntity.ClientSyncedBlockEntity;
+import net.frozenblock.lightsOn.render.LightBeamBlockEntityModel;
 import net.frozenblock.lightsOn.blocknet.BlockNetPole;
 import net.frozenblock.lightsOn.registry.RegisterBlockEntities;
 import net.minecraft.core.BlockPos;
@@ -12,12 +13,12 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements BlockNetPole {
 
-    private final List<BlockPos> poles = new ArrayList<>();
+    private final Set<BlockPos> poles = new HashSet<>();
 
     private int color = 16777215; //CHANNEL 0
     private int oldColor = color;
@@ -60,7 +61,7 @@ public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements Blo
         nbt.putFloat("OldLength", oldLength);
         nbt.putFloat("Size", size);
         nbt.putFloat("OldSize",oldSize);
-        saveBlockPosList(nbt, poles, POLE_KEY);
+        saveBlockPosList(nbt, poles);
     }
 
     @Override
@@ -78,7 +79,7 @@ public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements Blo
         this.length = nbt.getFloat("Length");
         this.oldLength = nbt.getFloat("OldLength");
         this.poles.clear();
-        loadBlockPosList(nbt, poles, POLE_KEY);
+        loadBlockPosList(nbt, poles);
     }
 
     public int calculateColor(float age) {
@@ -181,24 +182,18 @@ public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements Blo
 
     @Override
     public void addPole(BlockPos input) {
-        if(input == this.getBlockPos())
-            return;
-        if(!this.poles.contains(input)) {
-            this.poles.add(input);
-        }
+        if(input == getBlockPos()) return;
+        this.poles.add(input);
     }
 
     @Override
-    public List<BlockPos> getPoles() {
+    public Set<BlockPos> getPoles() {
         return poles;
     }
 
     @Override
     public void removePole(BlockPos pos) {
-        if(pos == this.getBlockPos())
-            return;
-        if(this.poles.contains(pos)) {
-            this.poles.remove(pos);
-        }
+        if(pos == getBlockPos()) return;
+        this.poles.remove(pos);
     }
 }

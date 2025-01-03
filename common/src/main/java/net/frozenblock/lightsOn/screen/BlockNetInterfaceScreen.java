@@ -1,7 +1,7 @@
 package net.frozenblock.lightsOn.screen;
 
 import net.frozenblock.lightsOn.LightsOnConstants;
-import net.frozenblock.lightsOn.block.BNIBlockEntity;
+import net.frozenblock.lightsOn.blockentity.BNIBlockEntity;
 import net.frozenblock.lightsOn.packet.EjectDiskPacket;
 import net.frozenblock.lightsOn.platform.Services;
 import net.frozenblock.lightsOn.screen.util.ActionBarButton;

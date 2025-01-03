@@ -1,10 +1,10 @@
 package net.frozenblock.lightsOn.registry;
 
 import net.frozenblock.lightsOn.LightsOnConstants;
-import net.frozenblock.lightsOn.block.BNIBlockEntity;
-import net.frozenblock.lightsOn.block.BNLBlockEntity;
-import net.frozenblock.lightsOn.block.LightBeamBlockEntity;
-import net.frozenblock.lightsOn.block.WorklightStandBlockEntity;
+import net.frozenblock.lightsOn.blockentity.BNIBlockEntity;
+import net.frozenblock.lightsOn.blockentity.BNLBlockEntity;
+import net.frozenblock.lightsOn.blockentity.LightBeamBlockEntity;
+import net.frozenblock.lightsOn.blockentity.WorklightStandBlockEntity;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;

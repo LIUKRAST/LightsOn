@@ -1,4 +1,4 @@
-package net.frozenblock.lightsOn.block;
+package net.frozenblock.lightsOn.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -7,7 +7,6 @@ import net.frozenblock.lightsOn.blocknet.BlockNetPole;
 import net.frozenblock.lightsOn.item.BlockNetWrenchUtils;
 import net.frozenblock.lightsOn.item.WrenchConnection;
 import net.frozenblock.lightsOn.registry.RegisterDataComponents;
-import net.frozenblock.lightsOn.render.WrenchLinkModel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -49,9 +48,9 @@ public class WrenchLinkRenderer implements BlockEntityRenderer<BlockEntity> {
         if(level == null) return;
         for (BlockPos pos : blockNetPole.getPoles()) {
             if(level.getBlockEntity(pos) instanceof BlockNetPole) {
-                if(hasPriority(that, pos)) continue;
+                //if(hasPriority(that, pos)) continue;
                 poseStack.translate(0, 0.01, 0);
-                MODEL.animate(createVector(that), createVector(pos), WrenchLinkModel.State.FINE);
+                MODEL.animate(that.getCenter(), pos.getCenter(), WrenchLinkModel.State.FINE);
                 MODEL.renderToBuffer(poseStack, vertexConsumer, 15728880, packedOverlay);
             } else LightsOnConstants.LOGGER.error("Tried to search for pole BlockNetElement, but found pole pole not instance of {}", BlockNetPole.class);
         }
@@ -67,7 +66,7 @@ public class WrenchLinkRenderer implements BlockEntityRenderer<BlockEntity> {
     public static void renderPlayerBinding(ItemStack stack, BlockPos pos, Vec3 playerPos, WrenchLinkModel.State state, PoseStack poseStack, VertexConsumer vertexConsumer, int packedOverlay) {
         final var data = stack.getOrDefault(RegisterDataComponents.WRENCH_CONNECTION, new WrenchConnection(null));
         if(pos.equals(data.pole())) {
-            MODEL.animate(createVector(pos), playerPos, state);
+            MODEL.animate(pos.getCenter(), playerPos, state);
             MODEL.renderToBuffer(poseStack, vertexConsumer, 15728880, packedOverlay);
         }
     }
@@ -81,10 +80,6 @@ public class WrenchLinkRenderer implements BlockEntityRenderer<BlockEntity> {
             }
         }
         return false;
-    }
-
-    private static Vec3 createVector(BlockPos pos) {
-        return new Vec3(pos.getX(), pos.getY(), pos.getZ());
     }
 
     @Override

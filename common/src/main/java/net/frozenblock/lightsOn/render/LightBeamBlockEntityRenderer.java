@@ -1,8 +1,10 @@
-package net.frozenblock.lightsOn.block;
+package net.frozenblock.lightsOn.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.frozenblock.lightsOn.LightsOnConstants;
+import net.frozenblock.lightsOn.block.LightBeamBlock;
+import net.frozenblock.lightsOn.blockentity.LightBeamBlockEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;

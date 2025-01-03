@@ -1,7 +1,7 @@
 package net.frozenblock.lightsOn.packet;
 
 import net.frozenblock.lightsOn.LightsOnConstants;
-import net.frozenblock.lightsOn.block.BNIBlockEntity;
+import net.frozenblock.lightsOn.blockentity.BNIBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
