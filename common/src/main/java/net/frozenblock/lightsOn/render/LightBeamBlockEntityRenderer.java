@@ -13,7 +13,6 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public class LightBeamBlockEntityRenderer implements BlockEntityRenderer<LightBeamBlockEntity> {
@@ -26,7 +25,8 @@ public class LightBeamBlockEntityRenderer implements BlockEntityRenderer<LightBe
     public void render(@NotNull LightBeamBlockEntity blockEntity, float partial, @NotNull PoseStack poseStack, @NotNull MultiBufferSource buffer, int packedLight, int packedOverlay) {
         float[] h = blockEntity.getProgress(partial);
         MODEL.supplementary(blockEntity, h);
-        final float age = blockEntity.getLevel().getGameTime() + partial;
+        var level = blockEntity.getLevel();
+        final float age = level == null ? 0 : level.getGameTime() + partial;
         poseStack.pushPose();
         poseStack.scale(-1.0f, -1.0f, 1.0f);
         poseStack.translate(-0.5D, -1.501F, 0.5D);

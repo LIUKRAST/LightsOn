@@ -4,7 +4,6 @@ import net.frozenblock.lightsOn.LightsOnConstants;
 import net.frozenblock.lightsOn.item.WrenchConnection;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 
 public class RegisterDataComponents {

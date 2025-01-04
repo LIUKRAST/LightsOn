@@ -105,11 +105,6 @@ public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements Blo
         return interpolate(oldLength, length, age);
     }
 
-
-    public int getDuration() {
-        return duration;
-    }
-
     public float[] getProgress(float partial) {
         int i = this.duration;
         if(i <= 0) {

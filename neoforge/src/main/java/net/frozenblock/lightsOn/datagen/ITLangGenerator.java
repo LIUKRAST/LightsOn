@@ -29,7 +29,7 @@ public class ITLangGenerator extends LanguageProvider {
         add(RegisterBlocks.WORKLIGHT_STAND, "Faro da lavoro con supporto");
 
         //WRENCH
-        add("item.blocknet_wrench.unbindable", "§c§lQuesto blocco non è linkabile");
+        add("item.blocknet_wrench.unbindable", "§c§lQuesto blocco non è collegabile");
         add("item.blocknet_wrench.binding", "§e§lCollegando le posizioni %s");
         add("item.blocknet_wrench.failed", "§c§lConnessione fallita");
         add("item.blocknet_wrench.success", "§pole§lConnessione stabilita");

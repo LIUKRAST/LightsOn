@@ -19,10 +19,7 @@
             "net.frozenblock.lightsOn.LightsOn"
         ],
         "client": [
-            "net.frozenblock.lightsOn.LightsOnClient"
-        ],
-        "server": [
-            "net.frozenblock.lightsOn.LightsOnServer"
+            "net.frozenblock.lightsOn.LightsOn"
         ]
     },
     "mixins": [

@@ -1,5 +1,6 @@
 package net.frozenblock.lightsOn.platform;
 
+import net.frozenblock.lightsOn.LightsOnConstants;
 import net.frozenblock.lightsOn.platform.services.IPlatformHelper;
 import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.fml.ModList;
@@ -8,9 +9,9 @@ import net.neoforged.fml.loading.FMLLoader;
 public class NeoForgePlatformHelper implements IPlatformHelper {
 
     @Override
-    public String getPlatformName() {
-
-        return "NeoForge";
+    public String getModVersion() {
+        return ModList.get().getModContainerById(LightsOnConstants.MOD_ID)
+                .map(container -> container.getModInfo().getVersion().toString()).orElseThrow();
     }
 
     @Override

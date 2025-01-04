@@ -22,8 +22,7 @@ public class WrenchLinkRenderer {
     private static final ResourceLocation TEXTURE = LightsOnConstants.id("textures/entity/wrench_link.png");
     private static final WrenchLinkModel MODEL = new WrenchLinkModel(WrenchLinkModel.create().bakeRoot());
 
-    @SuppressWarnings("unused")
-    public static void render(BlockEntity blockEntity, float v, PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight, int packedOverlay) {
+    public static void render(BlockEntity blockEntity, @SuppressWarnings("unused") float v, PoseStack poseStack, MultiBufferSource multiBufferSource, @SuppressWarnings("unused") int packedLight, int packedOverlay) {
         if(!(blockEntity instanceof BlockNetPole blockNetPole)) return;
         var player = Minecraft.getInstance().player;
         if(player == null) return;

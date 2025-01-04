@@ -5,7 +5,7 @@ import net.minecraft.world.item.CreativeModeTab;
 @SuppressWarnings("unused")
 public interface IPlatformHelper {
 
-    String getPlatformName();
+    String getModVersion();
 
     boolean isModLoaded(String modId);
 

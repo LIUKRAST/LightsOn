@@ -3,7 +3,6 @@ package net.frozenblock.lib.blocknet.setting;
 import net.frozenblock.lib.blocknet.BlockNetSetting;
 import net.frozenblock.lightsOn.screen.ColorMode;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.CycleButton;
