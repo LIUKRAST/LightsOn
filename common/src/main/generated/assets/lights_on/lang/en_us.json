@@ -25,7 +25,7 @@
   "item.blocknet_wrench.already_bound": "§e§lBlocks already bound",
   "item.blocknet_wrench.binding": "§e§lBinding BlockPos %s",
   "item.blocknet_wrench.failed": "§c§lConnection failed",
-  "item.blocknet_wrench.success": "§pole§lConnection established",
+  "item.blocknet_wrench.success": "§a§lConnection established",
   "item.blocknet_wrench.unbindable": "§c§lThis block is not linkable",
   "item.lights_on.blocknet_wrench": "BlockNet Wrench",
   "item.lights_on.blue_floppy_disk": "Blue Floppy Disk",

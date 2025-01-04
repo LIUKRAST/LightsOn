@@ -34,7 +34,7 @@ public class LightsOn {
     }
 
     @SubscribeEvent
-    public static void registerRenderers(final EntityRenderersEvent.RegisterRenderers event) {
+    public void registerRenderers(final EntityRenderersEvent.RegisterRenderers event) {
         RegisterBlockEntityRenderers.register();
     }
 }
