@@ -23,7 +23,7 @@ public class LightBeamBlockEntityRenderer implements BlockEntityRenderer<LightBe
 
     @Override
     public void render(@NotNull LightBeamBlockEntity blockEntity, float partial, @NotNull PoseStack poseStack, @NotNull MultiBufferSource buffer, int packedLight, int packedOverlay) {
-        float[] h = blockEntity.getProgress(partial);
+        float h = blockEntity.getProgress(partial);
         MODEL.supplementary(blockEntity, h);
         var level = blockEntity.getLevel();
         final float age = level == null ? 0 : level.getGameTime() + partial;
@@ -33,7 +33,7 @@ public class LightBeamBlockEntityRenderer implements BlockEntityRenderer<LightBe
         final RenderType renderType = MODEL.renderType(TEXTURE);
         final VertexConsumer vertexConsumer = buffer.getBuffer(renderType);
         MODEL.setupAnim(blockEntity, age);
-        MODEL.render(blockEntity, h[0], poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 16777216, 1.0F);
+        MODEL.render(blockEntity, h, poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 16777216, 1.0F);
         if (blockEntity.getBlockState().getValue(LightBeamBlock.POWERED))
             MODEL.renderLightBeam(blockEntity, h, buffer, poseStack);
         poseStack.popPose();

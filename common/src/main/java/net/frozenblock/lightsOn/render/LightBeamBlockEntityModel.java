@@ -47,9 +47,9 @@ public class LightBeamBlockEntityModel extends BlockEntityModel<LightBeamBlockEn
         return LayerDefinition.create(meshdefinition, 128, 128);
     }
 
-    public void supplementary(LightBeamBlockEntity entity, float[] h) {
-        body.yRot = (float)(Math.toRadians(entity.calculateYaw(h[2])));
-        head.xRot = -lim((float)(Math.toRadians(entity.calculatePitch(h[1]))), 0, (float)Math.PI);
+    public void supplementary(LightBeamBlockEntity entity, float h) {
+        body.yRot = (float)(Math.toRadians(entity.calculateYaw(h)));
+        head.xRot = -lim((float)(Math.toRadians(entity.calculatePitch(h))), 0, (float)Math.PI);
     }
 
     @Override
@@ -72,15 +72,15 @@ public class LightBeamBlockEntityModel extends BlockEntityModel<LightBeamBlockEn
         main.render(poseStack, vertexConsumer, packedLight, packedOverlay);
     }
 
-    public void renderLightBeam(LightBeamBlockEntity entity, float[] ageInTicks, MultiBufferSource bufferSource, PoseStack poseStack) {
+    public void renderLightBeam(LightBeamBlockEntity entity, float ageInTicks, MultiBufferSource bufferSource, PoseStack poseStack) {
         main.translateAndRotate(poseStack);
         body.translateAndRotate(poseStack);
         head.translateAndRotate(poseStack);
-        int color = entity.calculateColor(ageInTicks[0]);
+        int color = entity.calculateColor(ageInTicks);
         int[] rgb = ColorMode.int2rgb(color);
         float a = (rgb[0]/255.0f + rgb[1]/255.0f + rgb[2]/255.0f)/3.0f;
         poseStack.translate(0, 0, -0.8125f);
-        LightBeamRenderer.renderLightBeam(bufferSource.getBuffer(BEAM), poseStack, a, 3/16f, entity.calculateSize(ageInTicks[3]), entity.calculateLength(ageInTicks[4]), color);
+        LightBeamRenderer.renderLightBeam(bufferSource.getBuffer(BEAM), poseStack, a, 3/16f, entity.calculateSize(ageInTicks), entity.calculateLength(ageInTicks), color);
     }
 
     public static float lim(float var, float min, float max) {

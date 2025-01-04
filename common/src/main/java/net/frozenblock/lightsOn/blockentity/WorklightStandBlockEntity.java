@@ -76,9 +76,4 @@ public class WorklightStandBlockEntity extends ClientSyncedBlockEntity implement
         setChanged();
         if(level != null) this.level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
     }
-
-    @Override
-    public boolean includeInterpolation() {
-        return false;
-    }
 }

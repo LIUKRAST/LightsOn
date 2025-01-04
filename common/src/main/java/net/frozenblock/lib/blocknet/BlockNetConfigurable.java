@@ -2,6 +2,8 @@ package net.frozenblock.lib.blocknet;
 
 import net.minecraft.nbt.CompoundTag;
 
+import java.util.function.Supplier;
+
 /**
  * Defines the Block Entity is configurable through BlockNet System.
  * Adding this to your block entity automatically makes it
@@ -38,15 +40,11 @@ public interface BlockNetConfigurable {
     void updateData(CompoundTag tag);
 
     /**
-     * A method defining if the block entity supports interpolation.
-     * This will basically decide
-     * whether a {@link net.frozenblock.lightsOn.screen.BlockNetConfigScreen} should show the interpolation textbox
-     * when interacting with this block entity.
+     * @return The Block Entity's interpolation getter method. When null, the GUI will not include an "interpolate" button.
      * @since 1.0
      * @author LiukRast
-     * @return {@code true} if the block entity requires interpolations to move from one state to the other, {@code false} otherwise.
      * */
-    default boolean includeInterpolation() {
-        return true;
+    default Supplier<Integer> interpolationGetter() {
+        return null;
     }
 }

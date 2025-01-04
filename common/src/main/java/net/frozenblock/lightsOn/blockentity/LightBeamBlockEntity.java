@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Supplier;
 
 public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements BlockNetPole, BlockNetConfigurable {
 
@@ -32,7 +33,7 @@ public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements Blo
     private float oldSize = size;
     private float length = 3;
     private float oldLength = length;
-    private int duration = 40;
+    private int interpolation = 20;
 
     private long animationStart = 0;
 
@@ -49,12 +50,13 @@ public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements Blo
         nbt.putFloat("OldPitch", oldPitch);
         nbt.putFloat("Yaw", yaw);
         nbt.putFloat("OldYaw", oldYaw);
-        nbt.putFloat("Duration", duration);
-        nbt.putLong("AnimationStart", animationStart);
         nbt.putFloat("Length", length);
         nbt.putFloat("OldLength", oldLength);
         nbt.putFloat("Size", size);
         nbt.putFloat("OldSize",oldSize);
+
+        nbt.putFloat("Interpolation", interpolation);
+        nbt.putLong("AnimationStart", animationStart);
         saveBlockPosList(nbt, poles);
     }
 
@@ -66,13 +68,15 @@ public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements Blo
         this.oldPitch = nbt.getFloat("OldPitch");
         this.yaw = nbt.getFloat("Yaw");
         this.oldYaw = nbt.getFloat("OldYaw");
-        this.duration = nbt.getInt("Duration");
-        this.animationStart = nbt.getLong("AnimationStart");
         this.size = nbt.getFloat("Size");
         this.oldSize = nbt.getFloat("OldSize");
         this.length = nbt.getFloat("Length");
         this.oldLength = nbt.getFloat("OldLength");
-        this.poles.clear();
+
+        this.interpolation = nbt.getInt("Interpolation");
+        this.animationStart = nbt.getLong("AnimationStart");
+
+
         loadBlockPosList(nbt, poles);
     }
 
@@ -105,19 +109,12 @@ public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements Blo
         return interpolate(oldLength, length, age);
     }
 
-    public float[] getProgress(float partial) {
-        int i = this.duration;
-        if(i <= 0) {
-            return new float[]{1,1,1,1,1};
-        }
-        float[] array = new float[5];
-        for(int k = 0; k < 5; k++) {
-            @SuppressWarnings("all")
-            float f = level.getGameTime() - this.animationStart;
-            float g = f + partial;
-            array[k] = LightBeamBlockEntityModel.lim(getProgress(g, i), 0.0f, 1.0f);
-        }
-        return array;
+    public float getProgress(float partial) {
+        int i = this.interpolation;
+        if(i <= 0) return 1;
+        float f = level == null ? 0 : level.getGameTime() - this.animationStart;
+        float g = f + partial;
+        return LightBeamBlockEntityModel.lim(getProgress(g, i), 0.0f, 1.0f);
     }
 
     private static float getProgress(float v, float e) {
@@ -177,6 +174,10 @@ public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements Blo
         return this.length;
     }
 
+    public int getInterpolation() {
+        return this.interpolation;
+    }
+
     @Override
     public void defineSettings(BlockNetSettingBuilder builder) {
         builder.add(new ColorBlockNetSetting("color", this::getColor));
@@ -194,7 +195,7 @@ public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements Blo
         this.oldSize = size;
         this.oldLength = length;
 
-        this.duration = tag.getInt("duration");
+        this.interpolation = tag.getInt("duration");
 
         this.color = tag.getInt("color");
         this.pitch = tag.getFloat("pitch");
@@ -208,5 +209,10 @@ public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements Blo
 
         setChanged();
         if(level != null) this.level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
+    }
+
+    @Override
+    public Supplier<Integer> interpolationGetter() {
+        return this::getInterpolation;
     }
 }

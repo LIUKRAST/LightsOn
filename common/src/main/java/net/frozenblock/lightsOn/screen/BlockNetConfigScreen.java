@@ -29,14 +29,16 @@ public class BlockNetConfigScreen extends Screen {
     private final boolean includeInterpolation;
     private Button save = null;
     private boolean valid = true;
-    private int interpolation = 0;
+    private int interpolation;
 
     public BlockNetConfigScreen(BlockNetConfigurable configurable, BlockPos pos) {
         super(GameNarrator.NO_TITLE);
         var builder = new BlockNetSettingBuilder();
         configurable.defineSettings(builder);
         this.settings = builder.getSettings();
-        this.includeInterpolation = configurable.includeInterpolation();
+        var getter = configurable.interpolationGetter();
+        this.includeInterpolation = getter != null;
+        this.interpolation = includeInterpolation ? getter.get() : 0;
         this.pos = pos; //TODO: CLOSE SCREEN WHEN BLOCK IS BROKEN
     }
 
