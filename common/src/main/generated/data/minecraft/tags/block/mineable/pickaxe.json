@@ -2,6 +2,7 @@
   "values": [
     "lights_on:blocknet_interface",
     "lights_on:blocknet_link",
-    "lights_on:light_beam"
+    "lights_on:light_beam",
+    "lights_on:worklight_stand"
   ]
 }

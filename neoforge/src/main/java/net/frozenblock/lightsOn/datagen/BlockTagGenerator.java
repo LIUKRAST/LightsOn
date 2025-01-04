@@ -19,9 +19,11 @@ public class BlockTagGenerator extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.@NotNull Provider provider) {
-        tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(RegisterBlocks.BLOCKNET_INTERFACE)
-                .add(RegisterBlocks.BLOCKNET_LINK)
-                .add(RegisterBlocks.LIGHT_BEAM);
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
+                RegisterBlocks.BLOCKNET_INTERFACE,
+                RegisterBlocks.BLOCKNET_LINK,
+                RegisterBlocks.LIGHT_BEAM,
+                RegisterBlocks.WORKLIGHT_STAND
+        );
     }
 }

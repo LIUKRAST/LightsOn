@@ -5,6 +5,12 @@ plugins {
 
 repositories {
     maven { url "https://maven.terraformersmc.com/releases/" }
+    maven {
+        url "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
 dependencies {
@@ -16,6 +22,7 @@ dependencies {
     }*/
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+    modImplementation "curse.maven:jei-238222:5846878"
     modApi "com.terraformersmc:modmenu:11.0.2"
 }
 
