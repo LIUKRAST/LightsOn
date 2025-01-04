@@ -28,7 +28,7 @@ import org.lwjgl.system.NonnullDefault;
 
 @NonnullDefault
 public class WorklightStandBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
-    private static final VoxelShape SHAPE = Block.box(4.0, 0.0, 4.0, 12.0, 16.0, 12.0);
+    private static final VoxelShape SHAPE = Block.box(4.0, 0.0, 4.0, 12.0, 32.0, 12.0);
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public WorklightStandBlock(Properties properties) {
