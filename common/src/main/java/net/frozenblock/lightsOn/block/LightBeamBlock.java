@@ -69,8 +69,11 @@ public class LightBeamBlock extends BaseEntityBlock implements SimpleWaterlogged
         return SHAPE.copy().facing(state.getValue(FACING)).build();
     }
 
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(FACING, context.getClickedFace()).setValue(POWERED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        return this.defaultBlockState()
+                .setValue(FACING, ctx.getClickedFace())
+                .setValue(POWERED, ctx.getLevel().hasNeighborSignal(ctx.getClickedPos()))
+                .setValue(WATERLOGGED, ctx.getLevel().getFluidState(ctx.getClickedPos()).getType() == Fluids.WATER);
     }
 
     @Override

@@ -13,8 +13,9 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.AABB;
-import org.jetbrains.annotations.NotNull;
+import org.lwjgl.system.NonnullDefault;
 
+@NonnullDefault
 public class LightBeamBlockEntityRenderer implements BlockEntityRenderer<LightBeamBlockEntity> {
     public static final ResourceLocation TEXTURE = LightsOnConstants.id("textures/entity/light_beam.png");
     public static final LightBeamBlockEntityModel MODEL = new LightBeamBlockEntityModel(LightBeamBlockEntityModel.create().bakeRoot());
@@ -22,7 +23,7 @@ public class LightBeamBlockEntityRenderer implements BlockEntityRenderer<LightBe
     public LightBeamBlockEntityRenderer(BlockEntityRendererProvider.Context ignored) {}
 
     @Override
-    public void render(@NotNull LightBeamBlockEntity blockEntity, float partial, @NotNull PoseStack poseStack, @NotNull MultiBufferSource buffer, int packedLight, int packedOverlay) {
+    public void render( LightBeamBlockEntity blockEntity, float partial, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
         float h = blockEntity.getProgress(partial);
         MODEL.supplementary(blockEntity, h);
         var level = blockEntity.getLevel();
@@ -40,7 +41,7 @@ public class LightBeamBlockEntityRenderer implements BlockEntityRenderer<LightBe
     }
 
     @Override
-    public boolean shouldRenderOffScreen(@NotNull LightBeamBlockEntity blockEntity) {
+    public boolean shouldRenderOffScreen(LightBeamBlockEntity blockEntity) {
         return true;
     }
 
@@ -50,7 +51,7 @@ public class LightBeamBlockEntityRenderer implements BlockEntityRenderer<LightBe
     }
 
     @SuppressWarnings("unused")
-    public @NotNull AABB getRenderBoundingBox(@NotNull LightBeamBlockEntity blockEntity) {
+    public AABB getRenderBoundingBox(LightBeamBlockEntity blockEntity) {
         BlockPos pos = blockEntity.getBlockPos();
         final float length = blockEntity.calculateLength(1);
         return new AABB(pos.getX() - length, pos.getY() - length, pos.getZ() - length,pos.getX() + length, pos.getY() + length,pos.getZ() + length);

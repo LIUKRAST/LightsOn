@@ -8,8 +8,9 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
+import org.lwjgl.system.NonnullDefault;
 
+@NonnullDefault
 public class WrenchLinkModel extends Model {
     private final ModelPart main;
     private final ModelPart subMain;
@@ -44,7 +45,7 @@ public class WrenchLinkModel extends Model {
     }
 
     @Override
-    public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color) {
         main.render(poseStack, vertexConsumer, packedLight, packedOverlay);
     }
 

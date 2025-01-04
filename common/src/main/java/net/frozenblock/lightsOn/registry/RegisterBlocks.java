@@ -15,10 +15,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
 public class RegisterBlocks {
-    public static final Block LIGHT_BEAM = new LightBeamBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).dynamicShape());
+    public static final Block LIGHT_BEAM = new LightBeamBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).dynamicShape().lightLevel(b -> b.getValue(LightBeamBlock.POWERED) ? 10 : 0));
     public static final Block BLOCKNET_INTERFACE = new BNIBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).dynamicShape().lightLevel((b) -> 5));
     public static final Block BLOCKNET_LINK = new BNLBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).dynamicShape());
-    public static final Block WORKLIGHT_STAND = new WorklightStandBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).dynamicShape());
+    public static final Block WORKLIGHT_STAND = new WorklightStandBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).dynamicShape().lightLevel(b -> b.getValue(WorklightStandBlock.POWERED) ? 10 : 0));
 
     public static void register() {
         registerBlockWithItem(LightsOnConstants.id("light_beam"), LIGHT_BEAM);

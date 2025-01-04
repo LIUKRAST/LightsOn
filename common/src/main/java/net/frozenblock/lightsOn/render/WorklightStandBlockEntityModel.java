@@ -4,10 +4,14 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.frozenblock.lib.blockEntity.BlockEntityModel;
 import net.frozenblock.lightsOn.blockentity.WorklightStandBlockEntity;
+import net.frozenblock.lightsOn.screen.ColorMode;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+
+import static net.frozenblock.lightsOn.render.LightBeamRenderer.BEAM;
 
 public class WorklightStandBlockEntityModel extends BlockEntityModel<WorklightStandBlockEntity> {
     private final ModelPart middle;
@@ -49,5 +53,23 @@ public class WorklightStandBlockEntityModel extends BlockEntityModel<WorklightSt
     public void render(WorklightStandBlockEntity entity, float ageInTicks, PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color, float alpha) {
         middle.render(poseStack, vertexConsumer, packedLight, packedOverlay);
         legs.render(poseStack, vertexConsumer, packedLight, packedOverlay);
+    }
+
+    public void renderLightBeam(MultiBufferSource bufferSource, PoseStack poseStack) {
+        int color = 16777215;
+        int[] rgb = ColorMode.int2rgb(color);
+        float a = (rgb[0]/255.0f + rgb[1]/255.0f + rgb[2]/255.0f)/3.0f;
+        poseStack.pushPose();
+        middle.translateAndRotate(poseStack);
+        right_head.translateAndRotate(poseStack);
+        poseStack.translate(0.25f, -3/16f, -2/16f);
+        LightBeamRenderer.renderLightBeam(bufferSource.getBuffer(BEAM), poseStack, a, 1/8f, 1, 1, color);
+        poseStack.popPose();
+        poseStack.pushPose();
+        middle.translateAndRotate(poseStack);
+        left_head.translateAndRotate(poseStack);
+        poseStack.translate(-0.25f, -3/16f, -2/16f);
+        LightBeamRenderer.renderLightBeam(bufferSource.getBuffer(BEAM), poseStack, a, 1/8f, 1, 1, color);
+        poseStack.popPose();
     }
 }

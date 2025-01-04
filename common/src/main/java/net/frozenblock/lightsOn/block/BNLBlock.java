@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import net.frozenblock.lib.voxel.VoxelShapes;
 import net.frozenblock.lightsOn.blockentity.BNLBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
@@ -33,6 +34,12 @@ public class BNLBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
     @Override
     protected FluidState getFluidState(BlockState state) {
         return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        return defaultBlockState()
+                .setValue(WATERLOGGED, ctx.getLevel().getFluidState(ctx.getClickedPos()).getType() == Fluids.WATER);
     }
 
     @Override

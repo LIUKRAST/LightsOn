@@ -12,7 +12,6 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
-import org.jetbrains.annotations.NotNull;
 
 import static net.frozenblock.lightsOn.render.LightBeamRenderer.BEAM;
 
@@ -68,7 +67,7 @@ public class LightBeamBlockEntityModel extends BlockEntityModel<LightBeamBlockEn
     }
 
     @Override
-    public void render(LightBeamBlockEntity entity, float ageInTicks, @NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color, float alpha) {
+    public void render(LightBeamBlockEntity entity, float ageInTicks, PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color, float alpha) {
         main.render(poseStack, vertexConsumer, packedLight, packedOverlay);
     }
 

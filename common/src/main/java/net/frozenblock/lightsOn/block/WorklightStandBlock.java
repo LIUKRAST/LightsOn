@@ -5,6 +5,7 @@ import net.frozenblock.lightsOn.blockentity.WorklightStandBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -29,9 +30,10 @@ import org.lwjgl.system.NonnullDefault;
 public class WorklightStandBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     private static final VoxelShape SHAPE = Block.box(4.0, 0.0, 4.0, 12.0, 16.0, 12.0);
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public WorklightStandBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
+        this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false).setValue(POWERED, false));
     }
 
     @Override
@@ -49,7 +51,7 @@ public class WorklightStandBlock extends BaseEntityBlock implements SimpleWaterl
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(WATERLOGGED);
+        builder.add(WATERLOGGED, POWERED);
     }
 
     @Override
@@ -67,6 +69,13 @@ public class WorklightStandBlock extends BaseEntityBlock implements SimpleWaterl
     }
 
     @Override
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        return defaultBlockState()
+                .setValue(POWERED, ctx.getLevel().hasNeighborSignal(ctx.getClickedPos()))
+                .setValue(WATERLOGGED, ctx.getLevel().getFluidState(ctx.getClickedPos()).getType() == Fluids.WATER);
+    }
+
+    @Override
     @SuppressWarnings("deprecation")
     protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         return level.getBlockState(pos.below()).isSolid();
@@ -75,5 +84,15 @@ public class WorklightStandBlock extends BaseEntityBlock implements SimpleWaterl
     @Override
     protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
         return false;
+    }
+
+    @Override
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos sourcePos, boolean movedByPiston) {
+        if (!world.isClientSide) {
+            boolean flag = state.getValue(POWERED);
+            if (flag != world.hasNeighborSignal(pos)) {
+                world.setBlock(pos, state.cycle(POWERED), 2);
+            }
+        }
     }
 }
