@@ -10,6 +10,11 @@ import net.minecraft.resources.ResourceLocation;
 import java.text.DecimalFormat;
 import java.util.function.Supplier;
 
+/**
+ * A Ranged float Setting. Rendered as a slider in the GUI
+ * @since 1.0
+ * @author LiukRast
+ * */
 public class RangedBlockNetSetting extends BlockNetSetting<Float> {
     private static final ResourceLocation TEXTURE = LightsOnConstants.id("textures/gui/blocknet_config.png");
 
@@ -41,7 +46,8 @@ public class RangedBlockNetSetting extends BlockNetSetting<Float> {
 
     @Override
     public void render(GuiGraphics graphics, int leftPos, int topPos, int mouseX, int mouseY) {
-        // 0 -> 120
+
+        super.render(graphics, leftPos, topPos, mouseX, mouseY);
         int progress = (int)((getValue()-min)/(max-min)*120);
         boolean hovered = dragging || mouseY >= 0 && mouseY < 11 && mouseX >= leftPos+4 && mouseX < leftPos+132;
         graphics.blit(TEXTURE, leftPos+4, topPos, 16, 160, 128, 16);

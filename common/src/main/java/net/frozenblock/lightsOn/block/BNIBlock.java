@@ -16,18 +16,19 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.system.NonnullDefault;
 
 /**
@@ -39,9 +40,16 @@ public class BNIBlock extends BaseEntityBlock {
     public static final MapCodec<BNIBlock> CODEC = simpleCodec(BNIBlock::new);
     public static final BooleanProperty CONTAINS_FLOPPY = BooleanProperty.create("contains_floppy");
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     public BNIBlock(Properties properties) {
         super(properties);
+        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, false).setValue(CONTAINS_FLOPPY, false));
+    }
+
+    @Override
+    protected @NotNull FluidState getFluidState(BlockState state) {
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Override
@@ -57,15 +65,11 @@ public class BNIBlock extends BaseEntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING).add(CONTAINS_FLOPPY);
+        builder.add(FACING, CONTAINS_FLOPPY, WATERLOGGED);
     }
 
     @Override
-    protected VoxelShape getCollisionShape(BlockState state, BlockGetter blockGetter, BlockPos pos, CollisionContext ctx) {
-        return defineShape(state);
-    }
-
-    private VoxelShape defineShape(BlockState state) {
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         var a = VoxelShapes.javaBB(0,0,0, 16,4,16);
         var b = VoxelShapes.javaBB(2,4,10, 12,10,6);
         var c = VoxelShapes.javaBB(0,4,0, 16,12,10);
@@ -73,13 +77,10 @@ public class BNIBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return defineShape(state);
-    }
-
-    @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
+        return defaultBlockState()
+                .setValue(FACING, ctx.getHorizontalDirection().getOpposite())
+                .setValue(WATERLOGGED, ctx.getLevel().getFluidState(ctx.getClickedPos()).getType() == Fluids.WATER);
     }
 
     @Override
@@ -122,5 +123,17 @@ public class BNIBlock extends BaseEntityBlock {
     @SuppressWarnings("deprecation")
     protected RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    protected BlockState rotate(BlockState state, Rotation rotation) {
+        return super.rotate(state, rotation).setValue(FACING, rotation.rotate(state.getValue(FACING)));
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    protected BlockState mirror(BlockState state, Mirror mirror) {
+        return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 }

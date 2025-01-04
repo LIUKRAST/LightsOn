@@ -1,7 +1,7 @@
 package net.frozenblock.lib.blocknet.setting;
 
 import net.frozenblock.lib.blocknet.BlockNetSetting;
-import net.minecraft.client.gui.Font;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.nbt.CompoundTag;
@@ -10,6 +10,11 @@ import net.minecraft.network.chat.Component;
 import java.util.List;
 import java.util.function.Supplier;
 
+/**
+ * A float setting including a text box
+ * @since 1.0
+ * @author LiukRast
+ * */
 public class FloatBlockNetSetting extends BlockNetSetting<Float> {
 
     public FloatBlockNetSetting(String key, Supplier<Float> getter) {
@@ -27,8 +32,8 @@ public class FloatBlockNetSetting extends BlockNetSetting<Float> {
     }
 
     @Override
-    public void initGui(List<AbstractWidget> widgets, int leftPos, int topPos, Font font) {
-        var box = new EditBox(font, leftPos, topPos, 80, getHeight(), Component.empty());
+    public void initGui(List<AbstractWidget> widgets, int leftPos, int topPos) {
+        var box = new EditBox(Minecraft.getInstance().font, leftPos, topPos, 80, getHeight(), Component.empty());
         box.setMaxLength(128);
         box.setValue(String.valueOf(getValue()));
         box.setResponder(text -> {

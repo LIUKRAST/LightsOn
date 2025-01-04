@@ -26,6 +26,7 @@ public class BlockNetConfigScreen extends Screen {
 
     private final Set<BlockNetSetting<?>> settings;
     private final BlockPos pos;
+    private final boolean includeInterpolation;
     private Button save = null;
     private boolean valid = true;
     private int interpolation = 0;
@@ -35,6 +36,7 @@ public class BlockNetConfigScreen extends Screen {
         var builder = new BlockNetSettingBuilder();
         configurable.defineSettings(builder);
         this.settings = builder.getSettings();
+        this.includeInterpolation = configurable.includeInterpolation();
         this.pos = pos; //TODO: CLOSE SCREEN WHEN BLOCK IS BROKEN
     }
 
@@ -48,7 +50,7 @@ public class BlockNetConfigScreen extends Screen {
         ArrayList<AbstractWidget> list = new ArrayList<>();
         int y = 0;
         for(BlockNetSetting<?> setting : settings) {
-            setting.initGui(list, leftPos+4, topPos+13+y, this.font);
+            setting.initGui(list, leftPos+4, topPos+13+y);
             y+=12+setting.getHeight();
         }
         list.forEach(this::addRenderableWidget);
@@ -56,18 +58,20 @@ public class BlockNetConfigScreen extends Screen {
                 .bounds(rightPos-44, bottomPos-20, 40, 16)
                 .build();
         this.addRenderableWidget(save);
-        var interpolation = new EditBox(this.font,rightPos-44, bottomPos-38, 40, 16, Component.literal("Time"));
-        interpolation.setMaxLength(128);
-        interpolation.setResponder(s -> {
-            try {
-                this.interpolation = Integer.parseInt(s);
-                this.valid = true;
-            } catch (NumberFormatException e) {
-                this.valid = false;
-            }
-        });
-        interpolation.setValue(String.valueOf(this.interpolation));
-        this.addRenderableWidget(interpolation);
+        if(includeInterpolation) {
+            var interpolation = new EditBox(this.font, rightPos - 44, bottomPos - 38, 40, 16, Component.literal("Time"));
+            interpolation.setMaxLength(128);
+            interpolation.setResponder(s -> {
+                try {
+                    this.interpolation = Integer.parseInt(s);
+                    this.valid = true;
+                } catch (NumberFormatException e) {
+                    this.valid = false;
+                }
+            });
+            interpolation.setValue(String.valueOf(this.interpolation));
+            this.addRenderableWidget(interpolation);
+        }
     }
 
     @Override

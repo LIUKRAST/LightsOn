@@ -2,6 +2,7 @@ package net.frozenblock.lib.blocknet.setting;
 
 import net.frozenblock.lib.blocknet.BlockNetSetting;
 import net.frozenblock.lightsOn.screen.ColorMode;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -13,6 +14,11 @@ import net.minecraft.network.chat.Component;
 import java.util.List;
 import java.util.function.Supplier;
 
+/**
+ * A blocknet settings for color change. Exported as integer
+ * @since 1.0
+ * @author LiukRast
+ * */
 public class ColorBlockNetSetting extends BlockNetSetting<Integer> {
     public ColorBlockNetSetting(String key, Supplier<Integer> getter) {
         super(key, getter);
@@ -27,12 +33,12 @@ public class ColorBlockNetSetting extends BlockNetSetting<Integer> {
     }
 
     @Override
-    public void initGui(List<AbstractWidget> widgets, int leftPos, int topPos, Font font) {
+    public void initGui(List<AbstractWidget> widgets, int leftPos, int topPos) {
         CycleButton<ColorMode> colorButton = CycleButton.builder(ColorMode::getTitle)
                 .withValues(ColorMode.values()).withInitialValue(colorMode).displayOnlyValue()
                 .create(leftPos, topPos, 30, 16, Component.empty(), this::switchColorMode);
         widgets.add(colorButton);
-
+        var font = Minecraft.getInstance().font;
         channelA = new EditBox(font, leftPos + 32, topPos, 30, getHeight(), Component.empty());
         channelA.setMaxLength(3);
         channelA.setResponder(s -> setChanged());
@@ -133,6 +139,7 @@ public class ColorBlockNetSetting extends BlockNetSetting<Integer> {
 
     @Override
     public void render(GuiGraphics graphics, int leftPos, int topPos, int mouseX, int mouseY) {
+        super.render(graphics, leftPos, topPos, mouseX, mouseY);
         graphics.fill(leftPos + 132, topPos, leftPos + 132 + 16, topPos + 16, (255 << 24) | (getValue() & 0xFFFFFF));
         graphics.renderOutline(leftPos + 132, topPos, 16, 16, -16777216);
     }

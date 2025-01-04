@@ -16,6 +16,8 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
@@ -30,9 +32,10 @@ public class LightBeamBlock extends BaseEntityBlock {
             VoxelShapes.javaBB(0,0,7,16,16,3),
             VoxelShapes.javaBB(0,3,-3,16,10,10)
     );
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public LightBeamBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(POWERED, false));
+        this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(POWERED, false).setValue(WATERLOGGED, false));
     }
 
     @Override
@@ -47,8 +50,13 @@ public class LightBeamBlock extends BaseEntityBlock {
     }
 
     @Override
+    protected @NotNull FluidState getFluidState(BlockState state) {
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+    }
+
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING).add(POWERED);
+        builder.add(FACING, POWERED, WATERLOGGED);
     }
 
     @Override
