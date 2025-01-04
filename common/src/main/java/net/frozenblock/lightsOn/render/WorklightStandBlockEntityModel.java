@@ -43,7 +43,7 @@ public class WorklightStandBlockEntityModel extends BlockEntityModel<WorklightSt
     @Override
     public void setupAnim(WorklightStandBlockEntity entity, float ageInTicks) {
         float yaw = (float) Math.toRadians(entity.getYaw());
-        this.middle.y = -1-(entity.getHeight()*14.5F);
+        this.middle.y = -1-(entity.getHeight()*14F);
         this.middle.yRot = yaw;
         this.legs.yRot = (float) (yaw + Math.PI/4);
         this.right_head.xRot = (float) Math.toRadians(entity.getRightPitch());
