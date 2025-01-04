@@ -10,6 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
@@ -24,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 import org.lwjgl.system.NonnullDefault;
 
 @NonnullDefault
-public class WorklightStandBlock extends BaseEntityBlock {
+public class WorklightStandBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     private static final VoxelShape SHAPE = Block.box(4.0, 0.0, 4.0, 12.0, 16.0, 12.0);
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public WorklightStandBlock(Properties properties) {
@@ -68,5 +70,10 @@ public class WorklightStandBlock extends BaseEntityBlock {
     @SuppressWarnings("deprecation")
     protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         return level.getBlockState(pos.below()).isSolid();
+    }
+
+    @Override
+    protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
+        return false;
     }
 }

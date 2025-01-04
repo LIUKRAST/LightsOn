@@ -8,6 +8,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -15,12 +16,13 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.lwjgl.system.NonnullDefault;
 
-public class BNLBlock extends BaseEntityBlock {
+@NonnullDefault
+public class BNLBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     public BNLBlock(Properties properties) {
@@ -29,22 +31,22 @@ public class BNLBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected @NotNull FluidState getFluidState(BlockState state) {
+    protected FluidState getFluidState(BlockState state) {
         return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Override
-    protected @NotNull MapCodec<? extends BaseEntityBlock> codec() {
+    protected MapCodec<? extends BaseEntityBlock> codec() {
         return simpleCodec(BNLBlock::new);
     }
 
     @Override
-    public @Nullable BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new BNLBlockEntity(pos, state);
     }
 
     @Override
-    protected @NotNull VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
+    protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return defineShape();
     }
 
@@ -54,7 +56,7 @@ public class BNLBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return defineShape();
     }
 
@@ -64,7 +66,12 @@ public class BNLBlock extends BaseEntityBlock {
 
     @Override
     @SuppressWarnings("deprecation")
-    protected @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
+    protected RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
+    }
+
+    @Override
+    protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
+        return false;
     }
 }

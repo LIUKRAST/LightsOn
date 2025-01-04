@@ -18,12 +18,13 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.lwjgl.system.NonnullDefault;
 
-public class LightBeamBlock extends BaseEntityBlock {
+@NonnullDefault
+public class LightBeamBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final DirectionProperty FACING = DirectionalBlock.FACING;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final SmartVoxelShape SHAPE = VoxelShapes.union(
@@ -39,18 +40,17 @@ public class LightBeamBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected @NotNull MapCodec<? extends BaseEntityBlock> codec() {
+    protected MapCodec<? extends BaseEntityBlock> codec() {
         return simpleCodec(LightBeamBlock::new);
     }
 
-    @Nullable
     @Override
-    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new LightBeamBlockEntity(pos, state);
     }
 
     @Override
-    protected @NotNull FluidState getFluidState(BlockState state) {
+    protected FluidState getFluidState(BlockState state) {
         return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
@@ -61,7 +61,7 @@ public class LightBeamBlock extends BaseEntityBlock {
 
     @Override
     @SuppressWarnings("deprecated")
-    public @NotNull VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull BlockGetter world, @NotNull BlockPos pos, @NotNull CollisionContext ctx) {
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext ctx) {
         return defineShape(state);
     }
 
@@ -74,7 +74,7 @@ public class LightBeamBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void neighborChanged(@NotNull BlockState state, Level world, @NotNull BlockPos pos, @NotNull Block block, @NotNull BlockPos sourcePos, boolean movedByPiston) {
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos sourcePos, boolean movedByPiston) {
         if (!world.isClientSide) {
             boolean flag = state.getValue(POWERED);
             if (flag != world.hasNeighborSignal(pos)) {
@@ -84,26 +84,31 @@ public class LightBeamBlock extends BaseEntityBlock {
     }
 
     @Override
-    public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter world, @NotNull BlockPos pos, @NotNull CollisionContext ctx) {
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext ctx) {
         return defineShape(state);
     }
 
     @Override
     @SuppressWarnings("deprecation")
-    public @NotNull BlockState mirror(BlockState state, Mirror mirror) {
+    public BlockState mirror(BlockState state, Mirror mirror) {
         return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
 
     @Override
     @SuppressWarnings("deprecation")
-    public @NotNull BlockState rotate(BlockState state, Rotation rot) {
+    public BlockState rotate(BlockState state, Rotation rot) {
         return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
     }
 
     @Override
     @SuppressWarnings("deprecation")
-    public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
+    public RenderShape getRenderShape(BlockState state) {
         return RenderShape.ENTITYBLOCK_ANIMATED;
+    }
+
+    @Override
+    protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
+        return false;
     }
 }

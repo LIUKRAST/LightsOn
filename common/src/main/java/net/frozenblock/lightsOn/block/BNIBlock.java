@@ -25,6 +25,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -36,7 +37,7 @@ import org.lwjgl.system.NonnullDefault;
  * @since 1.0
  * */
 @NonnullDefault
-public class BNIBlock extends BaseEntityBlock {
+public class BNIBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final MapCodec<BNIBlock> CODEC = simpleCodec(BNIBlock::new);
     public static final BooleanProperty CONTAINS_FLOPPY = BooleanProperty.create("contains_floppy");
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
@@ -135,5 +136,10 @@ public class BNIBlock extends BaseEntityBlock {
     @Override
     protected BlockState mirror(BlockState state, Mirror mirror) {
         return state.rotate(mirror.getRotation(state.getValue(FACING)));
+    }
+
+    @Override
+    protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
+        return false;
     }
 }
