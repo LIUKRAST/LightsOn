@@ -34,15 +34,16 @@ public class WorklightStandBlockEntityModel extends BlockEntityModel<WorklightSt
                 .texOffs(0, 10).addBox(-6.5F, -3.0F, 0.0F, 13.0F, 3.0F, 0.0F), PartPose.offset(0.0F, 1.0F, 0.0F));
         middle.addOrReplaceChild("right_head", CubeListBuilder.create().texOffs(0, 0).addBox(1.0F, -6.0F, -2.0F, 6.0F, 6.0F, 4.0F), PartPose.offset(0.0F, -3.0F, 0.0F));
         middle.addOrReplaceChild("left_head", CubeListBuilder.create().texOffs(0, 0).addBox(-7.0F, -6.0F, -2.0F, 6.0F, 6.0F, 4.0F), PartPose.offset(0.0F, -3.0F, 0.0F));
-        partDefinition.addOrReplaceChild("legs", CubeListBuilder.create().texOffs(16, 0).addBox(0.0F, -25.0F, -8.0F, 0.0F, 16.0F, 16.0F)
+        PartDefinition legs = partDefinition.addOrReplaceChild("legs", CubeListBuilder.create().texOffs(16, 0).addBox(0.0F, -25.0F, -8.0F, 0.0F, 16.0F, 16.0F)
                 .texOffs(16, 16).addBox(-8.0F, -25.0F, 0.0F, 16.0F, 16.0F, 0.0F), PartPose.offset(0.0F, 33.0F, 0.0F));
+        legs.addOrReplaceChild("stick", CubeListBuilder.create().texOffs(0, 40).addBox(-1.5F, -27.0F, -1.5F, 3.0F, 16.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, -0.7854F, 0.0F));
         return LayerDefinition.create(meshDefinition, 64, 64);
     }
 
     @Override
     public void setupAnim(WorklightStandBlockEntity entity, float ageInTicks) {
         float yaw = (float) Math.toRadians(entity.getYaw());
-        this.middle.y = -1-(entity.getHeight()*16);
+        this.middle.y = -1-(entity.getHeight()*14.5F);
         this.middle.yRot = yaw;
         this.legs.yRot = (float) (yaw + Math.PI/4);
         this.right_head.xRot = (float) Math.toRadians(entity.getRightPitch());
