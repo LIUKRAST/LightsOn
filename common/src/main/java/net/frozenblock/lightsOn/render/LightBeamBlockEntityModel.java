@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.frozenblock.lib.blockEntity.BlockEntityModel;
 import net.frozenblock.lightsOn.block.LightBeamBlock;
 import net.frozenblock.lightsOn.blockentity.LightBeamBlockEntity;
-import net.frozenblock.lightsOn.screen.ColorInput;
+import net.frozenblock.lightsOn.screen.ColorMode;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
@@ -77,7 +77,7 @@ public class LightBeamBlockEntityModel extends BlockEntityModel<LightBeamBlockEn
         body.translateAndRotate(poseStack);
         head.translateAndRotate(poseStack);
         int color = entity.calculateColor(ageInTicks[0]);
-        int[] rgb = ColorInput.int2rgb(color);
+        int[] rgb = ColorMode.int2rgb(color);
         float a = (rgb[0]/255.0f + rgb[1]/255.0f + rgb[2]/255.0f)/3.0f;
         poseStack.translate(0, 0, -0.8125f);
         LightBeamRenderer.renderLightBeam(bufferSource.getBuffer(BEAM), poseStack, a, 3/16f, entity.calculateSize(ageInTicks[3]), entity.calculateLength(ageInTicks[4]), color);

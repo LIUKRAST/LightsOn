@@ -37,5 +37,6 @@ public record BlockNetConfigUpdatePacket(BlockPos pos, CompoundTag data) impleme
         ServerLevel world = (ServerLevel) player.level();
         BlockEntity be = world.getBlockEntity(packet.pos);
         if(be instanceof BlockNetConfigurable configurable) configurable.updateData(packet.data);
+        else LightsOnConstants.LOGGER.error("Received {} from {}, but BlockEntity at {} is not an instance of {}", BlockNetConfigUpdatePacket.class, ctx.getScoreboardName(), packet.pos, BlockNetConfigurable.class);
     }
 }

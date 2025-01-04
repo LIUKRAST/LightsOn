@@ -8,6 +8,7 @@ import net.frozenblock.lightsOn.registry.RegisterBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
@@ -73,6 +74,7 @@ public class WorklightStandBlockEntity extends ClientSyncedBlockEntity implement
         this.leftPitch = tag.getFloat("left_pitch");
         this.height = tag.getFloat("height");
         setChanged();
+        if(level != null) this.level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
     }
 
     @Override

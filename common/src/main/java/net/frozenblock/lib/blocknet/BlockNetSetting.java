@@ -35,9 +35,21 @@ public abstract class BlockNetSetting<T> {
         return 16;
     }
 
-    public void mouseClicked(int mouseX, int mouseY) {}
+    public boolean mouseClicked(double mouseX, double mouseY, int leftPos, int topPos) {
+        return false;
+    }
 
-    public void render(GuiGraphics graphics, int leftPos, int topPos) {}
+    public boolean mouseReleased(double mouseX, double mouseY, int leftPos, int topPos) {
+        return false;
+    }
+
+    public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY, int leftPos, int topPos) {
+        return false;
+    }
+
+    public void mouseMoved(double mouseX, double mouseY, int leftPos, int topPos) {}
+
+    public void render(GuiGraphics graphics, int leftPos, int topPos, int mouseX, int mouseY) {}
 
     public boolean isValid() {
         return this.isValid;

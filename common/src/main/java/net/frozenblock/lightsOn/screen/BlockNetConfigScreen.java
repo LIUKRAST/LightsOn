@@ -10,6 +10,7 @@ import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -26,6 +27,8 @@ public class BlockNetConfigScreen extends Screen {
     private final Set<BlockNetSetting<?>> settings;
     private final BlockPos pos;
     private Button save = null;
+    private boolean valid = true;
+    private int interpolation = 0;
 
     public BlockNetConfigScreen(BlockNetConfigurable configurable, BlockPos pos) {
         super(GameNarrator.NO_TITLE);
@@ -53,6 +56,18 @@ public class BlockNetConfigScreen extends Screen {
                 .bounds(rightPos-44, bottomPos-20, 40, 16)
                 .build();
         this.addRenderableWidget(save);
+        var interpolation = new EditBox(this.font,rightPos-44, bottomPos-38, 40, 16, Component.literal("Time"));
+        interpolation.setMaxLength(128);
+        interpolation.setResponder(s -> {
+            try {
+                this.interpolation = Integer.parseInt(s);
+                this.valid = true;
+            } catch (NumberFormatException e) {
+                this.valid = false;
+            }
+        });
+        interpolation.setValue(String.valueOf(this.interpolation));
+        this.addRenderableWidget(interpolation);
     }
 
     @Override
@@ -64,15 +79,73 @@ public class BlockNetConfigScreen extends Screen {
         int y = 0;
         for(BlockNetSetting<?> setting : settings) {
             guiGraphics.drawString(this.font, setting.getTitle(), leftPos + 4, topPos + y + 4, -1);
-            setting.render(guiGraphics, leftPos, topPos+y+13);
+            setting.render(guiGraphics, leftPos, topPos+y+13, mouseX, mouseY-y-13-topPos);
             y+=12+setting.getHeight();
         }
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        int y = 0;
+        int leftPos = (this.width-224)>>1;
+        int topPos = (this.height-144)>>1;
+        for(BlockNetSetting<?> setting : settings) {
+            var fMouseY = mouseY-y-13-topPos;
+            boolean hovered = fMouseY >= 0 && fMouseY < 11 && mouseX >= leftPos+4 && mouseX < leftPos+132;
+            if(hovered && setting.mouseClicked(mouseX, fMouseY, leftPos, topPos)) return true;
+            y+=12+setting.getHeight();
+        }
+        return super.mouseClicked(mouseX, mouseY, button);
+    }
+
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
+        int y = 0;
+        int leftPos = (this.width-224)>>1;
+        int topPos = (this.height-144)>>1;
+        for(BlockNetSetting<?> setting : settings) {
+            var fMouseY = mouseY-y-13-topPos;
+            boolean hovered = fMouseY >= 0 && fMouseY < 11 && mouseX >= leftPos+4 && mouseX < leftPos+132;
+            if(hovered && setting.mouseScrolled(mouseX, fMouseY, scrollX, scrollY, leftPos, topPos+13+y)) return true;
+            y+=12+setting.getHeight();
+        }
+        return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
+    }
+
+    @Override
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        int y = 0;
+        int leftPos = (this.width-224)>>1;
+        int topPos = (this.height-144)>>1;
+        for(BlockNetSetting<?> setting : settings) {
+            var fMouseY = mouseY-y-13-topPos;
+            if(setting.mouseReleased(mouseX, fMouseY, leftPos, topPos)) return true;
+            y+=12+setting.getHeight();
+        }
+        return super.mouseReleased(mouseX, mouseY, button);
+    }
+
+    @Override
+    public void mouseMoved(double mouseX, double mouseY) {
+        int y = 0;
+        int leftPos = (this.width-224)>>1;
+        int topPos = (this.height-144)>>1;
+        for(BlockNetSetting<?> setting : settings) {
+            var fMouseY = mouseY-y-13-topPos;
+            setting.mouseMoved(mouseX, fMouseY, leftPos, topPos);
+            y+=12+setting.getHeight();
+        }
+        super.mouseMoved(mouseX, mouseY);
     }
 
     @Override
     public void tick() {
         super.tick();
         if(save == null) return;
+        if(!this.valid) {
+            save.active = false;
+            return;
+        }
         for(BlockNetSetting<?> setting : settings) {
             if(!setting.isValid()) {
                 save.active = false;
@@ -94,6 +167,7 @@ public class BlockNetConfigScreen extends Screen {
 
     private CompoundTag packData() {
         final CompoundTag tag = new CompoundTag();
+        tag.putInt("duration", interpolation);
         for(BlockNetSetting<?> setting : settings) {
             setting.save(tag);
         }

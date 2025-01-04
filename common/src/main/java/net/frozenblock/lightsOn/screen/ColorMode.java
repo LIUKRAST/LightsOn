@@ -2,16 +2,27 @@ package net.frozenblock.lightsOn.screen;
 
 import net.minecraft.network.chat.Component;
 
-import java.util.function.Function;
+public enum ColorMode {
+    RGB(Component.literal("RGB")),
+    HSL(Component.literal("HSL")),
+    HEX(Component.literal("HEX")),
+    INT(Component.literal("INT"));
 
-public enum ColorInput {
-    RGB(Component.literal("RGB"),a -> a),
-    HSL(Component.literal("HSL"),a -> {
-        int[] hsl = int2rgb(a);
-        int h = hsl[0];
-        int s = hsl[1];
-        int l = hsl[2];
+    private final Component title;
 
+    ColorMode(Component title) {
+        this.title = title;
+    }
+
+    public Component getTitle() {
+        return title;
+    }
+
+    public static int rgb2int(int r, int g, int b) {
+        return (r << 16) | (g << 8) | b;
+    }
+
+    public static int hsl2int(int h, int s, int l) {
         double hn = h / 360.0;
         double sn = s / 100.0;
         double ln = l / 100.0;
@@ -47,23 +58,6 @@ public enum ColorInput {
         int blue = (int) ((b + m) * 255);
 
         return rgb2int(red, green, blue);
-    });
-
-
-    private final Function<Integer, Integer> func;
-    private final Component title;
-
-    ColorInput(Component title,Function<Integer, Integer> func) {
-        this.func = func;
-        this.title = title;
-    }
-
-    public int parse(int r, int g, int b) {
-        return func.apply(rgb2int(r,g,b));
-    }
-
-    public static int rgb2int(int r, int g, int b) {
-        return (r << 16) | (g << 8) | b;
     }
 
     public static int[] int2rgb(int index) {
@@ -71,10 +65,6 @@ public enum ColorInput {
         int g = ((index>>8)&0xFF);
         int b = ((index)&0xFF);
         return new int[]{r, g, b};
-    }
-
-    public Component getName() {
-        return title;
     }
 
     public static int[] int2hsl(int index) {
@@ -117,6 +107,4 @@ public enum ColorInput {
         int luminosityInt = (int) Math.round(luminosity * 100);
         return new int[]{hueInt,saturationInt,luminosityInt};
     }
-
-
 }

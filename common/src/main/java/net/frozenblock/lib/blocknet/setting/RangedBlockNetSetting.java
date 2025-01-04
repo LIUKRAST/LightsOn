@@ -15,6 +15,8 @@ public class RangedBlockNetSetting extends BlockNetSetting<Float> {
 
     private final float min, max;
 
+    boolean dragging = false;
+
     public RangedBlockNetSetting(String key, float max, Supplier<Float> getter) {
         this(key, 0, max, getter);
     }
@@ -38,12 +40,38 @@ public class RangedBlockNetSetting extends BlockNetSetting<Float> {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int leftPos, int topPos) {
+    public void render(GuiGraphics graphics, int leftPos, int topPos, int mouseX, int mouseY) {
         // 0 -> 120
         int progress = (int)((getValue()-min)/(max-min)*120);
+        boolean hovered = dragging || mouseY >= 0 && mouseY < 11 && mouseX >= leftPos+4 && mouseX < leftPos+132;
         graphics.blit(TEXTURE, leftPos+4, topPos, 16, 160, 128, 16);
-        graphics.blit(TEXTURE, leftPos+4 + progress, topPos, 0, 160, 8, 11);
+        graphics.blit(TEXTURE, leftPos+4 + progress, topPos, hovered ? 8 : 0, 160, 8, 11);
         final DecimalFormat df = new DecimalFormat("0.######");
         graphics.drawString(Minecraft.getInstance().font, df.format(getValue()), leftPos+133, topPos+2, -1);
+    }
+
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY, int leftPos, int topPos) {
+        setValue((float) Math.clamp(getValue() + scrollY, min, max));
+        return true;
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int leftPos, int topPos) {
+        this.dragging = true;
+        return true;
+    }
+
+    @Override
+    public boolean mouseReleased(double mouseX, double mouseY, int leftPos, int topPos) {
+        this.dragging = false;
+        return false;
+    }
+
+    @Override
+    public void mouseMoved(double mouseX, double mouseY, int leftPos, int topPos) {
+        if(!this.dragging) return;
+        double fMouseX = (mouseX - leftPos - 4)/120;
+        setValue((float) Math.clamp(fMouseX*(max - min)+min, min, max));
     }
 }
