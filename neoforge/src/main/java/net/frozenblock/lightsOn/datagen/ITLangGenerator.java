@@ -32,7 +32,7 @@ public class ITLangGenerator extends LanguageProvider {
         add("item.blocknet_wrench.unbindable", "§c§lQuesto blocco non è collegabile");
         add("item.blocknet_wrench.binding", "§e§lCollegando le posizioni %s");
         add("item.blocknet_wrench.failed", "§c§lConnessione fallita");
-        add("item.blocknet_wrench.success", "§pole§lConnessione stabilita");
+        add("item.blocknet_wrench.success", "§a§lConnessione stabilita");
         add("item.blocknet_wrench.already_bound", "§e§lBlocchi già connessi");
 
         //BLOCKNET CONFIG

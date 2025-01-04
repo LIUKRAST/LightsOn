@@ -32,7 +32,7 @@ public class ENLangGenerator extends LanguageProvider {
         add("item.blocknet_wrench.unbindable", "§c§lThis block is not linkable");
         add("item.blocknet_wrench.binding", "§e§lBinding BlockPos %s");
         add("item.blocknet_wrench.failed", "§c§lConnection failed");
-        add("item.blocknet_wrench.success", "§pole§lConnection established");
+        add("item.blocknet_wrench.success", "§a§lConnection established");
         add("item.blocknet_wrench.already_bound", "§e§lBlocks already bound");
 
         //BLOCKNET CONFIG
