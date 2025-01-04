@@ -4,15 +4,8 @@ import com.mojang.serialization.MapCodec;
 import net.frozenblock.lib.voxel.SmartVoxelShape;
 import net.frozenblock.lib.voxel.VoxelShapes;
 import net.frozenblock.lightsOn.blockentity.LightBeamBlockEntity;
-import net.frozenblock.lightsOn.item.BlockNetWrench;
-import net.frozenblock.lightsOn.registry.RegisterItems;
-import net.frozenblock.lightsOn.screen.LightBeamSetupScreen;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -23,7 +16,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
@@ -74,7 +66,7 @@ public class LightBeamBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void neighborChanged(@NotNull BlockState state, Level world, @NotNull BlockPos pos, @NotNull Block block, @NotNull BlockPos sourcePos, boolean movedBypiston) {
+    public void neighborChanged(@NotNull BlockState state, Level world, @NotNull BlockPos pos, @NotNull Block block, @NotNull BlockPos sourcePos, boolean movedByPiston) {
         if (!world.isClientSide) {
             boolean flag = state.getValue(POWERED);
             if (flag != world.hasNeighborSignal(pos)) {
@@ -105,23 +97,5 @@ public class LightBeamBlock extends BaseEntityBlock {
     @SuppressWarnings("deprecation")
     public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
         return RenderShape.ENTITYBLOCK_ANIMATED;
-    }
-
-    @Override
-    protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, Level world, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hitResult) {
-        BlockEntity blockEntity = world.getBlockEntity(pos);
-        final var stack = player.getMainHandItem();
-        if(stack.getItem() instanceof BlockNetWrench) {
-            return InteractionResult.PASS;
-        } else if(blockEntity instanceof LightBeamBlockEntity lightBeam &&
-                (player.getItemInHand(InteractionHand.MAIN_HAND).is(RegisterItems.BLOCKNET_WRENCH) || player.getItemInHand(InteractionHand.OFF_HAND).is(RegisterItems.BLOCKNET_WRENCH))) {
-            if(world.isClientSide()) {
-                final Runnable runnable = () -> Minecraft.getInstance().setScreen(new LightBeamSetupScreen(lightBeam));
-                runnable.run();
-            }
-            return InteractionResult.sidedSuccess(world.isClientSide());
-        } else {
-            return InteractionResult.PASS;
-        }
     }
 }

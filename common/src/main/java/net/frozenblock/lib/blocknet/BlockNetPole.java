@@ -1,4 +1,4 @@
-package net.frozenblock.lightsOn.blocknet;
+package net.frozenblock.lib.blocknet;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -6,7 +6,6 @@ import net.minecraft.nbt.IntArrayTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 
-import java.util.List;
 import java.util.Set;
 
 /**

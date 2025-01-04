@@ -1,7 +1,7 @@
 package net.frozenblock.lightsOn.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.frozenblock.lightsOn.blocknet.BlockNetPole;
+import net.frozenblock.lib.blocknet.BlockNetPole;
 import net.frozenblock.lightsOn.render.WrenchLinkRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
  * This mixin allows block entities implementing
- * {@link net.frozenblock.lightsOn.blocknet.BlockNetPole} to render a wrench connection by default.
+ * {@link BlockNetPole} to render a wrench connection by default.
  * @since 1.0
  * @author LiukRast
  * */

@@ -1,6 +1,6 @@
 package net.frozenblock.lightsOn.item;
 
-import net.frozenblock.lightsOn.blocknet.BlockNetPole;
+import net.frozenblock.lib.blocknet.BlockNetPole;
 import net.frozenblock.lightsOn.registry.RegisterDataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;

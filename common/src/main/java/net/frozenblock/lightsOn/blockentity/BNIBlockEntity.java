@@ -2,7 +2,7 @@ package net.frozenblock.lightsOn.blockentity;
 
 import net.frozenblock.lib.blockEntity.ClientSyncedBlockEntity;
 import net.frozenblock.lightsOn.block.BNIBlock;
-import net.frozenblock.lightsOn.blocknet.BlockNetPole;
+import net.frozenblock.lib.blocknet.BlockNetPole;
 import net.frozenblock.lightsOn.packet.BNIUpdatePacket;
 import net.frozenblock.lightsOn.platform.Services;
 import net.frozenblock.lightsOn.registry.RegisterBlockEntities;

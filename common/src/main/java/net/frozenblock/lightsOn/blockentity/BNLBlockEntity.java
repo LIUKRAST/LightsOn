@@ -1,7 +1,7 @@
 package net.frozenblock.lightsOn.blockentity;
 
 import net.frozenblock.lib.blockEntity.ClientSyncedBlockEntity;
-import net.frozenblock.lightsOn.blocknet.BlockNetPole;
+import net.frozenblock.lib.blocknet.BlockNetPole;
 import net.frozenblock.lightsOn.registry.RegisterBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;

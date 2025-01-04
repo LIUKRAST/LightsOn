@@ -3,7 +3,7 @@ package net.frozenblock.lightsOn.render;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.frozenblock.lightsOn.LightsOnConstants;
-import net.frozenblock.lightsOn.blocknet.BlockNetPole;
+import net.frozenblock.lib.blocknet.BlockNetPole;
 import net.frozenblock.lightsOn.item.BlockNetWrenchUtils;
 import net.frozenblock.lightsOn.item.WrenchConnection;
 import net.frozenblock.lightsOn.registry.RegisterDataComponents;

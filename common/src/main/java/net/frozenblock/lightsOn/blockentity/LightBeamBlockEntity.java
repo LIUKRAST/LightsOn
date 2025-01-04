@@ -1,8 +1,13 @@
 package net.frozenblock.lightsOn.blockentity;
 
 import net.frozenblock.lib.blockEntity.ClientSyncedBlockEntity;
+import net.frozenblock.lib.blocknet.BlockNetConfigurable;
+import net.frozenblock.lib.blocknet.BlockNetSettingBuilder;
+import net.frozenblock.lib.blocknet.setting.ColorBlockNetSetting;
+import net.frozenblock.lib.blocknet.setting.FloatBlockNetSetting;
+import net.frozenblock.lib.blocknet.setting.RangedBlockNetSetting;
 import net.frozenblock.lightsOn.render.LightBeamBlockEntityModel;
-import net.frozenblock.lightsOn.blocknet.BlockNetPole;
+import net.frozenblock.lib.blocknet.BlockNetPole;
 import net.frozenblock.lightsOn.registry.RegisterBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -16,35 +21,27 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.HashSet;
 import java.util.Set;
 
-public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements BlockNetPole {
+public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements BlockNetPole, BlockNetConfigurable {
 
     private final Set<BlockPos> poles = new HashSet<>();
 
-    private int color = 16777215; //CHANNEL 0
+    private int color = 16777215;
     private int oldColor = color;
-
-    private float pitch = 0.0f; // CHANNEL 1
+    private float pitch = 0.0f;
     private float oldPitch = pitch;
-    private float yaw = 0.0f; // CHANNEL 2
+    private float yaw = 0.0f;
     private float oldYaw = yaw;
-
-    private float size = 1; // CHANNEL 3
+    private float size = 1;
     private float oldSize = size;
-
-    private float length = 3; // CHANNEL 4
+    private float length = 3;
     private float oldLength = length;
-
     private int duration = 40;
 
-    private long[] animationStart = new long[5]; //Supports 5 channels
+    private long animationStart = 0;
 
 
     public LightBeamBlockEntity(BlockPos pos, BlockState blockState) {
         super(RegisterBlockEntities.LIGHT_BEAM, pos, blockState);
-        for(int i = 0; i < 5; i++) {
-            animationStart[i] = 0;
-        }
-
     }
 
     @Override
@@ -56,7 +53,7 @@ public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements Blo
         nbt.putFloat("Yaw", yaw);
         nbt.putFloat("OldYaw", oldYaw);
         nbt.putFloat("Duration", duration);
-        nbt.putLongArray("AnimationStart", animationStart);
+        nbt.putLong("AnimationStart", animationStart);
         nbt.putFloat("Length", length);
         nbt.putFloat("OldLength", oldLength);
         nbt.putFloat("Size", size);
@@ -73,7 +70,7 @@ public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements Blo
         this.yaw = nbt.getFloat("Yaw");
         this.oldYaw = nbt.getFloat("OldYaw");
         this.duration = nbt.getInt("Duration");
-        this.animationStart = nbt.getLongArray("AnimationStart");
+        this.animationStart = nbt.getLong("AnimationStart");
         this.size = nbt.getFloat("Size");
         this.oldSize = nbt.getFloat("OldSize");
         this.length = nbt.getFloat("Length");
@@ -116,30 +113,6 @@ public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements Blo
         return duration;
     }
 
-    public void update(CompoundTag data) {
-        this.oldColor = color;
-        this.oldPitch = pitch;
-        this.oldYaw = yaw;
-        this.oldSize = size;
-        this.oldLength = length;
-
-        this.color = data.getInt("Color");
-        this.pitch = data.getFloat("Pitch");
-        this.yaw = data.getFloat("Yaw");
-        this.duration = data.getInt("Duration");
-        this.size = data.getFloat("Size");
-        this.length = data.getFloat("Length");
-
-        if(level != null) {
-            for (int i = 0; i < 5; i++) {
-                this.animationStart[i] = level.getGameTime();
-            }
-        }
-
-        setChanged();
-        if(level != null) this.level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
-    }
-
     public float[] getProgress(float partial) {
         int i = this.duration;
         if(i <= 0) {
@@ -148,7 +121,7 @@ public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements Blo
         float[] array = new float[5];
         for(int k = 0; k < 5; k++) {
             @SuppressWarnings("all")
-            float f = level.getGameTime() - this.animationStart[k];
+            float f = level.getGameTime() - this.animationStart;
             float g = f + partial;
             array[k] = LightBeamBlockEntityModel.lim(getProgress(g, i), 0.0f, 1.0f);
         }
@@ -183,6 +156,7 @@ public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements Blo
     @Override
     public void addPole(BlockPos input) {
         this.poles.add(input);
+        setChanged();
     }
 
     @Override
@@ -193,5 +167,59 @@ public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements Blo
     @Override
     public void removePole(BlockPos pos) {
         this.poles.remove(pos);
+        setChanged();
+    }
+
+    public int getColor() {
+        return this.color;
+    }
+
+    public float getPitch() {
+        return this.pitch;
+    }
+
+    public float getYaw() {
+        return this.yaw;
+    }
+
+    public float getSize() {
+        return this.size;
+    }
+
+    public float getLength() {
+        return this.length;
+    }
+
+    @Override
+    public void defineSettings(BlockNetSettingBuilder builder) {
+        builder.add(new ColorBlockNetSetting("color", this::getColor));
+        builder.add(new RangedBlockNetSetting("pitch", 90, this::getPitch));
+        builder.add(new FloatBlockNetSetting("yaw", this::getYaw));
+        builder.add(new RangedBlockNetSetting("beam_size", 100, this::getSize));
+        builder.add(new RangedBlockNetSetting("beam_length", 100, this::getLength));
+    }
+
+    @Override
+    public void updateData(CompoundTag tag) {
+        this.oldColor = color;
+        this.oldPitch = pitch;
+        this.oldYaw = yaw;
+        this.oldSize = size;
+        this.oldLength = length;
+
+        this.duration = tag.getInt("duration");
+
+        this.color = tag.getInt("color");
+        this.pitch = tag.getFloat("pitch");
+        this.yaw = tag.getFloat("yaw");
+        this.size = tag.getFloat("beam_size");
+        this.length = tag.getFloat("beam_length");
+
+        if(level != null) {
+            this.animationStart = level.getGameTime();
+        }
+
+        setChanged();
+        if(level != null) this.level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
     }
 }

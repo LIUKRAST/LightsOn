@@ -1,7 +1,7 @@
 package net.frozenblock.lightsOn.screen;
 
 import net.frozenblock.lightsOn.blockentity.LightBeamBlockEntity;
-import net.frozenblock.lightsOn.packet.LightBeamUpdatePacket;
+import net.frozenblock.lightsOn.packet.BlockNetConfigUpdatePacket;
 import net.frozenblock.lightsOn.platform.Services;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.Minecraft;
@@ -66,7 +66,7 @@ public class LightBeamSetupScreen extends Screen {
     }
 
     private void sendToServer() {
-        Services.PACKET_HELPER.send2S(new LightBeamUpdatePacket(entity.getBlockPos(), packData()));
+        Services.PACKET_HELPER.send2S(new BlockNetConfigUpdatePacket(entity.getBlockPos(), packData()));
     }
 
     private CompoundTag packData() {
