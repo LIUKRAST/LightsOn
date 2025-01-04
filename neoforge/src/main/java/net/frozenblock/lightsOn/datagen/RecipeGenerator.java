@@ -57,10 +57,11 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
 
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, RegisterItems.BLOCKNET_WRENCH)
                 .pattern(" X ")
-                .pattern(" XX")
+                .pattern(" ZX")
                 .pattern("Y  ")
                 .define('X', Items.IRON_INGOT)
                 .define('Y', Items.STICK)
+                .define('Z', RegisterBlocks.BLOCKNET_LINK)
                 .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
                 .unlockedBy("has_stick", has(Items.STICK))
                 .save(recipeOutput);

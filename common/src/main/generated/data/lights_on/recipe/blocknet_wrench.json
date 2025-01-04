@@ -7,11 +7,14 @@
     },
     "Y": {
       "item": "minecraft:stick"
+    },
+    "Z": {
+      "item": "lights_on:blocknet_link"
     }
   },
   "pattern": [
     " X ",
-    " XX",
+    " ZX",
     "Y  "
   ],
   "result": {
