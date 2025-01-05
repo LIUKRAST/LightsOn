@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "X": {
+      "item": "minecraft:iron_ingot"
+    },
+    "Y": {
+      "item": "minecraft:end_rod"
+    },
+    "Z": {
+      "item": "minecraft:light_blue_dye"
+    }
+  },
+  "pattern": [
+    " X ",
+    "YZY",
+    " X "
+  ],
+  "result": {
+    "count": 2,
+    "id": "lights_on:light_blue_neon"
+  }
+}

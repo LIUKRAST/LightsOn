@@ -26,6 +26,18 @@ public class BlockLootGenerator extends BlockLootSubProvider {
         dropSelf(RegisterBlocks.RED_NEON);
         dropSelf(RegisterBlocks.YELLOW_NEON);
         dropSelf(RegisterBlocks.GREEN_NEON);
+        dropSelf(RegisterBlocks.WHITE_NEON);
+        dropSelf(RegisterBlocks.LIGHT_GRAY_NEON);
+        dropSelf(RegisterBlocks.GRAY_NEON);
+        dropSelf(RegisterBlocks.BLACK_NEON);
+        dropSelf(RegisterBlocks.BROWN_NEON);
+        dropSelf(RegisterBlocks.ORANGE_NEON);
+        dropSelf(RegisterBlocks.LIME_NEON);
+        dropSelf(RegisterBlocks.CYAN_NEON);
+        dropSelf(RegisterBlocks.LIGHT_BLUE_NEON);
+        dropSelf(RegisterBlocks.PURPLE_NEON);
+        dropSelf(RegisterBlocks.MAGENTA_NEON);
+        dropSelf(RegisterBlocks.PINK_NEON);
     }
 
     @Override

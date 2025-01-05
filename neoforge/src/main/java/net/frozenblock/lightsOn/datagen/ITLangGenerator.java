@@ -31,6 +31,18 @@ public class ITLangGenerator extends LanguageProvider {
         add(RegisterBlocks.RED_NEON, "Neon Rosso");
         add(RegisterBlocks.YELLOW_NEON, "Neon Giallo");
         add(RegisterBlocks.GREEN_NEON, "Neon Verde");
+        add(RegisterBlocks.WHITE_NEON, "Neon Bianco");
+        add(RegisterBlocks.LIGHT_GRAY_NEON, "Neon Grigio Chiaro");
+        add(RegisterBlocks.GRAY_NEON, "Neon Grigio");
+        add(RegisterBlocks.BLACK_NEON, "Neon Nero");
+        add(RegisterBlocks.BROWN_NEON, "Neon Marrone");
+        add(RegisterBlocks.ORANGE_NEON, "Neon Arancione");
+        add(RegisterBlocks.LIME_NEON, "Neon Lime");
+        add(RegisterBlocks.CYAN_NEON, "Neon Ciano");
+        add(RegisterBlocks.LIGHT_BLUE_NEON, "Neon Blu Chiaro");
+        add(RegisterBlocks.PURPLE_NEON, "Neon Viola");
+        add(RegisterBlocks.MAGENTA_NEON, "Neon Magenta");
+        add(RegisterBlocks.PINK_NEON, "Neon Rosa");
 
         //WRENCH
         add("item.blocknet_wrench.unbindable", "§c§lQuesto blocco non è collegabile");

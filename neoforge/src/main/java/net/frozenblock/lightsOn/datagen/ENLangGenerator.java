@@ -31,6 +31,18 @@ public class ENLangGenerator extends LanguageProvider {
         add(RegisterBlocks.RED_NEON, "Red Neon");
         add(RegisterBlocks.YELLOW_NEON, "Yellow Neon");
         add(RegisterBlocks.GREEN_NEON, "Green Neon");
+        add(RegisterBlocks.WHITE_NEON, "White Neon");
+        add(RegisterBlocks.LIGHT_GRAY_NEON, "Light Gray Neon");
+        add(RegisterBlocks.GRAY_NEON, "Gray Neon");
+        add(RegisterBlocks.BLACK_NEON, "Black Neon");
+        add(RegisterBlocks.BROWN_NEON, "Brown Neon");
+        add(RegisterBlocks.ORANGE_NEON, "Orange Neon");
+        add(RegisterBlocks.LIME_NEON, "Lime Neon");
+        add(RegisterBlocks.CYAN_NEON, "Cyan Neon");
+        add(RegisterBlocks.LIGHT_BLUE_NEON, "Light Blue Neon");
+        add(RegisterBlocks.PURPLE_NEON, "Purple Neon");
+        add(RegisterBlocks.MAGENTA_NEON, "Magenta Neon");
+        add(RegisterBlocks.PINK_NEON, "Pink Neon");
 
         //WRENCH
         add("item.blocknet_wrench.unbindable", "§c§lThis block is not linkable");

@@ -22,5 +22,17 @@ public class LightsOnConstants {
         Services.PLATFORM.setRenderType(RegisterBlocks.RED_NEON, RenderType.translucent());
         Services.PLATFORM.setRenderType(RegisterBlocks.YELLOW_NEON, RenderType.translucent());
         Services.PLATFORM.setRenderType(RegisterBlocks.GREEN_NEON, RenderType.translucent());
+        Services.PLATFORM.setRenderType(RegisterBlocks.WHITE_NEON, RenderType.translucent());
+        Services.PLATFORM.setRenderType(RegisterBlocks.LIGHT_GRAY_NEON, RenderType.translucent());
+        Services.PLATFORM.setRenderType(RegisterBlocks.GRAY_NEON, RenderType.translucent());
+        Services.PLATFORM.setRenderType(RegisterBlocks.BLACK_NEON, RenderType.translucent());
+        Services.PLATFORM.setRenderType(RegisterBlocks.BROWN_NEON, RenderType.translucent());
+        Services.PLATFORM.setRenderType(RegisterBlocks.ORANGE_NEON, RenderType.translucent());
+        Services.PLATFORM.setRenderType(RegisterBlocks.LIME_NEON, RenderType.translucent());
+        Services.PLATFORM.setRenderType(RegisterBlocks.CYAN_NEON, RenderType.translucent());
+        Services.PLATFORM.setRenderType(RegisterBlocks.LIGHT_BLUE_NEON, RenderType.translucent());
+        Services.PLATFORM.setRenderType(RegisterBlocks.PURPLE_NEON, RenderType.translucent());
+        Services.PLATFORM.setRenderType(RegisterBlocks.MAGENTA_NEON, RenderType.translucent());
+        Services.PLATFORM.setRenderType(RegisterBlocks.PINK_NEON, RenderType.translucent());
     }
 }

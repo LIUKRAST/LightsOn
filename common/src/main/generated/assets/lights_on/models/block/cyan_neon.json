@@ -1,0 +1,6 @@
+{
+  "parent": "lights_on:block/template_neon",
+  "textures": {
+    "all": "lights_on:block/cyan_neon"
+  }
+}

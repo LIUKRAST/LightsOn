@@ -140,5 +140,165 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
                 .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
                 .unlockedBy("has_paper", has(Items.PAPER))
                 .save(recipeOutput, LightsOnConstants.id("yellow_floppy_disk_2"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterBlocks.RED_NEON, 2)
+                .pattern(" X ")
+                .pattern("YZY")
+                .pattern(" X ")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', Items.END_ROD)
+                .define('Z', Items.RED_DYE)
+                .unlockedBy("has_end_rod", has(Items.END_ROD))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterBlocks.BLUE_NEON, 2)
+                .pattern(" X ")
+                .pattern("YZY")
+                .pattern(" X ")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', Items.END_ROD)
+                .define('Z', Items.BLUE_DYE)
+                .unlockedBy("has_end_rod", has(Items.END_ROD))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterBlocks.YELLOW_NEON, 2)
+                .pattern(" X ")
+                .pattern("YZY")
+                .pattern(" X ")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', Items.END_ROD)
+                .define('Z', Items.YELLOW_DYE)
+                .unlockedBy("has_end_rod", has(Items.END_ROD))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterBlocks.WHITE_NEON, 2)
+                .pattern(" X ")
+                .pattern("YZY")
+                .pattern(" X ")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', Items.END_ROD)
+                .define('Z', Items.WHITE_DYE)
+                .unlockedBy("has_end_rod", has(Items.END_ROD))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterBlocks.LIGHT_GRAY_NEON, 2)
+                .pattern(" X ")
+                .pattern("YZY")
+                .pattern(" X ")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', Items.END_ROD)
+                .define('Z', Items.LIGHT_GRAY_DYE)
+                .unlockedBy("has_end_rod", has(Items.END_ROD))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterBlocks.GRAY_NEON, 2)
+                .pattern(" X ")
+                .pattern("YZY")
+                .pattern(" X ")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', Items.END_ROD)
+                .define('Z', Items.GRAY_DYE)
+                .unlockedBy("has_end_rod", has(Items.END_ROD))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterBlocks.BLACK_NEON, 2)
+                .pattern(" X ")
+                .pattern("YZY")
+                .pattern(" X ")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', Items.END_ROD)
+                .define('Z', Items.BLACK_DYE)
+                .unlockedBy("has_end_rod", has(Items.END_ROD))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterBlocks.BROWN_NEON, 2)
+                .pattern(" X ")
+                .pattern("YZY")
+                .pattern(" X ")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', Items.END_ROD)
+                .define('Z', Items.BROWN_DYE)
+                .unlockedBy("has_end_rod", has(Items.END_ROD))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterBlocks.ORANGE_NEON, 2)
+                .pattern(" X ")
+                .pattern("YZY")
+                .pattern(" X ")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', Items.END_ROD)
+                .define('Z', Items.ORANGE_DYE)
+                .unlockedBy("has_end_rod", has(Items.END_ROD))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterBlocks.LIME_NEON, 2)
+                .pattern(" X ")
+                .pattern("YZY")
+                .pattern(" X ")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', Items.END_ROD)
+                .define('Z', Items.LIME_DYE)
+                .unlockedBy("has_end_rod", has(Items.END_ROD))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterBlocks.GREEN_NEON, 2)
+                .pattern(" X ")
+                .pattern("YZY")
+                .pattern(" X ")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', Items.END_ROD)
+                .define('Z', Items.GREEN_DYE)
+                .unlockedBy("has_end_rod", has(Items.END_ROD))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterBlocks.CYAN_NEON, 2)
+                .pattern(" X ")
+                .pattern("YZY")
+                .pattern(" X ")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', Items.END_ROD)
+                .define('Z', Items.CYAN_DYE)
+                .unlockedBy("has_end_rod", has(Items.END_ROD))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterBlocks.LIGHT_BLUE_NEON, 2)
+                .pattern(" X ")
+                .pattern("YZY")
+                .pattern(" X ")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', Items.END_ROD)
+                .define('Z', Items.LIGHT_BLUE_DYE)
+                .unlockedBy("has_end_rod", has(Items.END_ROD))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterBlocks.PURPLE_NEON, 2)
+                .pattern(" X ")
+                .pattern("YZY")
+                .pattern(" X ")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', Items.END_ROD)
+                .define('Z', Items.PURPLE_DYE)
+                .unlockedBy("has_end_rod", has(Items.END_ROD))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterBlocks.MAGENTA_NEON, 2)
+                .pattern(" X ")
+                .pattern("YZY")
+                .pattern(" X ")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', Items.END_ROD)
+                .define('Z', Items.MAGENTA_DYE)
+                .unlockedBy("has_end_rod", has(Items.END_ROD))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterBlocks.PINK_NEON, 2)
+                .pattern(" X ")
+                .pattern("YZY")
+                .pattern(" X ")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', Items.END_ROD)
+                .define('Z', Items.PINK_DYE)
+                .unlockedBy("has_end_rod", has(Items.END_ROD))
+                .save(recipeOutput);
     }
 }

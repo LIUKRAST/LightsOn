@@ -1,0 +1,125 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "lights_on:block/light_gray_neon"
+      },
+      "when": {
+        "axis": "y",
+        "powered": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "lights_on:block/light_gray_neon",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "axis": "x",
+        "powered": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "lights_on:block/light_gray_neon",
+        "x": 90
+      },
+      "when": {
+        "axis": "z",
+        "powered": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "lights_on:block/neon_off"
+      },
+      "when": {
+        "axis": "y",
+        "powered": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "lights_on:block/neon_off",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "axis": "x",
+        "powered": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "lights_on:block/neon_off",
+        "x": 90
+      },
+      "when": {
+        "axis": "z",
+        "powered": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "lights_on:block/neon_base"
+      },
+      "when": {
+        "type": "double|bottom",
+        "axis": "y"
+      }
+    },
+    {
+      "apply": {
+        "model": "lights_on:block/neon_base",
+        "x": 180
+      },
+      "when": {
+        "type": "double|top",
+        "axis": "y"
+      }
+    },
+    {
+      "apply": {
+        "model": "lights_on:block/neon_base",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "type": "double|bottom",
+        "axis": "x"
+      }
+    },
+    {
+      "apply": {
+        "model": "lights_on:block/neon_base",
+        "x": -90,
+        "y": 90
+      },
+      "when": {
+        "type": "double|top",
+        "axis": "x"
+      }
+    },
+    {
+      "apply": {
+        "model": "lights_on:block/neon_base",
+        "x": -90
+      },
+      "when": {
+        "type": "double|bottom",
+        "axis": "z"
+      }
+    },
+    {
+      "apply": {
+        "model": "lights_on:block/neon_base",
+        "x": 90
+      },
+      "when": {
+        "type": "double|top",
+        "axis": "z"
+      }
+    }
+  ]
+}

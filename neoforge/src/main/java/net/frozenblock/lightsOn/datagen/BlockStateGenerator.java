@@ -31,6 +31,18 @@ public class BlockStateGenerator extends BlockStateProvider {
         createNeon(RegisterBlocks.RED_NEON);
         createNeon(RegisterBlocks.YELLOW_NEON);
         createNeon(RegisterBlocks.GREEN_NEON);
+        createNeon(RegisterBlocks.WHITE_NEON);
+        createNeon(RegisterBlocks.LIGHT_GRAY_NEON);
+        createNeon(RegisterBlocks.GRAY_NEON);
+        createNeon(RegisterBlocks.BLACK_NEON);
+        createNeon(RegisterBlocks.BROWN_NEON);
+        createNeon(RegisterBlocks.ORANGE_NEON);
+        createNeon(RegisterBlocks.LIME_NEON);
+        createNeon(RegisterBlocks.CYAN_NEON);
+        createNeon(RegisterBlocks.LIGHT_BLUE_NEON);
+        createNeon(RegisterBlocks.PURPLE_NEON);
+        createNeon(RegisterBlocks.MAGENTA_NEON);
+        createNeon(RegisterBlocks.PINK_NEON);
     }
 
     private void createNeon(Block block) {
