@@ -1,6 +1,8 @@
 package net.frozenblock.lightsOn;
 
 import net.frozenblock.lightsOn.platform.Services;
+import net.frozenblock.lightsOn.registry.RegisterBlocks;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,5 +15,12 @@ public class LightsOnConstants {
 
     public static ResourceLocation id(String name) {
         return ResourceLocation.fromNamespaceAndPath(MOD_ID, name);
+    }
+
+    public static void initClient() {
+        Services.PLATFORM.setRenderType(RegisterBlocks.BLUE_NEON, RenderType.translucent());
+        Services.PLATFORM.setRenderType(RegisterBlocks.RED_NEON, RenderType.translucent());
+        Services.PLATFORM.setRenderType(RegisterBlocks.YELLOW_NEON, RenderType.translucent());
+        Services.PLATFORM.setRenderType(RegisterBlocks.GREEN_NEON, RenderType.translucent());
     }
 }

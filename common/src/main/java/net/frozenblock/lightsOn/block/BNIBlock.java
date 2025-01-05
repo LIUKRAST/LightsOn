@@ -39,13 +39,12 @@ import org.lwjgl.system.NonnullDefault;
 @NonnullDefault
 public class BNIBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final MapCodec<BNIBlock> CODEC = simpleCodec(BNIBlock::new);
-    public static final BooleanProperty CONTAINS_FLOPPY = BooleanProperty.create("contains_floppy");
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     public BNIBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, false).setValue(CONTAINS_FLOPPY, false));
+        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, false));
     }
 
     @Override
@@ -66,7 +65,7 @@ public class BNIBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, CONTAINS_FLOPPY, WATERLOGGED);
+        builder.add(FACING, WATERLOGGED);
     }
 
     @Override
@@ -86,7 +85,7 @@ public class BNIBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result) {
-        if(world.getBlockEntity(pos) instanceof  BNIBlockEntity bni) {
+        if(world.getBlockEntity(pos) instanceof BNIBlockEntity bni) {
             if (world.isClientSide()) {
                 final Runnable runnable = () -> Minecraft.getInstance().setScreen(new BlockNetInterfaceScreen(bni));
                 runnable.run();
@@ -106,18 +105,15 @@ public class BNIBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
             copy.setCount(1);
             itemStack.shrink(1);
             bni.setItem(copy);
-            level.setBlock(pos, state.setValue(CONTAINS_FLOPPY, true), 3);
-            return ItemInteractionResult.CONSUME;
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
         return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if(level.getBlockEntity(pos) instanceof BNIBlockEntity bni) bni.ejectDisk();
         super.onRemove(state, level, pos, newState, movedByPiston);
-        if(level.getBlockEntity(pos) instanceof BNIBlockEntity bni) {
-            bni.ejectDisk();
-        }
     }
 
     @Override

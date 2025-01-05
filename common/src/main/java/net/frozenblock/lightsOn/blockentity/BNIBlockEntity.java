@@ -21,8 +21,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashSet;
 import java.util.Set;
 
-import static net.frozenblock.lightsOn.block.BNIBlock.CONTAINS_FLOPPY;
-
 public class BNIBlockEntity extends ClientSyncedBlockEntity implements BlockNetPole {
 
     public static final String DATA_KEY = "ProjectData";
@@ -46,7 +44,7 @@ public class BNIBlockEntity extends ClientSyncedBlockEntity implements BlockNetP
             CompoundTag itemTag = new CompoundTag();
             tag.put(ITEM_KEY, stack.save(registries, itemTag));
         }
-        saveBlockPosList(tag, poles);
+        saveBlockPosList(tag);
     }
 
     @Override
@@ -56,7 +54,7 @@ public class BNIBlockEntity extends ClientSyncedBlockEntity implements BlockNetP
             CompoundTag itemTag = tag.getCompound(ITEM_KEY);
             stack = ItemStack.parse(registries, itemTag).orElse(ItemStack.EMPTY);
         }
-        loadBlockPosList(tag, poles);
+        loadBlockPosList(tag);
     }
 
     public void askForSync() {
@@ -75,9 +73,27 @@ public class BNIBlockEntity extends ClientSyncedBlockEntity implements BlockNetP
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
+    public void setItem(ItemStack stack) {
+        ejectDisk();
+        this.stack = stack;
+        setChanged();
+    }
+
+    public void ejectDisk() {
+        if(!this.stack.isEmpty()) {
+            final var pos = this.getBlockPos().relative(getBlockState().getValue(BNIBlock.FACING)).getCenter();
+            if(level == null) return;
+            ItemEntity itemEntity = new ItemEntity(level, pos.x, pos.y, pos.z, this.stack);
+            itemEntity.setPickUpDelay(10);
+            level.addFreshEntity(itemEntity);
+            this.stack = ItemStack.EMPTY;
+            setChanged();
+        }
+    }
+
     @Override
     public void addPole(BlockPos input) {
-        this.poles.add(input);
+        poles.add(input);
     }
 
     @Override
@@ -85,27 +101,8 @@ public class BNIBlockEntity extends ClientSyncedBlockEntity implements BlockNetP
         return poles;
     }
 
-    public void setItem(ItemStack stack) {
-        ejectDisk();
-        this.stack = stack;
-        setChanged();
-    }
-
     @Override
     public void removePole(BlockPos pos) {
-        this.poles.remove(pos);
-    }
-
-    public void ejectDisk() {
-        if(!this.stack.isEmpty()) {
-            final var pos = this.getBlockPos().relative(getBlockState().getValue(BNIBlock.FACING)).getCenter();
-            assert level != null;
-            level.setBlock(getBlockPos(), getBlockState().setValue(CONTAINS_FLOPPY, true), 3);
-            ItemEntity itemEntity = new ItemEntity(level, pos.x, pos.y, pos.z, this.stack);
-            itemEntity.setPickUpDelay(10);
-            level.addFreshEntity(itemEntity);
-            this.stack = ItemStack.EMPTY;
-            setChanged();
-        }
+        poles.remove(pos);
     }
 }

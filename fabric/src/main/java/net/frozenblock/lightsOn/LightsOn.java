@@ -20,5 +20,6 @@ public class LightsOn implements ModInitializer, ClientModInitializer {
     public void onInitializeClient() {
         RegisterNetworking.registerClient();
         RegisterBlockEntityRenderers.register();
+        LightsOnConstants.initClient();
     }
 }

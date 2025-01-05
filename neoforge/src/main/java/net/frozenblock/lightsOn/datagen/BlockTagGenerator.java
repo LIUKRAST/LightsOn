@@ -23,7 +23,11 @@ public class BlockTagGenerator extends BlockTagsProvider {
                 RegisterBlocks.BLOCKNET_INTERFACE,
                 RegisterBlocks.BLOCKNET_LINK,
                 RegisterBlocks.LIGHT_BEAM,
-                RegisterBlocks.WORKLIGHT_STAND
+                RegisterBlocks.WORKLIGHT_STAND,
+                RegisterBlocks.BLUE_NEON,
+                RegisterBlocks.RED_NEON,
+                RegisterBlocks.YELLOW_NEON,
+                RegisterBlocks.GREEN_NEON
         );
     }
 }

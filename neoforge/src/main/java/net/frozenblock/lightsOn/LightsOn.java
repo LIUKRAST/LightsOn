@@ -6,7 +6,9 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.registries.RegisterEvent;
 
@@ -20,8 +22,8 @@ public class LightsOn {
     }
 
     @SubscribeEvent
-    public void onInitialize(FMLCommonSetupEvent event) {
-
+    public void initClient(FMLClientSetupEvent event) {
+        LightsOnConstants.initClient();
     }
 
     @SubscribeEvent
@@ -36,5 +38,9 @@ public class LightsOn {
     @SubscribeEvent
     public void registerRenderers(final EntityRenderersEvent.RegisterRenderers event) {
         RegisterBlockEntityRenderers.register();
+    }
+
+    @SubscribeEvent
+    public void registerCapabilities(RegisterCapabilitiesEvent event) {
     }
 }

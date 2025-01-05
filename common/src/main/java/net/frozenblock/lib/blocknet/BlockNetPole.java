@@ -13,7 +13,7 @@ import java.util.Set;
  * Defines the block entity is a pole for BlockNet network,
  * allowing it to be connected with other blocknet elements.
  * To make this work,
- * we recommend invoking {@link #loadBlockPosList(CompoundTag, Set)} & {@link #saveBlockPosList(CompoundTag, Set)}
+ * we recommend invoking {@link #loadBlockPosList(CompoundTag)} & {@link #saveBlockPosList(CompoundTag)}
  * when saving/loading your block entity data so that it gets saved.
  * See an example in {@link net.frozenblock.lightsOn.blockentity.LightBeamBlockEntity#save(CompoundTag, HolderLookup.Provider)}
  * and {@link net.frozenblock.lightsOn.blockentity.LightBeamBlockEntity#load(CompoundTag, HolderLookup.Provider)}
@@ -22,6 +22,27 @@ import java.util.Set;
  * @author LiukRast
  * */
 public interface BlockNetPole {
+
+    static BlockNetPole simple(Set<BlockPos> poles, Runnable setChanged) {
+        return new BlockNetPole() {
+            @Override
+            public Set<BlockPos> getPoles() {
+                return poles;
+            }
+
+            @Override
+            public void addPole(BlockPos pole) {
+                poles.add(pole);
+                setChanged.run();
+            }
+
+            @Override
+            public void removePole(BlockPos pole) {
+                poles.remove(pole);
+                setChanged.run();
+            }
+        };
+    }
 
     /**
      * The key under which all the BlockNet Pole data will be saved
@@ -54,13 +75,12 @@ public interface BlockNetPole {
     /**
      * A util method to save the BlockPos list of your poles to the compound tag.
      * @param tag The compound where your data will be saved. Uses {@link #POLE_KEY} as a key
-     * @param blockPosList The list of Block positions to be saved
      * @since 1.0
      * @author LiukRast
      * */
-    default void saveBlockPosList(CompoundTag tag, Set<BlockPos> blockPosList) {
+    default void saveBlockPosList(CompoundTag tag) {
         ListTag outList = new ListTag();
-        for(BlockPos pos : blockPosList) {
+        for(BlockPos pos : getPoles()) {
             final IntArrayTag posTag = new IntArrayTag(new int[]{pos.getX(), pos.getY(), pos.getZ()});
             outList.add(posTag);
         }
@@ -70,12 +90,12 @@ public interface BlockNetPole {
     /**
      * A util method to load the BlockPos list of your poles to the compound tag.
      * @param tag The compound where your data will be loaded. Uses {@link #POLE_KEY} as a key
-     * @param blockPosList The list of Block positions to be loaded
      * @since 1.0
      * @author LiukRast
      * */
-    default void loadBlockPosList(CompoundTag tag, Set<BlockPos> blockPosList) {
-        blockPosList.clear();
+    default void loadBlockPosList(CompoundTag tag) {
+        Set<BlockPos> poles = getPoles();
+        poles.clear();
         if(tag.contains(POLE_KEY)) {
             for(Tag iat : tag.getList(POLE_KEY, Tag.TAG_INT_ARRAY)) {
                 final var asList = ((IntArrayTag)iat);
@@ -84,7 +104,7 @@ public interface BlockNetPole {
                         asList.get(1).getAsInt(),
                         asList.get(2).getAsInt()
                 );
-                blockPosList.add(pos);
+                poles.add(pos);
             }
         }
     }

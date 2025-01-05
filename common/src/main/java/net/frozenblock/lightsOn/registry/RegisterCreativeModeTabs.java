@@ -15,14 +15,16 @@ public class RegisterCreativeModeTabs {
             .icon(() -> new ItemStack(RegisterBlocks.LIGHT_BEAM))
             .title(Component.translatable("itemGroup.lights_on_tab"))
             .displayItems((parameters, output) -> {
-                output.accept(RegisterBlocks.LIGHT_BEAM);
-                output.accept(RegisterBlocks.BLOCKNET_INTERFACE);
-                output.accept(RegisterBlocks.BLOCKNET_LINK);
                 output.accept(RegisterItems.BLOCKNET_WRENCH);
                 output.accept(RegisterItems.BLUE_FLOPPY_DISK);
                 output.accept(RegisterItems.RED_FLOPPY_DISK);
                 output.accept(RegisterItems.YELLOW_FLOPPY_DISK);
+
+                output.accept(RegisterBlocks.BLOCKNET_LINK);
+                output.accept(RegisterBlocks.LIGHT_BEAM);
+                output.accept(RegisterBlocks.BLOCKNET_INTERFACE);
                 output.accept(RegisterBlocks.WORKLIGHT_STAND);
+                output.accept(RegisterBlocks.BLUE_NEON);
             })
             .build();
 

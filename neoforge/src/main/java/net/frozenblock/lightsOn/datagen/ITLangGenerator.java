@@ -27,6 +27,10 @@ public class ITLangGenerator extends LanguageProvider {
         add(RegisterBlocks.BLOCKNET_INTERFACE, "Interfaccia BlockNet");
         add(RegisterBlocks.BLOCKNET_LINK, "Link BlockNet");
         add(RegisterBlocks.WORKLIGHT_STAND, "Faro da lavoro con supporto");
+        add(RegisterBlocks.BLUE_NEON, "Neon Blu");
+        add(RegisterBlocks.RED_NEON, "Neon Rosso");
+        add(RegisterBlocks.YELLOW_NEON, "Neon Giallo");
+        add(RegisterBlocks.GREEN_NEON, "Neon Verde");
 
         //WRENCH
         add("item.blocknet_wrench.unbindable", "§c§lQuesto blocco non è collegabile");

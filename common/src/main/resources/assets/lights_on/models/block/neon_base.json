@@ -1,0 +1,21 @@
+{
+	"credit": "Made by LiukRast",
+	"textures": {
+		"all": "lights_on:block/neon_end"
+	},
+	"elements": [
+		{
+			"from": [4.99, -0.01, 4.99],
+			"to": [11.01, 3.01, 11.01],
+			"rotation": {"angle": 0, "axis": "y", "origin": [5, 0, 5]},
+			"faces": {
+				"north": {"uv": [0, 12, 6, 15], "texture": "#all"},
+				"east": {"uv": [0, 12, 6, 15], "texture": "#all"},
+				"south": {"uv": [0, 12, 6, 15], "texture": "#all"},
+				"west": {"uv": [0, 12, 6, 15], "texture": "#all"},
+				"up": {"uv": [0, 0, 6, 6], "texture": "#all"},
+				"down": {"uv": [0, 6, 6, 12], "texture": "#all", "cullface": "down"}
+			}
+		}
+	]
+}

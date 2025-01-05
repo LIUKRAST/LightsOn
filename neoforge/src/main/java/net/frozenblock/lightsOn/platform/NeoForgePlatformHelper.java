@@ -2,7 +2,10 @@ package net.frozenblock.lightsOn.platform;
 
 import net.frozenblock.lightsOn.LightsOnConstants;
 import net.frozenblock.lightsOn.platform.services.IPlatformHelper;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLLoader;
 
@@ -24,6 +27,12 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
     public boolean isDevelopmentEnvironment() {
 
         return !FMLLoader.isProduction();
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void setRenderType(Block block, RenderType type) {
+        ItemBlockRenderTypes.setRenderLayer(block, type);
     }
 
     @Override

@@ -1,8 +1,12 @@
 {
   "block.lights_on.blocknet_interface": "Interfaccia BlockNet",
   "block.lights_on.blocknet_link": "Link BlockNet",
+  "block.lights_on.blue_neon": "Neon Blu",
+  "block.lights_on.green_neon": "Neon Verde",
   "block.lights_on.light_beam": "Testa rotante",
+  "block.lights_on.red_neon": "Neon Rosso",
   "block.lights_on.worklight_stand": "Faro da lavoro con supporto",
+  "block.lights_on.yellow_neon": "Neon Giallo",
   "blockNet.configScreen.save": "Salva",
   "blocknet.edit.redo": "Redo",
   "blocknet.edit.undo": "Undo",

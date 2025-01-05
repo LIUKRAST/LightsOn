@@ -57,7 +57,7 @@ public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements Blo
 
         nbt.putFloat("Interpolation", interpolation);
         nbt.putLong("AnimationStart", animationStart);
-        saveBlockPosList(nbt, poles);
+        saveBlockPosList(nbt);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements Blo
         this.animationStart = nbt.getLong("AnimationStart");
 
 
-        loadBlockPosList(nbt, poles);
+        loadBlockPosList(nbt);
     }
 
     public int calculateColor(float age) {

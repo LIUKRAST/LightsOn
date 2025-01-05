@@ -3,6 +3,10 @@
     "lights_on:blocknet_interface",
     "lights_on:blocknet_link",
     "lights_on:light_beam",
-    "lights_on:worklight_stand"
+    "lights_on:worklight_stand",
+    "lights_on:blue_neon",
+    "lights_on:red_neon",
+    "lights_on:yellow_neon",
+    "lights_on:green_neon"
   ]
 }

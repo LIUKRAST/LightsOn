@@ -27,6 +27,10 @@ public class ENLangGenerator extends LanguageProvider {
         add(RegisterBlocks.BLOCKNET_INTERFACE, "BlockNet Interface");
         add(RegisterBlocks.BLOCKNET_LINK, "BlockNet Link");
         add(RegisterBlocks.WORKLIGHT_STAND, "Worklight Stand");
+        add(RegisterBlocks.BLUE_NEON, "Blue Neon");
+        add(RegisterBlocks.RED_NEON, "Red Neon");
+        add(RegisterBlocks.YELLOW_NEON, "Yellow Neon");
+        add(RegisterBlocks.GREEN_NEON, "Green Neon");
 
         //WRENCH
         add("item.blocknet_wrench.unbindable", "§c§lThis block is not linkable");

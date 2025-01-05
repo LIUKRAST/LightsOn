@@ -21,12 +21,12 @@ public class BNLBlockEntity extends ClientSyncedBlockEntity implements BlockNetP
 
     @Override
     public void save(CompoundTag tag, HolderLookup.Provider registries) {
-        saveBlockPosList(tag, this.poles);
+        saveBlockPosList(tag);
     }
 
     @Override
     public void load(CompoundTag tag, HolderLookup.Provider registries) {
-        loadBlockPosList(tag, this.poles);
+        loadBlockPosList(tag);
     }
 
     @Override

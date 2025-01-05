@@ -1,8 +1,12 @@
 {
   "block.lights_on.blocknet_interface": "BlockNet Interface",
   "block.lights_on.blocknet_link": "BlockNet Link",
+  "block.lights_on.blue_neon": "Blue Neon",
+  "block.lights_on.green_neon": "Green Neon",
   "block.lights_on.light_beam": "Light Beam",
+  "block.lights_on.red_neon": "Red Neon",
   "block.lights_on.worklight_stand": "Worklight Stand",
+  "block.lights_on.yellow_neon": "Yellow Neon",
   "blockNet.configScreen.save": "Save",
   "blocknet.edit.redo": "Redo",
   "blocknet.edit.undo": "Undo",

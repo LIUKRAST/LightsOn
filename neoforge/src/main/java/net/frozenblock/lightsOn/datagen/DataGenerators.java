@@ -22,6 +22,8 @@ public class DataGenerators {
         var packOutput = event.getGenerator().getPackOutput();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
+        generator.addProvider(event.includeClient(), new BlockStateGenerator(packOutput, fileHelper));
+
         generator.addProvider(event.includeServer(), new ENLangGenerator(packOutput));
         generator.addProvider(event.includeServer(), new ITLangGenerator(packOutput));
 
