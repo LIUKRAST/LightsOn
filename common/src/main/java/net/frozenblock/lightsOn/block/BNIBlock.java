@@ -2,7 +2,7 @@ package net.frozenblock.lightsOn.block;
 
 import com.mojang.serialization.MapCodec;
 import net.frozenblock.lib.voxel.VoxelShapes;
-import net.frozenblock.lightsOn.blockentity.BNIBlockEntity;
+import net.frozenblock.lightsOn.block_entity.BNIBlockEntity;
 import net.frozenblock.lightsOn.item.BlockNetWrench;
 import net.frozenblock.lightsOn.item.FloppyDiskItem;
 import net.frozenblock.lightsOn.screen.BlockNetInterfaceScreen;

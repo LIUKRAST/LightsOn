@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.frozenblock.lightsOn.LightsOnConstants;
 import net.frozenblock.lib.blocknet.BlockNetPole;
 import net.frozenblock.lightsOn.item.BlockNetWrenchUtils;
-import net.frozenblock.lightsOn.item.WrenchConnection;
+import net.frozenblock.lightsOn.data_component.WrenchConnection;
 import net.frozenblock.lightsOn.registry.RegisterDataComponents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;

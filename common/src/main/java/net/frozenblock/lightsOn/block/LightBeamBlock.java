@@ -3,7 +3,7 @@ package net.frozenblock.lightsOn.block;
 import com.mojang.serialization.MapCodec;
 import net.frozenblock.lib.voxel.SmartVoxelShape;
 import net.frozenblock.lib.voxel.VoxelShapes;
-import net.frozenblock.lightsOn.blockentity.LightBeamBlockEntity;
+import net.frozenblock.lightsOn.block_entity.LightBeamBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;

@@ -23,8 +23,8 @@ public class BlockNetWrench extends Item {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-        final var data = stack.getOrDefault(RegisterDataComponents.WRENCH_CONNECTION, new WrenchConnection(null));
-        if(data.pole() != null) tooltipComponents.add(Component.translatable("item.blocknet_wrench.binding", data.pole().toShortString()));
+        final var data = stack.get(RegisterDataComponents.WRENCH_CONNECTION);
+        if(data != null) tooltipComponents.add(Component.translatable("item.blocknet_wrench.binding", data.toShortString()));
     }
 
     @Override
@@ -39,11 +39,11 @@ public class BlockNetWrench extends Item {
 
         if(data == null) {
             if(block instanceof BlockNetPole) {
-                stack.set(RegisterDataComponents.WRENCH_CONNECTION, new WrenchConnection(pos));
+                stack.set(RegisterDataComponents.WRENCH_CONNECTION, pos);
                 sendBinding(player, pos);
             } else sendMessage(player, UNBINDABLE);
         } else {
-            final var block1 = world.getBlockEntity(data.pole());
+            final var block1 = world.getBlockEntity(data);
             if(!(block instanceof BlockNetPole pole2)) {
                 if(player.isCrouching()) {
                     sendMessage(player, FAILED);
@@ -52,14 +52,14 @@ public class BlockNetWrench extends Item {
                 } else sendMessage(player, UNBINDABLE);
             } else if(block1 instanceof BlockNetPole pole1) {
                 sendMessage(player, SUCCESS);
-                if(pos.equals(data.pole())) {
+                if(pos.equals(data)) {
                     sendMessage(player, UNBINDABLE);
                     return InteractionResult.CONSUME;
                 }
-                if(pole1.hasPole(pos) || pole2.hasPole(data.pole())) sendMessage(player, ALREADY_BOUND);
+                if(pole1.hasPole(pos) || pole2.hasPole(data)) sendMessage(player, ALREADY_BOUND);
                 pole1.addPole(pos);
-                pole2.addPole(data.pole());
-                update(world, data.pole());
+                pole2.addPole(data);
+                update(world, data);
                 update(world, pos);
                 stack.remove(RegisterDataComponents.WRENCH_CONNECTION);
             } else {
@@ -72,7 +72,7 @@ public class BlockNetWrench extends Item {
 
     @Override
     public boolean isFoil(ItemStack stack) {
-        final var data = stack.getOrDefault(RegisterDataComponents.WRENCH_CONNECTION, new WrenchConnection(null));
-        return super.isFoil(stack) || data.pole() != null;
+        final var data = stack.get(RegisterDataComponents.WRENCH_CONNECTION);
+        return super.isFoil(stack) || data != null;
     }
 }

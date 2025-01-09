@@ -15,8 +15,8 @@ import java.util.Set;
  * To make this work,
  * we recommend invoking {@link #loadBlockPosList(CompoundTag)} & {@link #saveBlockPosList(CompoundTag)}
  * when saving/loading your block entity data so that it gets saved.
- * See an example in {@link net.frozenblock.lightsOn.blockentity.LightBeamBlockEntity#save(CompoundTag, HolderLookup.Provider)}
- * and {@link net.frozenblock.lightsOn.blockentity.LightBeamBlockEntity#load(CompoundTag, HolderLookup.Provider)}
+ * See an example in {@link net.frozenblock.lightsOn.block_entity.LightBeamBlockEntity#save(CompoundTag, HolderLookup.Provider)}
+ * and {@link net.frozenblock.lightsOn.block_entity.LightBeamBlockEntity#load(CompoundTag, HolderLookup.Provider)}
  *
  * @since 1.0
  * @author LiukRast

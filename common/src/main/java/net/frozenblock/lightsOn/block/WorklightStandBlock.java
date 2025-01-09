@@ -1,7 +1,7 @@
 package net.frozenblock.lightsOn.block;
 
 import com.mojang.serialization.MapCodec;
-import net.frozenblock.lightsOn.blockentity.WorklightStandBlockEntity;
+import net.frozenblock.lightsOn.block_entity.WorklightStandBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;

@@ -1,4 +1,4 @@
-package net.frozenblock.lightsOn.blockentity;
+package net.frozenblock.lightsOn.block_entity;
 
 import net.frozenblock.lib.blockEntity.ClientSyncedBlockEntity;
 import net.frozenblock.lib.blocknet.BlockNetPole;

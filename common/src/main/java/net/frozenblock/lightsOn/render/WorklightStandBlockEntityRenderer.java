@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.frozenblock.lightsOn.LightsOnConstants;
 import net.frozenblock.lightsOn.block.WorklightStandBlock;
-import net.frozenblock.lightsOn.blockentity.WorklightStandBlockEntity;
+import net.frozenblock.lightsOn.block_entity.WorklightStandBlockEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;

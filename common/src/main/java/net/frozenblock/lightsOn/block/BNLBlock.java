@@ -2,7 +2,7 @@ package net.frozenblock.lightsOn.block;
 
 import com.mojang.serialization.MapCodec;
 import net.frozenblock.lib.voxel.VoxelShapes;
-import net.frozenblock.lightsOn.blockentity.BNLBlockEntity;
+import net.frozenblock.lightsOn.block_entity.BNLBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;

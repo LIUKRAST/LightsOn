@@ -1,7 +1,7 @@
 package net.frozenblock.lightsOn.screen;
 
 import net.frozenblock.lightsOn.LightsOnConstants;
-import net.frozenblock.lightsOn.blockentity.BNIBlockEntity;
+import net.frozenblock.lightsOn.block_entity.BNIBlockEntity;
 import net.frozenblock.lightsOn.packet.EjectDiskPacket;
 import net.frozenblock.lightsOn.platform.Services;
 import net.frozenblock.lightsOn.screen.util.ActionBarButton;
@@ -53,7 +53,7 @@ public class BlockNetInterfaceScreen extends Screen {
             new ActionBarButton("Help",
                     new ActionBarSubButton[]{
                             new ActionBarSubButton(Component.translatable("blocknet.help.wiki"), () -> Util.getPlatform().openUri("https://github.com/LIUKRAST/LightsOn/wiki/BlockNet-Interface")),
-                            new ActionBarSubButton(Component.translatable("blocknet.help.issue"), () -> {})
+                            new ActionBarSubButton(Component.translatable("blocknet.help.issue"), () -> Util.getPlatform().openUri("https://github.com/LIUKRAST/LightsOn/issues"))
                     }
             )
     };

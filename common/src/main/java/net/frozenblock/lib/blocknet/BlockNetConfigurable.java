@@ -18,7 +18,7 @@ public interface BlockNetConfigurable {
     /**
      * This method is required when implementing this interface and will be where you register your BlockNet setting,
      * so that they can be shown in the menus, and update their values.
-     * See {@link net.frozenblock.lightsOn.blockentity.WorklightStandBlockEntity} for reference.
+     * See {@link net.frozenblock.lightsOn.block_entity.WorklightStandBlockEntity} for reference.
      * @param builder The BlockNet settings builder, which includes the possibility to add settings
      * @author LiukRast
      * */
