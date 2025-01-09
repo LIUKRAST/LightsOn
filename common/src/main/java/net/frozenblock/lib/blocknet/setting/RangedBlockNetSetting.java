@@ -52,7 +52,7 @@ public class RangedBlockNetSetting extends BlockNetSetting<Float> {
         boolean hovered = dragging || mouseY >= 0 && mouseY < 11 && mouseX >= leftPos+4 && mouseX < leftPos+132;
         graphics.blit(TEXTURE, leftPos+4, topPos, 16, 160, 128, 16);
         graphics.blit(TEXTURE, leftPos+4 + progress, topPos, hovered ? 8 : 0, 160, 8, 11);
-        final DecimalFormat df = new DecimalFormat("0.######");
+        final DecimalFormat df = new DecimalFormat("0.##");
         graphics.drawString(Minecraft.getInstance().font, df.format(getValue()), leftPos+133, topPos+2, -1);
     }
 
