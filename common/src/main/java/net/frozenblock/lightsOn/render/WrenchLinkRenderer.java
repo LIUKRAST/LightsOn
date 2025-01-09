@@ -5,7 +5,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.frozenblock.lightsOn.LightsOnConstants;
 import net.frozenblock.lib.blocknet.BlockNetPole;
 import net.frozenblock.lightsOn.item.BlockNetWrenchUtils;
-import net.frozenblock.lightsOn.data_component.WrenchConnection;
 import net.frozenblock.lightsOn.registry.RegisterDataComponents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -57,8 +56,8 @@ public class WrenchLinkRenderer {
     }
 
     public static void renderPlayerBinding(ItemStack stack, BlockPos pos, Vec3 playerPos, WrenchLinkModel.State state, PoseStack poseStack, VertexConsumer vertexConsumer, int packedOverlay) {
-        final var data = stack.getOrDefault(RegisterDataComponents.WRENCH_CONNECTION, new WrenchConnection(null));
-        if(pos.equals(data.pole())) {
+        final var data = stack.get(RegisterDataComponents.WRENCH_CONNECTION);
+        if(pos.equals(data)) {
             MODEL.animate(createVector(pos), playerPos, state);
             MODEL.renderToBuffer(poseStack, vertexConsumer, 15728880, packedOverlay);
         }
