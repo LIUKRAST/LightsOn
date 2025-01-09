@@ -31,6 +31,10 @@ public class BlockBehaviourMixin {
                 else LightsOnConstants.LOGGER.error("Tried to search for pole BlockNetElement, but found pole pole not instance of {}", BlockNetPole.class);
             }
         }
+        if(level.getBlockEntity(pos) instanceof BlockNetConfigurable && level.isClientSide) {
+            if(!(Minecraft.getInstance().screen instanceof BlockNetConfigScreen screen)) return;
+            if(pos == screen.getBlockPos()) Minecraft.getInstance().screen.onClose();
+        }
     }
 
     @Inject(method = "useWithoutItem", at = @At("HEAD"), cancellable = true)

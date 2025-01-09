@@ -179,4 +179,8 @@ public class BlockNetConfigScreen extends Screen {
         }
         return tag;
     }
+
+    public BlockPos getBlockPos() {
+        return this.pos;
+    }
 }

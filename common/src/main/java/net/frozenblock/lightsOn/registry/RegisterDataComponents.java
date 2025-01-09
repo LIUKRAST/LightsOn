@@ -11,6 +11,7 @@ public class RegisterDataComponents {
     public static final DataComponentType<WrenchConnection> WRENCH_CONNECTION = DataComponentType.<WrenchConnection>builder()
             .persistent(WrenchConnection.CODEC)
             .networkSynchronized(WrenchConnection.STREAM_CODEC)
+            .cacheEncoding()
             .build();
 
     public static void register() {
