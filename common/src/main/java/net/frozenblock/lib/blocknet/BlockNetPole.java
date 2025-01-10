@@ -22,7 +22,6 @@ import java.util.Set;
  * @author LiukRast
  * */
 public interface BlockNetPole {
-
     static BlockNetPole simple(Set<BlockPos> poles, Runnable setChanged) {
         return new BlockNetPole() {
             @Override
@@ -43,12 +42,10 @@ public interface BlockNetPole {
             }
         };
     }
-
     /**
      * The key under which all the BlockNet Pole data will be saved
      * @since 1.0 */
     String POLE_KEY = "NetworkPoles";
-
     /**
      * @return The set of all blockStates which this block entity should be connected to.
      * You should include a {@link Set} in your block entity class and make this method returns it
@@ -56,7 +53,6 @@ public interface BlockNetPole {
      * @author LiukRast
      * */
     Set<BlockPos> getPoles();
-
     /**
      * @param pole The pole which wants to be added to the network.
      *             This is called when a {@link net.frozenblock.lightsOn.item.BlockNetWrench} is interacting with blocks
@@ -71,7 +67,6 @@ public interface BlockNetPole {
      * @author LiukRast
      * */
     void removePole(BlockPos pole);
-
     /**
      * A util method to save the BlockPos list of your poles to the compound tag.
      * @param tag The compound where your data will be saved. Uses {@link #POLE_KEY} as a key
@@ -86,7 +81,6 @@ public interface BlockNetPole {
         }
         tag.put(POLE_KEY, outList);
     }
-
     /**
      * A util method to load the BlockPos list of your poles to the compound tag.
      * @param tag The compound where your data will be loaded. Uses {@link #POLE_KEY} as a key
@@ -108,7 +102,6 @@ public interface BlockNetPole {
             }
         }
     }
-
     /**
      * A util method which checks if the BlockEntity has a precise pole.
      * Its already built and relied on other methods of this interface

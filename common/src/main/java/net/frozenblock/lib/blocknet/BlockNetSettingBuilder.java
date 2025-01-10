@@ -10,7 +10,6 @@ import java.util.Set;
  * */
 public class BlockNetSettingBuilder {
     private final Set<BlockNetSetting<?>> settings = new LinkedHashSet<>();
-
     /**
      * Allows you to add settings to your {@link BlockNetConfigurable}.
      * It's important to note that a setting cannot have the key {@code duration} which is used for interpolation
@@ -29,7 +28,6 @@ public class BlockNetSettingBuilder {
         settings.add(setting);
         return this;
     }
-
     /**
      * @return The list of all settings registered
      * @since 1.0

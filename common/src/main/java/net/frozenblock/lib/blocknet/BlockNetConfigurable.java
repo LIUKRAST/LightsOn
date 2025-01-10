@@ -14,7 +14,6 @@ import java.util.function.Supplier;
  * @author LiukRast
  * */
 public interface BlockNetConfigurable {
-
     /**
      * This method is required when implementing this interface and will be where you register your BlockNet setting,
      * so that they can be shown in the menus, and update their values.
@@ -23,7 +22,6 @@ public interface BlockNetConfigurable {
      * @author LiukRast
      * */
     void defineSettings(BlockNetSettingBuilder builder);
-
     /**
      * The method involved in data update for your settings.
      * This will be invoked each time a BlockNet screen is sending new data for the block entity to update.
@@ -38,7 +36,6 @@ public interface BlockNetConfigurable {
      * @author LiukRast
      * */
     void updateData(CompoundTag tag);
-
     /**
      * @return The Block Entity's interpolation getter method. When null, the GUI will not include an "interpolate" button.
      * @since 1.0
