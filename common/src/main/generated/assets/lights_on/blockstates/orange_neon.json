@@ -2,6 +2,11 @@
   "multipart": [
     {
       "apply": {
+        "model": "lights_on:block/orange_neon_particle"
+      }
+    },
+    {
+      "apply": {
         "model": "lights_on:block/orange_neon"
       },
       "when": {
