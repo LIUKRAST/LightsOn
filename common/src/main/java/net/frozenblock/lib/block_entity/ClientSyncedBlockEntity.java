@@ -1,4 +1,4 @@
-package net.frozenblock.lib.blockEntity;
+package net.frozenblock.lib.block_entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;

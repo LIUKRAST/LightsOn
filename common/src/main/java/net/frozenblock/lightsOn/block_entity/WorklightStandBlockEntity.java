@@ -1,6 +1,6 @@
 package net.frozenblock.lightsOn.block_entity;
 
-import net.frozenblock.lib.blockEntity.ClientSyncedBlockEntity;
+import net.frozenblock.lib.block_entity.ClientSyncedBlockEntity;
 import net.frozenblock.lib.blocknet.BlockNetConfigurable;
 import net.frozenblock.lib.blocknet.BlockNetSettingBuilder;
 import net.frozenblock.lib.blocknet.setting.RangedBlockNetSetting;
