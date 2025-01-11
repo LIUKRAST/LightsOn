@@ -184,7 +184,7 @@ public class LightBeamBlockEntity extends ClientSyncedBlockEntity implements Blo
         builder.add(new RangedBlockNetSetting("pitch", 90, this::getPitch));
         builder.add(new FloatBlockNetSetting("yaw", this::getYaw));
         builder.add(new RangedBlockNetSetting("beam_size", 1, 100, this::getSize));
-        builder.add(new RangedBlockNetSetting("beam_length", 100, this::getLength));
+        builder.add(new RangedBlockNetSetting("beam_length", 0.1f, 100, this::getLength));
     }
 
     @Override

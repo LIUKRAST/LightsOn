@@ -28,7 +28,12 @@ public class ColorBlockNetSetting extends BlockNetSetting<Integer> {
 
     @Override
     public String getTitleTip() {
-        return "";
+        return switch (colorMode) {
+            case HEX -> "[0 -> FFFFFF]";
+            case HSL -> "[H max 359; S, L max 100]";
+            case INT -> "[0 -> 16777215]";
+            case RGB -> "R,G,B max 255";
+        };
     }
 
     @Override
@@ -129,6 +134,15 @@ public class ColorBlockNetSetting extends BlockNetSetting<Integer> {
         } catch (NumberFormatException e) {
             setValid(false);
         }
+    }
+
+    @Override
+    public void setValid(boolean valid) {
+        int color = valid ? 14737632 : 16733525;
+        channelA.setTextColor(color);
+        channelB.setTextColor(color);
+        channelC.setTextColor(color);
+        super.setValid(valid);
     }
 
     @Override

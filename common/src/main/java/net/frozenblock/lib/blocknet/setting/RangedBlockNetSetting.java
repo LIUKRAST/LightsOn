@@ -17,25 +17,29 @@ import java.util.function.Supplier;
  * */
 public class RangedBlockNetSetting extends BlockNetSetting<Float> {
     private static final ResourceLocation TEXTURE = LightsOnConstants.id("textures/gui/blocknet_config.png");
-
     private final float min, max;
-
+    private final String stepDigits;
     boolean dragging = false;
 
     public RangedBlockNetSetting(String key, float max, Supplier<Float> getter) {
-        this(key, 0, max, getter);
+        this(key, 0, max, 1, getter);
     }
 
     public RangedBlockNetSetting(String key, float min, float max, Supplier<Float> getter) {
+        this(key, min, max, 1, getter);
+    }
+
+    public RangedBlockNetSetting(String key, float min, float max, int stepDigits, Supplier<Float> getter) {
         super(key, getter);
         if(min >= max) throw new IllegalStateException("Min should not be equal or larger than max");
         this.min = min;
         this.max = max;
+        this.stepDigits = "0." + new String(new char[stepDigits]).replace("\0", "#");
     }
 
     @Override
     public String getTitleTip() {
-        final DecimalFormat df = new DecimalFormat("0.######");
+        final DecimalFormat df = new DecimalFormat(stepDigits);
         return String.format("[%s -> %s]", df.format(this.min), df.format(this.max));
     }
 
@@ -46,13 +50,12 @@ public class RangedBlockNetSetting extends BlockNetSetting<Float> {
 
     @Override
     public void render(GuiGraphics graphics, int leftPos, int topPos, int mouseX, int mouseY) {
-
         super.render(graphics, leftPos, topPos, mouseX, mouseY);
         int progress = (int)((getValue()-min)/(max-min)*120);
         boolean hovered = dragging || mouseY >= 0 && mouseY < 11 && mouseX >= leftPos+4 && mouseX < leftPos+132;
         graphics.blit(TEXTURE, leftPos+4, topPos, 16, 160, 128, 16);
         graphics.blit(TEXTURE, leftPos+4 + progress, topPos, hovered ? 8 : 0, 160, 8, 11);
-        final DecimalFormat df = new DecimalFormat("0.##");
+        final DecimalFormat df = new DecimalFormat(stepDigits);
         graphics.drawString(Minecraft.getInstance().font, df.format(getValue()), leftPos+133, topPos+2, -1);
     }
 

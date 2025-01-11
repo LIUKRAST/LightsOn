@@ -17,7 +17,6 @@ import java.util.function.Supplier;
 public abstract class BlockNetSetting<T> {
     private final String key;
     private final Supplier<T> getter;
-    private Component title = null;
     private T value;
     private boolean isValid = true;
     /**
@@ -193,7 +192,6 @@ public abstract class BlockNetSetting<T> {
      * Note that you should include {@code blocknet.settingType.YOURKEY} in your lang files
      * */
     public Component getTitle() {
-        if(title == null) title = Component.translatable("blocknet.settingType." + key).append(net.minecraft.network.chat.Component.literal(" " + getTitleTip()).withStyle(ChatFormatting.GRAY));
-        return title;
+        return Component.translatable("blocknet.settingType." + key).append(net.minecraft.network.chat.Component.literal(" " + getTitleTip()).withStyle(ChatFormatting.GRAY));
     }
 }

@@ -39,9 +39,11 @@ public class FloatBlockNetSetting extends BlockNetSetting<Float> {
         box.setResponder(text -> {
             try {
                 setValue(Float.parseFloat(text));
+                box.setTextColor(14737632);
                 setValid(true);
             } catch (NumberFormatException e) {
                 setValid(false);
+                box.setTextColor(16733525);
             }
         });
         widgets.add(box);
