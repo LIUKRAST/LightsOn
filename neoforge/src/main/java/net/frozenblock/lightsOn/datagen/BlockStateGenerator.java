@@ -59,7 +59,15 @@ public class BlockStateGenerator extends BlockStateProvider {
                 "all",
                 ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + id.getPath())
         );
+        models().getBuilder(id.getPath() + "_particle")
+                        .texture("particle", ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + id.getPath()));
+
         getMultipartBuilder(block)
+                .part()
+                .modelFile(models().getExistingFile(modLoc("block/" + id.getPath() + "_particle")))
+                .addModel()
+                .end()
+
                 .part()
                 .modelFile(models().getExistingFile(modLoc("block/" + id.getPath())))
                 .addModel()
