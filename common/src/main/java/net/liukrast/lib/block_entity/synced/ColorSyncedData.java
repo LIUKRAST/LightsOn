@@ -4,8 +4,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 
 public class ColorSyncedData extends AbstractSyncedData<Integer> {
-    public ColorSyncedData(Level level) {
-        super(16777216, level);
+    public ColorSyncedData() {
+        super(16777216);
     }
 
     @Override

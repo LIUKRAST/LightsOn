@@ -41,14 +41,14 @@ public class SpotlightModel extends BlockEntityModel<Spotlight> {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition main = partdefinition.addOrReplaceChild("main", CubeListBuilder.create().texOffs(0, 37).addBox(-5.0F, 7.0F, -4.0F, 10.0F, 1.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 16.0F, 0.0F));
+        PartDefinition main = partdefinition.addOrReplaceChild("main", CubeListBuilder.create().texOffs(0, 37).addBox(-5.0F, 7.0F, -4.0F, 10.0F, 1.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 16.0F, -1.0F));
 
         PartDefinition body = main.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 28).addBox(-4.0F, -6.0F, -1.5F, 8.0F, 6.0F, 3.0F, new CubeDeformation(0.01F))
                 .texOffs(0, 20).addBox(-5.0F, -10.0F, -2.0F, 10.0F, 4.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 7.0F, 1.0F));
 
         PartDefinition head = body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -4.0F, -6.0F, 8.0F, 8.0F, 12.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -8.0F, 0.0F));
 
-        head.addOrReplaceChild("top_panel", CubeListBuilder.create().texOffs(23, 2).addBox(0.0F, 0.0F, -5.0F, 8.0F, 0.0F, 5.0F, new CubeDeformation(0.01f)), PartPose.offset(-4.0F, -4.0F, -6.0F));
+        head.addOrReplaceChild("top_panel", CubeListBuilder.create().texOffs(23, 2).addBox(0.0F, 0.0F, -5.0F, 8.0F, 0.0F, 5.0F, new CubeDeformation(0.01F)), PartPose.offset(-4.0F, -4.0F, -6.0F));
 
         head.addOrReplaceChild("right_panel", CubeListBuilder.create().texOffs(28, 15).addBox(0.0F, 0.0F, -5.0F, 0.0F, 8.0F, 5.0F, new CubeDeformation(0.01F)), PartPose.offset(-4.0F, -4.0F, -6.0F));
 
@@ -63,7 +63,9 @@ public class SpotlightModel extends BlockEntityModel<Spotlight> {
         body.yRot = (float)(Math.toRadians(entity.yaw.getProgress(partial)));
         head.xRot = -lim((float)(Math.toRadians(entity.pitch.getProgress(partial))), 0, (float)Math.PI);
 
-        float open = (float) (Math.sqrt((entity.size.getProgress(partial) - 1) / 100) * Math.PI / 2);
+        float size = entity.size.getProgress(partial);
+        float length = entity.length.getProgress(partial);
+        float open = size <= 0 ? 0 : (float) (length <= 0 ? Math.PI / 2 : Math.min((Math.PI / 2), Math.atan(size / length)));
         top_panel.xRot = -open;
         bottom_panel.xRot = open;
         right_panel.yRot = open;

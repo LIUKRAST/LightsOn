@@ -4,8 +4,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 
 public class FloatSyncedData extends AbstractSyncedData<Float> {
-    public FloatSyncedData(Level level) {
-        super(0.0f, level);
+    public FloatSyncedData() {
+        super(0.0f);
     }
 
     @Override

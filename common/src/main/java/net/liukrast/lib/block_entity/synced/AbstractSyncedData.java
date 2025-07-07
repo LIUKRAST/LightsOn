@@ -8,12 +8,15 @@ public abstract class AbstractSyncedData<T> {
     private T oldValue;
 
     long animationStart;
-    private final Level level;
+    private Level level;
     int interpolation;
 
-    public AbstractSyncedData(T defaultValue, Level level) {
+    public AbstractSyncedData(T defaultValue) {
         this.value = defaultValue;
         this.oldValue = defaultValue;
+    }
+
+    public void setLevel(Level level) {
         this.level = level;
     }
 

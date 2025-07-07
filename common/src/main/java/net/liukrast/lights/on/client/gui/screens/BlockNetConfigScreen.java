@@ -173,9 +173,9 @@ public class BlockNetConfigScreen extends Screen {
 
     private CompoundTag packData() {
         final CompoundTag tag = new CompoundTag();
-        tag.putInt("duration", interpolation);
         for(BlockNetSetting<?> setting : settings) {
             setting.save(tag);
+            tag.getCompound(setting.getKey()).putInt("Interpolation", interpolation);
         }
         return tag;
     }
