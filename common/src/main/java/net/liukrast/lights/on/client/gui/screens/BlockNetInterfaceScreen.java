@@ -80,7 +80,7 @@ public class BlockNetInterfaceScreen extends Screen {
     @Override
     public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         super.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
-        guiGraphics.fill(width/2 - getHalfWindowWidth(), height/2 - getHalfWindowHeight(), width/2 + getHalfWindowWidth(), height/2 + getHalfWindowHeight(), -16777216);
+        //guiGraphics.fill(width/2 - getHalfWindowWidth(), height/2 - getHalfWindowHeight(), width/2 + getHalfWindowWidth(), height/2 + getHalfWindowHeight(), -16777216);
     }
 
     @Override

@@ -25,6 +25,10 @@ repositories {
 
 dependencies {
     implementation "curse.maven:jei-238222:5846880"
+    implementation "curse.maven:create-328085:6641610"
+
+    implementation("net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_version}")
+    jarJar("net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:[${ponder_version},)")
 }
 
 neoForge {

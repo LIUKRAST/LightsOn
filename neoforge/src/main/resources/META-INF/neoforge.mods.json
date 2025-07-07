@@ -1,7 +1,8 @@
 {
-  "license": "${license}",
+  "license": "${mod_license}",
   "loaderVersion": "${neoforge_loader_version_range}",
   "modLoader": "javafml",
+  "issueTrackerURL": "https://github.com/LIUKRAST/LightsOn",
   "accessTransformers": [
     {
       "file": "src/main/resources/META-INF/accesstransformer.cfg"
@@ -13,23 +14,13 @@
   "mods": [
     {
       "authors": "${mod_author}",
-      "credits": "${credits}",
-      "description": "${description}",
+      "credits": "${mod_credits}",
+      "description": "${mod_description}",
       "displayName": "${mod_name}",
-      "displayURL": "https://frozenblock.net",
+      "displayURL": "${mod_url}",
       "logoFile": "${mod_id}_banner.png",
       "modId": "${mod_id}",
-      "version": "${version}",
-      "frozenlib": {
-        "entrypoints": {
-          "frozenlib:example": [
-            "net.frozenblock.lightsOn.FrozenEntryPoint"
-          ]
-        },
-        "registry": {
-          "mod_protocol": 1
-        }
-      }
+      "version": "${version}"
     }
   ],
   "dependencies.${mod_id}": [

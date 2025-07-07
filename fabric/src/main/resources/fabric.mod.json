@@ -3,23 +3,23 @@
     "id": "${mod_id}",
     "version": "${version}",
     "name": "${mod_name}",
-    "description": "${description}",
+    "description": "${mod_description}",
     "authors": [
         "${mod_author}"
     ],
     "contact": {
-        "homepage": "https://frozenblock.net",
+        "homepage": "${mod_url}",
         "sources": "https://github.com/LIUKRAST/LightsOn"
     },
-    "license": "${license}",
+    "license": "${mod_license}",
     "icon": "${mod_id}.png",
     "environment": "*",
     "entrypoints": {
         "main": [
-            "net.frozenblock.lightsOn.LightsOn"
+            "net.liukrast.lights.on.LightsOn"
         ],
         "client": [
-            "net.frozenblock.lightsOn.LightsOn"
+            "net.liukrast.lights.on.LightsOn"
         ]
     },
     "mixins": [

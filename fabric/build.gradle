@@ -24,6 +24,8 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
     modImplementation "curse.maven:jei-238222:5846878"
     modApi "com.terraformersmc:modmenu:11.0.2"
+
+    modImplementation "net.createmod.ponder:Ponder-Fabric-${minecraft_version}:${ponder_version}"
 }
 
 loom {
@@ -48,4 +50,9 @@ loom {
             runDir('runs/server')
         }
     }
+}
+
+remapJar {
+    nestedJars.from "net.createmod.ponder:Ponder-Fabric-${minecraft_version}:${ponder_version}"
+    addNestedDependencies = true
 }

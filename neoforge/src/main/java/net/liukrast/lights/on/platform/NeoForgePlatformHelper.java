@@ -1,9 +1,12 @@
 package net.liukrast.lights.on.platform;
 
 import net.liukrast.lights.LightsOnConstants;
+import net.liukrast.lights.on.NewBlockNetInterfaceScreen;
 import net.liukrast.lights.on.platform.services.IPlatformHelper;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.fml.ModList;
@@ -38,5 +41,10 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
     @Override
     public CreativeModeTab.Builder getCreativeTabBuilder() {
         return CreativeModeTab.builder();
+    }
+
+    @Override
+    public Screen getScreen() {
+        return new NewBlockNetInterfaceScreen(Component.empty());
     }
 }

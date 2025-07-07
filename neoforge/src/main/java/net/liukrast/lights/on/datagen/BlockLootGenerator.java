@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Set;
 
 public class BlockLootGenerator extends BlockLootSubProvider {
-    protected BlockLootGenerator(HolderLookup.Provider registries) {
+    public BlockLootGenerator(HolderLookup.Provider registries) {
         super(Set.of(), FeatureFlags.REGISTRY.allFlags(), registries);
     }
 

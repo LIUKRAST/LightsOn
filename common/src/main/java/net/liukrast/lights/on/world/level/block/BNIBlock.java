@@ -2,12 +2,14 @@ package net.liukrast.lights.on.world.level.block;
 
 import com.mojang.serialization.MapCodec;
 import net.liukrast.lib.voxel.VoxelShapes;
+import net.liukrast.lights.on.platform.Services;
 import net.liukrast.lights.on.world.level.block.entity.BNIBlockEntity;
 import net.liukrast.lights.on.world.item.BlockNetWrench;
 import net.liukrast.lights.on.world.item.FloppyDiskItem;
 import net.liukrast.lights.on.client.gui.screens.BlockNetInterfaceScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
@@ -87,7 +89,7 @@ public class BNIBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
     protected InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result) {
         if(world.getBlockEntity(pos) instanceof BNIBlockEntity bni) {
             if (world.isClientSide()) {
-                final Runnable runnable = () -> Minecraft.getInstance().setScreen(new BlockNetInterfaceScreen(bni));
+                final Runnable runnable = () -> Minecraft.getInstance().setScreen(Services.PLATFORM.getScreen());
                 runnable.run();
             }
             return InteractionResult.sidedSuccess(world.isClientSide());

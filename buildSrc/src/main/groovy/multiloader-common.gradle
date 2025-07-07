@@ -42,6 +42,9 @@ repositories {
         name = 'BlameJared'
         url = 'https://maven.blamejared.com'
     }
+
+    maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" }
+    maven { url = "https://maven.createmod.net" }
 }
 
 // Declare capabilities on the outgoing configurations.
@@ -92,14 +95,14 @@ processResources {
             'mod_name'                     : mod_name,
             'mod_author'                   : mod_author,
             'mod_id'                       : mod_id,
-            'license'                      : license,
-            'description'                  : project.description,
+            'mod_url'                      : mod_url,
+            'mod_license'                  : mod_license,
+            'mod_description'              : mod_description,
             'neoforge_version'             : neoforge_version,
             'neoforge_loader_version_range': neoforge_loader_version_range,
-            "forge_version": forge_version,
-            "forge_loader_version_range": forge_loader_version_range,
-            'credits'                      : credits,
-            'java_version'                 : java_version
+            'mod_credits'                  : mod_credits,
+            'java_version'                 : java_version,
+            'ponder_version'               : ponder_version
     ]
 
     filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml', 'META-INF/neoforge.mods.toml', '*.mixins.json']) {

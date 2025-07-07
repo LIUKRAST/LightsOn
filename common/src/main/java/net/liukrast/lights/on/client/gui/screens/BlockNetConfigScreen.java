@@ -88,6 +88,7 @@ public class BlockNetConfigScreen extends Screen {
             setting.render(guiGraphics, leftPos, topPos+y+13, mouseX, mouseY-y-13-topPos);
             y+=12+setting.getHeight();
         }
+
     }
 
     @Override

@@ -1,4 +1,4 @@
-package net.liukrast.lights.mixin;
+package net.liukrast.lights.on.mixin;
 
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.RenderType;

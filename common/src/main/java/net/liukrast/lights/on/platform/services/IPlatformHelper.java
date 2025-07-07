@@ -1,5 +1,6 @@
 package net.liukrast.lights.on.platform.services;
 
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
@@ -21,4 +22,6 @@ public interface IPlatformHelper {
     void setRenderType(Block block, RenderType type);
 
     CreativeModeTab.Builder getCreativeTabBuilder();
+
+    Screen getScreen();
 }

@@ -2,11 +2,13 @@ package net.liukrast.lights.on.world.item;
 
 import net.liukrast.lib.blocknet.BlockNetPole;
 import net.liukrast.lights.on.registry.RegisterDataComponents;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.item.context.UseOnContext;
 import org.lwjgl.system.NonnullDefault;
 

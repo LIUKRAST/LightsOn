@@ -1,4 +1,4 @@
-package net.liukrast.lights.mixin;
+package net.liukrast.lights.on.mixin;
 
 import net.liukrast.lib.blocknet.BlockNetConfigurable;
 import net.liukrast.lights.LightsOnConstants;

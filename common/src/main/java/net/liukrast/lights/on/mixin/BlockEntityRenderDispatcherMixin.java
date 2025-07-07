@@ -1,4 +1,4 @@
-package net.liukrast.lights.mixin;
+package net.liukrast.lights.on.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.liukrast.lib.blocknet.BlockNetPole;
