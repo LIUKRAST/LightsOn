@@ -2,7 +2,7 @@
   "sources": [
     {
       "type": "single",
-      "resource": "lights_on:entity/light_beam"
+      "resource": "lights_on:entity/spotlight/spotlight"
     },
     {
       "type": "single",

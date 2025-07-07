@@ -1,13 +1,12 @@
 {
   "block.lights_on.black_neon": "Black Neon",
-  "block.lights_on.blocknet_interface": "BlockNet Interface",
-  "block.lights_on.blocknet_link": "BlockNet Link",
+  "block.lights_on.blocknet_interface": "Blocknet Interface",
+  "block.lights_on.blocknet_link": "Blocknet Link",
   "block.lights_on.blue_neon": "Blue Neon",
   "block.lights_on.brown_neon": "Brown Neon",
   "block.lights_on.cyan_neon": "Cyan Neon",
   "block.lights_on.gray_neon": "Gray Neon",
   "block.lights_on.green_neon": "Green Neon",
-  "block.lights_on.light_beam": "Light Beam",
   "block.lights_on.light_blue_neon": "Light Blue Neon",
   "block.lights_on.light_gray_neon": "Light Gray Neon",
   "block.lights_on.lime_neon": "Lime Neon",
@@ -16,6 +15,7 @@
   "block.lights_on.pink_neon": "Pink Neon",
   "block.lights_on.purple_neon": "Purple Neon",
   "block.lights_on.red_neon": "Red Neon",
+  "block.lights_on.spotlight": "Spotlight",
   "block.lights_on.white_neon": "White Neon",
   "block.lights_on.worklight_stand": "Worklight Stand",
   "block.lights_on.yellow_neon": "Yellow Neon",
@@ -43,9 +43,9 @@
   "item.blocknet_wrench.failed": "§c§lConnection failed",
   "item.blocknet_wrench.success": "§a§lConnection established",
   "item.blocknet_wrench.unbindable": "§c§lThis block is not linkable",
-  "item.lights_on.blocknet_wrench": "BlockNet Wrench",
+  "item.lights_on.blocknet_wrench": "Blocknet Wrench",
   "item.lights_on.blue_floppy_disk": "Blue Floppy Disk",
   "item.lights_on.red_floppy_disk": "Red Floppy Disk",
   "item.lights_on.yellow_floppy_disk": "Yellow Floppy Disk",
-  "itemGroup.lights_on_tab": "Lights On"
+  "itemGroup.lights_on": "Lights On"
 }
