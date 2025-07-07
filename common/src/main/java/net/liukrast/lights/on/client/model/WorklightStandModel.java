@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.liukrast.lib.block_entity.BlockEntityModel;
 import net.liukrast.lights.on.client.renderer.blockentity.BeamRenderType;
-import net.liukrast.lights.on.world.level.block.entity.WorklightStandBlockEntity;
+import net.liukrast.lights.on.world.level.block.entity.WorklightStand;
 import net.liukrast.lights.on.client.gui.screens.ColorMode;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.RenderType;
 
 import static net.liukrast.lights.on.client.renderer.blockentity.BeamRenderType.BEAM;
 
-public class WorklightStandModel extends BlockEntityModel<WorklightStandBlockEntity> {
+public class WorklightStandModel extends BlockEntityModel<WorklightStand> {
     private final ModelPart middle;
     private final ModelPart right_head;
     private final ModelPart left_head;
@@ -42,7 +42,7 @@ public class WorklightStandModel extends BlockEntityModel<WorklightStandBlockEnt
     }
 
     @Override
-    public void setupAnim(WorklightStandBlockEntity entity, float ageInTicks) {
+    public void setupAnim(WorklightStand entity, float ageInTicks) {
         float yaw = (float) Math.toRadians(entity.getYaw());
         this.middle.y = -1-(entity.getHeight()*14F);
         this.middle.yRot = yaw;
@@ -52,7 +52,7 @@ public class WorklightStandModel extends BlockEntityModel<WorklightStandBlockEnt
     }
 
     @Override
-    public void render(WorklightStandBlockEntity entity, float ageInTicks, PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color, float alpha) {
+    public void render(WorklightStand entity, float ageInTicks, PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color, float alpha) {
         middle.render(poseStack, vertexConsumer, packedLight, packedOverlay);
         legs.render(poseStack, vertexConsumer, packedLight, packedOverlay);
     }

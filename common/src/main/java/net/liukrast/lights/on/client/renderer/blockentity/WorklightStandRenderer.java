@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.liukrast.lights.LightsOnConstants;
 import net.liukrast.lights.on.client.model.WorklightStandModel;
 import net.liukrast.lights.on.world.level.block.WorklightStandBlock;
-import net.liukrast.lights.on.world.level.block.entity.WorklightStandBlockEntity;
+import net.liukrast.lights.on.world.level.block.entity.WorklightStand;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -16,14 +16,14 @@ import net.minecraft.world.phys.AABB;
 import org.lwjgl.system.NonnullDefault;
 
 @NonnullDefault
-public class WorklightStandRenderer implements BlockEntityRenderer<WorklightStandBlockEntity> {
+public class WorklightStandRenderer implements BlockEntityRenderer<WorklightStand> {
     public static final ResourceLocation TEXTURE = LightsOnConstants.id("textures/entity/worklight_stand.png");
     public static final WorklightStandModel MODEL = new WorklightStandModel(WorklightStandModel.create().bakeRoot());
 
     public WorklightStandRenderer(BlockEntityRendererProvider.Context ignored) {}
 
     @Override
-    public void render(WorklightStandBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
+    public void render(WorklightStand blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         poseStack.pushPose();
         poseStack.scale(-1, -1, 1);
         poseStack.translate(-0.5, -1.5, 0.5);
@@ -37,12 +37,12 @@ public class WorklightStandRenderer implements BlockEntityRenderer<WorklightStan
     }
 
     @Override
-    public boolean shouldRenderOffScreen(WorklightStandBlockEntity blockEntity) {
+    public boolean shouldRenderOffScreen(WorklightStand blockEntity) {
         return true;
     }
 
     @SuppressWarnings("unused")
-    public AABB getRenderBoundingBox(WorklightStandBlockEntity blockEntity) {
+    public AABB getRenderBoundingBox(WorklightStand blockEntity) {
         return new AABB(blockEntity.getBlockPos().above()).inflate(0, 1,0);
     }
 }

@@ -12,13 +12,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
-public class WorklightStandBlockEntity extends ClientSyncedBlockEntity implements BlockNetConfigurable {
+public class WorklightStand extends ClientSyncedBlockEntity implements BlockNetConfigurable {
 
     private float yaw;
     private float rightPitch, leftPitch;
     private float height;
 
-    public WorklightStandBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
+    public WorklightStand(@NotNull BlockPos pos, @NotNull BlockState state) {
         super(RegisterBlockEntityTypes.WORKLIGHT_STAND, pos, state);
     }
 
@@ -61,18 +61,18 @@ public class WorklightStandBlockEntity extends ClientSyncedBlockEntity implement
 
     @Override
     public void defineSettings(BlockNetSettingBuilder builder) {
-        builder.add(new RangedBlockNetSetting("yaw", -180, 180, this::getYaw));
-        builder.add(new RangedBlockNetSetting("right_pitch", -90, 90, this::getRightPitch));
-        builder.add(new RangedBlockNetSetting("left_pitch", -90, 90, this::getLeftPitch));
-        builder.add(new RangedBlockNetSetting("height", 1, this::getHeight));
+        builder.add(new RangedBlockNetSetting("Yaw", -180, 180, this::getYaw));
+        builder.add(new RangedBlockNetSetting("RightPitch", -90, 90, this::getRightPitch));
+        builder.add(new RangedBlockNetSetting("LeftPitch", -90, 90, this::getLeftPitch));
+        builder.add(new RangedBlockNetSetting("Height", 1, this::getHeight));
     }
 
     @Override
     public void updateData(CompoundTag tag) {
-        this.yaw = tag.getFloat("yaw");
-        this.rightPitch = tag.getFloat("right_pitch");
-        this.leftPitch = tag.getFloat("left_pitch");
-        this.height = tag.getFloat("height");
+        this.yaw = tag.getCompound("Yaw").getFloat("Value");
+        this.rightPitch = tag.getCompound("RightPitch").getFloat("Value");
+        this.leftPitch = tag.getCompound("LeftPitch").getFloat("Value");
+        this.height = tag.getCompound("Height").getFloat("Value");
         setChanged();
         if(level != null) this.level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
     }

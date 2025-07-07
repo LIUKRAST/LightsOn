@@ -56,6 +56,8 @@ public class SpotlightRenderer implements BlockEntityRenderer<Spotlight> {
     public AABB getRenderBoundingBox(Spotlight blockEntity) {
         BlockPos pos = blockEntity.getBlockPos();
         final float length = blockEntity.length.getProgress(1);
-        return new AABB(pos).inflate(length);
+        var aabb = new AABB(pos);
+        if(!blockEntity.getBlockState().getValue(SpotlightBlock.POWERED)) return aabb;
+        return aabb.inflate(length);
     }
 }

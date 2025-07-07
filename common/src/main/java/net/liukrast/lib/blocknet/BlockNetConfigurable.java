@@ -3,7 +3,7 @@ package net.liukrast.lib.blocknet;
 import net.liukrast.lights.on.client.gui.screens.BlockNetConfigScreen;
 import net.liukrast.lights.on.client.gui.screens.BlockNetInterfaceScreen;
 import net.liukrast.lights.on.world.item.BlockNetWrench;
-import net.liukrast.lights.on.world.level.block.entity.WorklightStandBlockEntity;
+import net.liukrast.lights.on.world.level.block.entity.WorklightStand;
 import net.minecraft.nbt.CompoundTag;
 
 import java.util.function.Supplier;
@@ -21,7 +21,7 @@ public interface BlockNetConfigurable {
     /**
      * This method is required when implementing this interface and will be where you register your BlockNet setting,
      * so that they can be shown in the menus, and update their values.
-     * See {@link WorklightStandBlockEntity} for reference.
+     * See {@link WorklightStand} for reference.
      * @param builder The BlockNet settings builder, which includes the possibility to add settings
      * @author LiukRast
      * */

@@ -1,7 +1,7 @@
 package net.liukrast.lights.on.world.level.block;
 
 import com.mojang.serialization.MapCodec;
-import net.liukrast.lights.on.world.level.block.entity.WorklightStandBlockEntity;
+import net.liukrast.lights.on.world.level.block.entity.WorklightStand;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -46,7 +46,7 @@ public class WorklightStandBlock extends BaseEntityBlock implements SimpleWaterl
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new WorklightStandBlockEntity(pos, state);
+        return new WorklightStand(pos, state);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class WorklightStandBlock extends BaseEntityBlock implements SimpleWaterl
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
         if(placer == null) return;
-        if(level.getBlockEntity(pos) instanceof WorklightStandBlockEntity stand) {
+        if(level.getBlockEntity(pos) instanceof WorklightStand stand) {
             stand.setYaw(placer.getYHeadRot());
         }
     }
