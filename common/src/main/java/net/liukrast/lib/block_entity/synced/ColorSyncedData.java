@@ -1,22 +1,12 @@
 package net.liukrast.lib.block_entity.synced;
 
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.Level;
+import com.mojang.serialization.Codec;
+import net.minecraft.util.ExtraCodecs;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
-public class ColorSyncedData extends AbstractSyncedData<Integer> {
-    public ColorSyncedData() {
-        super(16777216);
-    }
-
-    @Override
-    public void save(CompoundTag tag) {
-        tag.putInt("Value", this.get());
-        tag.putInt("OldValue", this.getProgress(0));
-    }
-
-    @Override
-    public void load(CompoundTag tag) {
-        this.set(tag.getInt("Value"));
+public class ColorSyncedData extends AbstractInterpolatedData<Integer> {
+    public ColorSyncedData(BlockEntity blockEntity) {
+        super(16777216, blockEntity);
     }
 
     @Override
@@ -31,5 +21,10 @@ public class ColorSyncedData extends AbstractSyncedData<Integer> {
         int fg = (int) interpolate(og, g, age);
         int fb = (int) interpolate(ob, b, age);
         return (fr << 16) | (fg << 8) | fb;
+    }
+
+    @Override
+    public Codec<Integer> codec() {
+        return ExtraCodecs.intRange(0, 16777216);
     }
 }

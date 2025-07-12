@@ -1,12 +1,12 @@
 package net.liukrast.lights.on.world.level.block.entity;
 
-import net.liukrast.lib.block_entity.ClientSyncedBlockEntity;
-import net.liukrast.lib.block_entity.synced.SyncedDataHolder;
-import net.liukrast.lib.block_entity.synced.AbstractSyncedData;
+import net.liukrast.lib.block_entity.synced.InterpolatedDataHolder;
+import net.liukrast.lib.block_entity.synced.AbstractInterpolatedData;
 import net.liukrast.lib.block_entity.synced.ColorSyncedData;
 import net.liukrast.lib.block_entity.synced.FloatSyncedData;
 import net.liukrast.lib.blocknet.BlockNetConfigurable;
-import net.liukrast.lib.blocknet.BlockNetSettingBuilder;
+import net.liukrast.lib.blocknet.BlockNetSettings;
+import net.liukrast.lib.blocknet.InterpolatedHolder;
 import net.liukrast.lib.blocknet.setting.ColorBlockNetSetting;
 import net.liukrast.lib.blocknet.setting.FloatBlockNetSetting;
 import net.liukrast.lib.blocknet.setting.RangedBlockNetSetting;
@@ -15,45 +15,47 @@ import net.liukrast.lights.on.registry.RegisterBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.system.NonnullDefault;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Supplier;
 
-public class Spotlight extends ClientSyncedBlockEntity implements BlockNetPole, BlockNetConfigurable {
+@NonnullDefault
+public class Spotlight extends BlockEntity implements BlockNetPole, BlockNetConfigurable, InterpolatedHolder {
     private final Set<BlockPos> poles = new HashSet<>();
+    private final InterpolatedDataHolder holder = new InterpolatedDataHolder(this);
+    private final BlockNetSettings blockNetSettings = new BlockNetSettings();
 
-    private final SyncedDataHolder holder = new SyncedDataHolder();
-
-    public final AbstractSyncedData<Integer> color;
-    public final AbstractSyncedData<Float> pitch;
-    public final AbstractSyncedData<Float> yaw;
-    public final AbstractSyncedData<Float> size;
-    public final AbstractSyncedData<Float> length;
+    public final AbstractInterpolatedData<Integer> color = holder.register("Color", ColorSyncedData::new);
+    public final AbstractInterpolatedData<Float> pitch = holder.register("Pitch", FloatSyncedData::new);
+    public final AbstractInterpolatedData<Float> yaw = holder.register("Yaw", FloatSyncedData::new);
+    public final AbstractInterpolatedData<Float> size = holder.register("Size", FloatSyncedData::new);
+    public final AbstractInterpolatedData<Float> length = holder.register("Length", FloatSyncedData::new);
 
     public Spotlight(BlockPos pos, BlockState blockState) {
         super(RegisterBlockEntityTypes.SPOTLIGHT, pos, blockState);
-        this.color = holder.addSyncedData("Color", new ColorSyncedData());
-        this.pitch = holder.addSyncedData("Pitch", new FloatSyncedData());
-        this.yaw = holder.addSyncedData("Yaw", new FloatSyncedData());
-        this.size = holder.addSyncedData("Size", new FloatSyncedData());
-        this.length = holder.addSyncedData("Length", new FloatSyncedData());
     }
 
     @Override
-    public void save(CompoundTag nbt, HolderLookup.Provider registries) {
-        holder.save(nbt);
-        saveBlockPosList(nbt);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
+        holder.saveAdditional(tag, registries);
+        saveBlockPosList(tag);
     }
 
     @Override
-    public void load(CompoundTag nbt, HolderLookup.Provider registries) {
-        holder.load(nbt);
-        loadBlockPosList(nbt);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
+        holder.loadAdditional(tag, registries);
+        loadBlockPosList(tag);
     }
 
     @Override
@@ -73,35 +75,38 @@ public class Spotlight extends ClientSyncedBlockEntity implements BlockNetPole, 
         setChanged();
     }
 
-
     @Override
-    public void defineSettings(BlockNetSettingBuilder builder) {
-        builder.add(new ColorBlockNetSetting("Color", color::get));
-        builder.add(new RangedBlockNetSetting("Pitch", 90, pitch::get));
-        builder.add(new FloatBlockNetSetting("Yaw", yaw::get));
-        builder.add(new RangedBlockNetSetting("Size", 0, 100, size::get));
-        builder.add(new RangedBlockNetSetting("Length", 0, 100, length::get));
-    }
-
-    @Override
-    public void updateData(CompoundTag tag) {
-        holder.forEach((key, sd) -> {
-            CompoundTag tag1 = tag.getCompound(key);
-            tag1.putLong("AnimationStart", level == null ? 0 : level.getGameTime());
+    public BlockNetSettings getSettings() {
+        blockNetSettings.init(() -> {
+            blockNetSettings.add(new ColorBlockNetSetting("Color", color::get, color::set));
+            blockNetSettings.add(new RangedBlockNetSetting("Pitch", 90, pitch::get, pitch::set));
+            blockNetSettings.add(new FloatBlockNetSetting("Yaw", yaw::get, yaw::set));
+            blockNetSettings.add(new RangedBlockNetSetting("Size", 0, 100, size::get, size::set));
+            blockNetSettings.add(new RangedBlockNetSetting("Length", 0, 100, length::get, length::set));
         });
-        holder.load(tag);
-        setChanged();
-        if(level != null) this.level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
+        return blockNetSettings;
     }
 
     @Override
-    public void setLevel(@NotNull Level level) {
-        super.setLevel(level);
-        holder.setLevel(level);
+    public void updateSettings(CompoundTag tag) {
+        if(level == null) return;
+        holder.set(tag, level);
     }
 
     @Override
-    public Supplier<Integer> interpolationGetter() {
-        return color::getInterpolation;
+    public InterpolatedDataHolder getHolder() {
+        return holder;
+    }
+
+    @Override
+    public @NotNull CompoundTag getUpdateTag(HolderLookup.@NotNull Provider registries) {
+        CompoundTag tag = super.getUpdateTag(registries);
+        saveAdditional(tag, registries);
+        return tag;
+    }
+
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 }

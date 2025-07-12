@@ -2,9 +2,9 @@ package net.liukrast.lights.on.client.gui.screens;
 
 import net.liukrast.lib.blocknet.BlockNetConfigurable;
 import net.liukrast.lib.blocknet.BlockNetSetting;
-import net.liukrast.lib.blocknet.BlockNetSettingBuilder;
+import net.liukrast.lib.blocknet.BlockNetSettings;
 import net.liukrast.lights.LightsOnConstants;
-import net.liukrast.lights.on.network.protocol.game.BlockNetConfigUpdatePacket;
+import net.liukrast.lights.on.network.protocol.game.BlockNetSettingUpdatePacket;
 import net.liukrast.lights.on.platform.Services;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.GuiGraphics;
@@ -33,12 +33,9 @@ public class BlockNetConfigScreen extends Screen {
 
     public BlockNetConfigScreen(BlockNetConfigurable configurable, BlockPos pos) {
         super(GameNarrator.NO_TITLE);
-        var builder = new BlockNetSettingBuilder();
-        configurable.defineSettings(builder);
-        this.settings = builder.getSettings();
-        var getter = configurable.interpolationGetter();
-        this.includeInterpolation = getter != null;
-        this.interpolation = includeInterpolation ? getter.get() : 0;
+        this.settings = configurable.getSettings().getSettings();
+        this.includeInterpolation = true; //TODO:
+        this.interpolation = 0; //TODO
         this.pos = pos;
     }
 
@@ -168,15 +165,16 @@ public class BlockNetConfigScreen extends Screen {
     }
 
     private void onDone(Button ignored) {
-        Services.PACKET_HELPER.send2S(new BlockNetConfigUpdatePacket(pos, packData()));
+        Services.PACKET_HELPER.send2S(new BlockNetSettingUpdatePacket(pos, packData()));
         this.onClose();
     }
 
     private CompoundTag packData() {
         final CompoundTag tag = new CompoundTag();
         for(BlockNetSetting<?> setting : settings) {
-            setting.save(tag);
-            tag.getCompound(setting.getKey()).putInt("Interpolation", interpolation);
+            CompoundTag tag1 = new CompoundTag();
+            setting.save(tag1, interpolation);
+            tag.put(setting.getKey(), tag1);
         }
         return tag;
     }

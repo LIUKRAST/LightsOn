@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 
 public class RegisterBlocks {
     public static final Block SPOTLIGHT = new SpotlightBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).dynamicShape().lightLevel(b -> b.getValue(SpotlightBlock.POWERED) ? 10 : 0));
-    public static final Block BLOCKNET_INTERFACE = new BNIBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).dynamicShape().lightLevel((b) -> 5));
+    public static final Block BLOCKNET_INTERFACE = new BlockNetInterfaceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).dynamicShape().lightLevel((b) -> 5));
     public static final Block BLOCKNET_LINK = new BNLBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).dynamicShape());
     public static final Block WORKLIGHT_STAND = new WorklightStandBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).dynamicShape().lightLevel(b -> b.getValue(WorklightStandBlock.POWERED) ? 10 : 0));
     public static final NeonBlock BLUE_NEON = new NeonBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).dynamicShape().lightLevel(b -> b.getValue(NeonBlock.POWERED) ? 14 : 0));

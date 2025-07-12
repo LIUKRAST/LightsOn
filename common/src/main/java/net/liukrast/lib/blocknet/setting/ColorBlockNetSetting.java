@@ -1,5 +1,6 @@
 package net.liukrast.lib.blocknet.setting;
 
+import com.mojang.serialization.Codec;
 import net.liukrast.lib.blocknet.BlockNetSetting;
 import net.liukrast.lights.on.client.gui.screens.ColorMode;
 import net.minecraft.client.Minecraft;
@@ -11,6 +12,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -19,8 +22,8 @@ import java.util.function.Supplier;
  * @author LiukRast
  * */
 public class ColorBlockNetSetting extends BlockNetSetting<Integer> {
-    public ColorBlockNetSetting(String key, Supplier<Integer> getter) {
-        super(key, getter);
+    public ColorBlockNetSetting(String key, Supplier<Integer> getter, BiConsumer<Integer, Integer> setter) {
+        super(key, getter, setter);
     }
 
     private EditBox channelA,channelB,channelC;
@@ -146,10 +149,8 @@ public class ColorBlockNetSetting extends BlockNetSetting<Integer> {
     }
 
     @Override
-    public void save(CompoundTag tag) {
-        var tag1 = new CompoundTag();
-        tag1.putInt("Value", getValue());
-        tag.put(getKey(), tag1);
+    public Codec<Integer> codec() {
+        return Codec.INT;
     }
 
     @Override

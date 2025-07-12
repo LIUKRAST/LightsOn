@@ -12,13 +12,13 @@ public class BeamRenderType extends RenderType {
 
     public static final RenderType BEAM = create("LightsonBeam",
             DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256,
-            CompositeState.builder().setLayeringState(RenderStateShard.POLYGON_OFFSET_LAYERING)
+            CompositeState.builder().setLayeringState(POLYGON_OFFSET_LAYERING)
                     .setTextureState(NO_TEXTURE)
                     .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
-                    .setCullState(RenderStateShard.CULL)
-                    .setLightmapState(RenderStateShard.NO_LIGHTMAP)
-                    .setWriteMaskState(WriteMaskStateShard.COLOR_WRITE)
-                    .setShaderState(RenderStateShard.RENDERTYPE_LIGHTNING_SHADER)
+                    .setCullState(NO_CULL) // TODO: Replace with 
+                    .setLightmapState(LIGHTMAP)
+                    .setWriteMaskState(COLOR_WRITE)
+                    .setShaderState(RENDERTYPE_LIGHTNING_SHADER)
                     .createCompositeState(false));
 
     public BeamRenderType(String name, VertexFormat vertexFormat, VertexFormat.Mode mode, int bufferSize, boolean affectsCrumbling, boolean sortOnUpload, Runnable setupState, Runnable clearState) {
@@ -34,29 +34,32 @@ public class BeamRenderType extends RenderType {
         float endMultiplier = beamEnd * 2.65f;
         float length = beamLength * 0.77f;
 
-        builder.addVertex(m, beamSize, beamSize, 0).setColor(r,g,b,a);
-        builder.addVertex(m, beamSize, -beamSize, 0).setColor(r,g,b,a);
-        builder.addVertex(m, -beamSize, -beamSize, 0).setColor(r,g,b,a);
-        builder.addVertex(m, -beamSize, beamSize, 0).setColor(r,g,b,a);
+        int bl = 15;
+        int sl = 15;
 
-        builder.addVertex(m, beamSize * endMultiplier, beamSize * endMultiplier, -length).setColor(r, g, b,0);
-        builder.addVertex(m, beamSize, beamSize, 0).setColor(r, g, b, a);
-        builder.addVertex(m, beamSize, -beamSize, 0).setColor(r, g, b, a);
-        builder.addVertex(m, beamSize * endMultiplier, -beamSize * endMultiplier, -length).setColor(r, g, b,0);
+        builder.addVertex(m, beamSize, beamSize, 0).setUv2(bl, sl).setColor(r,g,b,a);
+        builder.addVertex(m, beamSize, -beamSize, 0).setUv2(bl, sl).setColor(r,g,b,a);
+        builder.addVertex(m, -beamSize, -beamSize, 0).setUv2(bl, sl).setColor(r,g,b,a);
+        builder.addVertex(m, -beamSize, beamSize, 0).setUv2(bl, sl).setColor(r,g,b,a);
 
-        builder.addVertex(m, -beamSize * endMultiplier, -beamSize * endMultiplier, -length).setColor(r, g, b,0);
+        builder.addVertex(m, beamSize * endMultiplier, beamSize * endMultiplier, -length).setUv2(bl, sl).setColor(r, g, b,0);
+        builder.addVertex(m, beamSize, beamSize, 0).setUv2(bl, sl).setColor(r, g, b, a);
+        builder.addVertex(m, beamSize, -beamSize, 0).setUv2(bl, sl).setColor(r, g, b, a);
+        builder.addVertex(m, beamSize * endMultiplier, -beamSize * endMultiplier, -length).setUv2(bl, sl).setColor(r, g, b,0);
+
+        builder.addVertex(m, -beamSize * endMultiplier, -beamSize * endMultiplier, -length).setUv2(bl, sl).setColor(r, g, b,0);
         builder.addVertex(m, -beamSize, -beamSize, 0).setColor(r, g, b, a);
         builder.addVertex(m, -beamSize, beamSize, 0).setColor(r, g, b, a);
-        builder.addVertex(m, -beamSize * endMultiplier, beamSize * endMultiplier, -length).setColor(r, g, b,0);
+        builder.addVertex(m, -beamSize * endMultiplier, beamSize * endMultiplier, -length).setUv2(bl, sl).setColor(r, g, b,0);
 
-        builder.addVertex(m, -beamSize * endMultiplier, beamSize * endMultiplier, -length).setColor(r, g, b,0);
-        builder.addVertex(m, -beamSize, beamSize, 0).setColor(r, g, b, a);
-        builder.addVertex(m, beamSize, beamSize, 0).setColor(r, g, b, a);
-        builder.addVertex(m, beamSize * endMultiplier, beamSize * endMultiplier, -length).setColor(r, g, b,0);
+        builder.addVertex(m, -beamSize * endMultiplier, beamSize * endMultiplier, -length).setUv2(bl, sl).setColor(r, g, b,0);
+        builder.addVertex(m, -beamSize, beamSize, 0).setUv2(bl, sl).setColor(r, g, b, a);
+        builder.addVertex(m, beamSize, beamSize, 0).setUv2(bl, sl).setColor(r, g, b, a);
+        builder.addVertex(m, beamSize * endMultiplier, beamSize * endMultiplier, -length).setUv2(bl, sl).setColor(r, g, b,0);
 
-        builder.addVertex(m, beamSize * endMultiplier, -beamSize * endMultiplier, -length).setColor(r, g, b,0);
-        builder.addVertex(m, beamSize, -beamSize, 0).setColor(r, g, b, a);
-        builder.addVertex(m, -beamSize, -beamSize, 0).setColor(r, g, b, a);
-        builder.addVertex(m, -beamSize * endMultiplier, -beamSize * endMultiplier, -length).setColor(r, g, b,0);
+        builder.addVertex(m, beamSize * endMultiplier, -beamSize * endMultiplier, -length).setUv2(bl, sl).setColor(r, g, b,0);
+        builder.addVertex(m, beamSize, -beamSize, 0).setUv2(bl, sl).setColor(r, g, b, a);
+        builder.addVertex(m, -beamSize, -beamSize, 0).setUv2(bl, sl).setColor(r, g, b, a);
+        builder.addVertex(m, -beamSize * endMultiplier, -beamSize * endMultiplier, -length).setUv2(bl, sl).setColor(r, g, b,0);
     }
 }

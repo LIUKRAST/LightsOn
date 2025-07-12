@@ -1,13 +1,14 @@
 package net.liukrast.lib.blocknet.setting;
 
+import com.mojang.serialization.Codec;
 import net.liukrast.lib.blocknet.BlockNetSetting;
 import net.liukrast.lights.LightsOnConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 
 import java.text.DecimalFormat;
+import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 /**
@@ -21,16 +22,16 @@ public class RangedBlockNetSetting extends BlockNetSetting<Float> {
     private final String stepDigits;
     boolean dragging = false;
 
-    public RangedBlockNetSetting(String key, float max, Supplier<Float> getter) {
-        this(key, 0, max, 1, getter);
+    public RangedBlockNetSetting(String key, float max, Supplier<Float> getter, BiConsumer<Float, Integer> setter) {
+        this(key, 0, max, 1, getter, setter);
     }
 
-    public RangedBlockNetSetting(String key, float min, float max, Supplier<Float> getter) {
-        this(key, min, max, 1, getter);
+    public RangedBlockNetSetting(String key, float min, float max, Supplier<Float> getter, BiConsumer<Float, Integer> setter) {
+        this(key, min, max, 1, getter, setter);
     }
 
-    public RangedBlockNetSetting(String key, float min, float max, int stepDigits, Supplier<Float> getter) {
-        super(key, getter);
+    public RangedBlockNetSetting(String key, float min, float max, int stepDigits, Supplier<Float> getter, BiConsumer<Float, Integer> setter) {
+        super(key, getter, setter);
         if(min >= max) throw new IllegalStateException("Min should not be equal or larger than max");
         this.min = min;
         this.max = max;
@@ -44,10 +45,8 @@ public class RangedBlockNetSetting extends BlockNetSetting<Float> {
     }
 
     @Override
-    public void save(CompoundTag tag) {
-        var tag1 = new CompoundTag();
-        tag1.putFloat("Value", getValue());
-        tag.put(getKey(), tag1);
+    public Codec<Float> codec() {
+        return Codec.FLOAT;
     }
 
     @Override

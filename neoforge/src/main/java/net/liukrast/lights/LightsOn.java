@@ -1,5 +1,6 @@
 package net.liukrast.lights;
 
+import net.liukrast.lights.on.client.gui.screens.BlockNetScreen;
 import net.liukrast.lights.on.datagen.*;
 import net.liukrast.lights.on.registry.*;
 import net.minecraft.core.HolderLookup;
@@ -13,6 +14,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.RegisterEvent;
@@ -41,6 +43,7 @@ public class LightsOn {
         event.register(BuiltInRegistries.CREATIVE_MODE_TAB.key(), helper -> RegisterCreativeModeTabs.register());
         event.register(BuiltInRegistries.ITEM.key(), helper -> RegisterItems.register());
         event.register(BuiltInRegistries.DATA_COMPONENT_TYPE.key(), helper -> RegisterDataComponents.register());
+        event.register(BuiltInRegistries.MENU.key(), helper -> RegisterMenuTypes.register());
     }
 
     @SubscribeEvent
@@ -71,5 +74,10 @@ public class LightsOn {
         generator.addProvider(event.includeServer(), new ItemTagGenerator(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), fileHelper));
 
         generator.addProvider(event.includeServer(), new RecipeGenerator(packOutput, lookupProvider));
+    }
+
+    @SubscribeEvent
+    public void registerMenuScreens(RegisterMenuScreensEvent event) {
+        event.register(RegisterMenuTypes.BLOCK_NET, BlockNetScreen::new);
     }
 }

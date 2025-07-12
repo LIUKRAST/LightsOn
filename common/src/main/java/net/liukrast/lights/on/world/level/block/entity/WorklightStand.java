@@ -2,7 +2,7 @@ package net.liukrast.lights.on.world.level.block.entity;
 
 import net.liukrast.lib.block_entity.ClientSyncedBlockEntity;
 import net.liukrast.lib.blocknet.BlockNetConfigurable;
-import net.liukrast.lib.blocknet.BlockNetSettingBuilder;
+import net.liukrast.lib.blocknet.BlockNetSettings;
 import net.liukrast.lib.blocknet.setting.RangedBlockNetSetting;
 import net.liukrast.lights.on.registry.RegisterBlockEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -59,21 +59,22 @@ public class WorklightStand extends ClientSyncedBlockEntity implements BlockNetC
         return this.height;
     }
 
-    @Override
-    public void defineSettings(BlockNetSettingBuilder builder) {
+    /*
+    public void defineSettings(BlockNetSettings builder) {
         builder.add(new RangedBlockNetSetting("Yaw", -180, 180, this::getYaw));
         builder.add(new RangedBlockNetSetting("RightPitch", -90, 90, this::getRightPitch));
         builder.add(new RangedBlockNetSetting("LeftPitch", -90, 90, this::getLeftPitch));
         builder.add(new RangedBlockNetSetting("Height", 1, this::getHeight));
     }
+    */
 
     @Override
-    public void updateData(CompoundTag tag) {
-        this.yaw = tag.getCompound("Yaw").getFloat("Value");
-        this.rightPitch = tag.getCompound("RightPitch").getFloat("Value");
-        this.leftPitch = tag.getCompound("LeftPitch").getFloat("Value");
-        this.height = tag.getCompound("Height").getFloat("Value");
-        setChanged();
-        if(level != null) this.level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
+    public BlockNetSettings getSettings() {
+        return null;
+    }
+
+    @Override
+    public void updateSettings(CompoundTag tag) {
+
     }
 }

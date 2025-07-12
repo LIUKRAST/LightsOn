@@ -1,5 +1,6 @@
 package net.liukrast.lib.blocknet.setting;
 
+import com.mojang.serialization.Codec;
 import net.liukrast.lib.blocknet.BlockNetSetting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -8,6 +9,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -17,20 +20,13 @@ import java.util.function.Supplier;
  * */
 public class FloatBlockNetSetting extends BlockNetSetting<Float> {
 
-    public FloatBlockNetSetting(String key, Supplier<Float> getter) {
-        super(key, getter);
+    public FloatBlockNetSetting(String key, Supplier<Float> getter, BiConsumer<Float, Integer> setter) {
+        super(key, getter, setter);
     }
 
     @Override
     public String getTitleTip() {
         return "";
-    }
-
-    @Override
-    public void save(CompoundTag tag) {
-        var tag1 = new CompoundTag();
-        tag1.putFloat("Value", getValue());
-        tag.put(getKey(), tag1);
     }
 
     @Override
@@ -49,5 +45,10 @@ public class FloatBlockNetSetting extends BlockNetSetting<Float> {
             }
         });
         widgets.add(box);
+    }
+
+    @Override
+    public Codec<Float> codec() {
+        return Codec.FLOAT;
     }
 }

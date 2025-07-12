@@ -1,12 +1,17 @@
 package net.liukrast.lib.blocknet;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.Dynamic;
+import net.liukrast.lights.LightsOnConstants;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
 
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 /**
@@ -17,6 +22,7 @@ import java.util.function.Supplier;
 public abstract class BlockNetSetting<T> {
     private final String key;
     private final Supplier<T> getter;
+    private final BiConsumer<T, Integer> setter;
     private T value;
     private boolean isValid = true;
     /**
@@ -28,9 +34,10 @@ public abstract class BlockNetSetting<T> {
      * @since 1.0
      * @author LiukRast
      * */
-    public BlockNetSetting(String key, Supplier<T> getter) {
+    public BlockNetSetting(String key, Supplier<T> getter, BiConsumer<T, Integer> setter) {
         this.key = key;
         this.getter = getter;
+        this.setter = setter;
         this.value = getter.get();
     }
     /**
@@ -50,13 +57,6 @@ public abstract class BlockNetSetting<T> {
      * @author LiukRast
      * */
     public abstract String getTitleTip();
-    /**
-     * The method involved for data save. Always save your data using the {@link #getKey()}
-     * @param tag the tag where you should write your values.
-     * @since 1.0
-     * @author LiukRast
-     * */
-    public abstract void save(CompoundTag tag);
     /**
      * @return The height required for this setting. Each setting is stacked on top of another, so this can be changed.
      * @since 1.0
@@ -194,4 +194,14 @@ public abstract class BlockNetSetting<T> {
     public Component getTitle() {
         return Component.translatable("blocknet.settingType." + key).append(net.minecraft.network.chat.Component.literal(" " + getTitleTip()).withStyle(ChatFormatting.GRAY));
     }
+
+    public void save(CompoundTag tag, int interpolation) {
+        var res = codec().encodeStart(NbtOps.INSTANCE, value).resultOrPartial(s -> LightsOnConstants.LOGGER.error("{} : {}", this.getClass(), s));
+        res.ifPresent(tag1 -> {
+            tag.put("Value", tag1);
+            tag.putInt("Interpolation", interpolation);
+        });
+    }
+
+    public abstract Codec<T> codec();
 }

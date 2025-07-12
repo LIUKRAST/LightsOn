@@ -8,7 +8,8 @@ import java.util.Set;
  * @since 1.0
  * @author LiukRast
  * */
-public class BlockNetSettingBuilder {
+public class BlockNetSettings {
+    private boolean initialized = false;
     private final Set<BlockNetSetting<?>> settings = new LinkedHashSet<>();
     /**
      * Allows you to add settings to your {@link BlockNetConfigurable}.
@@ -20,7 +21,7 @@ public class BlockNetSettingBuilder {
      * @since 1.0
      * @author LiukRast
      * */
-    public BlockNetSettingBuilder add(BlockNetSetting<?> setting) {
+    public BlockNetSettings add(BlockNetSetting<?> setting) {
         if(setting.getKey().equals("duration")) throw new IllegalStateException("You cannot register a BlockNetSetting under the key \"duration\"");
         for(BlockNetSetting<?> setting1 : settings) {
             if(setting1.getKey().equals(setting.getKey())) throw new IllegalStateException("You cannot register two BlockNetSettings with the same key");
@@ -35,5 +36,12 @@ public class BlockNetSettingBuilder {
      * */
     public Set<BlockNetSetting<?>> getSettings() {
         return this.settings;
+    }
+
+    public synchronized void init(Runnable runnable) {
+        if(!this.initialized) {
+            initialized = true;
+            runnable.run();
+        }
     }
 }

@@ -2,18 +2,19 @@ package net.liukrast.lights.on.world.level.block;
 
 import com.mojang.serialization.MapCodec;
 import net.liukrast.lib.voxel.VoxelShapes;
-import net.liukrast.lights.on.platform.Services;
-import net.liukrast.lights.on.world.level.block.entity.BNIBlockEntity;
+import net.liukrast.lights.on.world.inventory.BlockNetMenu;
+import net.liukrast.lights.on.world.level.block.entity.BlockNetInterface;
 import net.liukrast.lights.on.world.item.BlockNetWrench;
-import net.liukrast.lights.on.world.item.FloppyDiskItem;
-import net.liukrast.lights.on.client.gui.screens.BlockNetInterfaceScreen;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -39,12 +40,12 @@ import org.lwjgl.system.NonnullDefault;
  * @since 1.0
  * */
 @NonnullDefault
-public class BNIBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
-    public static final MapCodec<BNIBlock> CODEC = simpleCodec(BNIBlock::new);
+public class BlockNetInterfaceBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
+    public static final MapCodec<BlockNetInterfaceBlock> CODEC = simpleCodec(BlockNetInterfaceBlock::new);
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-    public BNIBlock(Properties properties) {
+    public BlockNetInterfaceBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, false));
     }
@@ -61,7 +62,7 @@ public class BNIBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new BNIBlockEntity(pos, state);
+        return new BlockNetInterface(pos, state);
     }
 
 
@@ -86,13 +87,12 @@ public class BNIBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result) {
-        if(world.getBlockEntity(pos) instanceof BNIBlockEntity bni) {
-            if (world.isClientSide()) {
-                final Runnable runnable = () -> Minecraft.getInstance().setScreen(Services.PLATFORM.getScreen());
-                runnable.run();
-            }
-            return InteractionResult.sidedSuccess(world.isClientSide());
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult result) {
+        if(level.getBlockEntity(pos) instanceof BlockNetInterface bni && bni.connectedPlayer == null) {
+            player.openMenu(new SimpleMenuProvider((a,b, c) -> new BlockNetMenu(a, bni.container, ContainerLevelAccess.create(level, pos), bni), Component.empty()));
+            bni.connectedPlayer = player;
+            bni.setChanged();
+            return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
     }
@@ -102,20 +102,22 @@ public class BNIBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
         ItemStack itemStack = player.getItemInHand(hand);
         if(itemStack.getItem() instanceof BlockNetWrench) {
             return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
-        } else if(player.getMainHandItem().getItem() instanceof FloppyDiskItem && level.getBlockEntity(pos) instanceof BNIBlockEntity bni) {
-            ItemStack copy = itemStack.copy();
-            copy.setCount(1);
-            itemStack.shrink(1);
-            bni.setItem(copy);
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
         return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
 
     @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if(level.getBlockEntity(pos) instanceof BNIBlockEntity bni) bni.ejectDisk();
-        super.onRemove(state, level, pos, newState, movedByPiston);
+    protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        super.tick(state, level, pos, random);
+        if(!(level.getBlockEntity(pos) instanceof BlockNetInterface bni)) return;
+        bni.tick();
+        level.scheduleTick(pos, state.getBlock(), 1);
+    }
+
+    @Override
+    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+        super.onPlace(state, level, pos, oldState, movedByPiston);
+        level.scheduleTick(pos, state.getBlock(), 1);
     }
 
     @Override

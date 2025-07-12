@@ -17,33 +17,13 @@ import java.util.Set;
  * To make this work,
  * we recommend invoking {@link #loadBlockPosList(CompoundTag)} & {@link #saveBlockPosList(CompoundTag)}
  * when saving/loading your block entity data so that it gets saved.
- * See an example in {@link Spotlight#save(CompoundTag, HolderLookup.Provider)}
- * and {@link Spotlight#load(CompoundTag, HolderLookup.Provider)}
+ * See an example in {@link Spotlight#saveAdditional(CompoundTag, HolderLookup.Provider)}
+ * and {@link Spotlight#loadAdditional(CompoundTag, HolderLookup.Provider)}
  *
  * @since 1.0
  * @author LiukRast
  * */
 public interface BlockNetPole {
-    static BlockNetPole simple(Set<BlockPos> poles, Runnable setChanged) {
-        return new BlockNetPole() {
-            @Override
-            public Set<BlockPos> getPoles() {
-                return poles;
-            }
-
-            @Override
-            public void addPole(BlockPos pole) {
-                poles.add(pole);
-                setChanged.run();
-            }
-
-            @Override
-            public void removePole(BlockPos pole) {
-                poles.remove(pole);
-                setChanged.run();
-            }
-        };
-    }
     /**
      * The key under which all the BlockNet Pole data will be saved
      * @since 1.0 */
@@ -96,7 +76,7 @@ public interface BlockNetPole {
             for(Tag iat : tag.getList(POLE_KEY, Tag.TAG_INT_ARRAY)) {
                 final var asList = ((IntArrayTag)iat);
                 BlockPos pos = new BlockPos(
-                        asList.get(0).getAsInt(),
+                        asList.getFirst().getAsInt(),
                         asList.get(1).getAsInt(),
                         asList.get(2).getAsInt()
                 );

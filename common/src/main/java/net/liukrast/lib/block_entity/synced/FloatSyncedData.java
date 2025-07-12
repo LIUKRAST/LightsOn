@@ -1,21 +1,16 @@
 package net.liukrast.lib.block_entity.synced;
 
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.Level;
+import com.mojang.serialization.Codec;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
-public class FloatSyncedData extends AbstractSyncedData<Float> {
-    public FloatSyncedData() {
-        super(0.0f);
+public class FloatSyncedData extends AbstractInterpolatedData<Float> {
+    public FloatSyncedData(BlockEntity blockEntity) {
+        super(0.0f, blockEntity);
     }
 
     @Override
-    public void save(CompoundTag tag) {
-        tag.putFloat("Value", get());
-    }
-
-    @Override
-    public void load(CompoundTag tag) {
-        this.set(tag.getFloat("Value"));
+    public Codec<Float> codec() {
+        return Codec.FLOAT;
     }
 
     @Override

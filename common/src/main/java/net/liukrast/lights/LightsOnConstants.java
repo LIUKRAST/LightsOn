@@ -3,9 +3,13 @@ package net.liukrast.lights;
 import net.liukrast.lights.on.platform.Services;
 import net.liukrast.lights.on.registry.RegisterBlocks;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Method;
 
 public class LightsOnConstants {
     public static final String MOD_ID = "lights_on";
@@ -13,11 +17,17 @@ public class LightsOnConstants {
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
     public static final String PACKET_VERSION = Services.PLATFORM.getModVersion();
 
+    public static void dataError(Object clazz, String method, String message, Tag tag) {
+        LOGGER.error("{} encountered an error in method {}: {}. Data: {}", clazz, method, message, tag);
+    }
+
     public static ResourceLocation id(String name) {
         return ResourceLocation.fromNamespaceAndPath(MOD_ID, name);
     }
 
     public static void initClient() {
+        //TODO: Add all these to translucent layer
+        /*
         Services.PLATFORM.setRenderType(RegisterBlocks.BLUE_NEON, RenderType.translucent());
         Services.PLATFORM.setRenderType(RegisterBlocks.RED_NEON, RenderType.translucent());
         Services.PLATFORM.setRenderType(RegisterBlocks.YELLOW_NEON, RenderType.translucent());
@@ -33,6 +43,6 @@ public class LightsOnConstants {
         Services.PLATFORM.setRenderType(RegisterBlocks.LIGHT_BLUE_NEON, RenderType.translucent());
         Services.PLATFORM.setRenderType(RegisterBlocks.PURPLE_NEON, RenderType.translucent());
         Services.PLATFORM.setRenderType(RegisterBlocks.MAGENTA_NEON, RenderType.translucent());
-        Services.PLATFORM.setRenderType(RegisterBlocks.PINK_NEON, RenderType.translucent());
+        Services.PLATFORM.setRenderType(RegisterBlocks.PINK_NEON, RenderType.translucent());*/
     }
 }
