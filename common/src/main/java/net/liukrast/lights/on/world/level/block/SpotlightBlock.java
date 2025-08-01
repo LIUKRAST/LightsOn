@@ -1,9 +1,6 @@
 package net.liukrast.lights.on.world.level.block;
 
-import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.MapCodec;
-import net.liukrast.lib.voxel.SmartVoxelShape;
-import net.liukrast.lib.voxel.VoxelShapes;
 import net.liukrast.lights.on.world.level.block.entity.Spotlight;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -23,8 +20,6 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.lwjgl.system.NonnullDefault;
-
-import java.util.function.Function;
 
 @NonnullDefault
 public class SpotlightBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {

@@ -1,7 +1,6 @@
 package net.liukrast.lights.on.world.level.block.entity;
 
 import net.liukrast.lib.blocknet.BlockNetConfigurable;
-import net.liukrast.lights.LightsOnConstants;
 import net.liukrast.lights.on.network.protocol.game.EditorUpdatePacket;
 import net.liukrast.lights.on.platform.Services;
 import net.liukrast.lights.on.project.BlockNetProject;
@@ -19,7 +18,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.system.NonnullDefault;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 @NonnullDefault
@@ -27,33 +28,31 @@ public class BlockNetInterface extends BlockEntity implements BlockNetPole {
 
     private boolean playing = false;
     private long currentTime = 0;
-
-    public static final String DATA_KEY = "ProjectData";
-
-    private final BlockNetProject blockNetProject = new BlockNetProject();
+    @Nullable
+    private String currentProjectName;
+    @Nullable
+    private BlockNetProject currentProject;
+    private final Map<String, BlockNetProject> savedProjects = new HashMap<>();
 
     public final ContainerData container = new ContainerData() {
         @Override
         public int get(int index) {
-            if(index == 0) return (int) (((float)currentTime / blockNetProject.duration) * 256);
-            if(index == 1) return playing ? 1 : 0; //TODO: Stop current animation!
-            if(index == 2) return Math.toIntExact(currentTime);
-            if(index == 3) return Math.toIntExact(blockNetProject.duration);
+            if(index == 0) return Math.toIntExact(currentTime);
+            if(index == 1) return playing ? 1 : 0;
             return 0;
         }
 
         @Override
         public void set(int index, int value) {
-            if(index == 0) currentTime = (long) ((value/256f)*blockNetProject.duration);
+            /*if(index == 0) currentTime = (long) ((value/256f)*blockNetProject.duration);
             if(index == 1) playing = value > 0;
-            if(index == 2) currentTime = Math.clamp(value, 0, blockNetProject.duration);
-            //TODO: Set project length
-            setChanged();
+            if(index == 2) currentTime = Math.clamp(value, 0, blockNetProject.duration);*/
+            //setChanged();
         }
 
         @Override
         public int getCount() {
-            return 4;
+            return 2;
         }
     };
 
@@ -70,7 +69,15 @@ public class BlockNetInterface extends BlockEntity implements BlockNetPole {
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        tag.put(DATA_KEY, blockNetProject.saveAdditional());
+        CompoundTag projects = new CompoundTag();
+        int i = 0;
+        for(String key : savedProjects.keySet()) {
+            if(i >= 8) break;
+            projects.put(key, savedProjects.get(key).saveAdditional());
+            i++;
+        }
+        tag.put("SavedProjects", projects);
+        if(currentProjectName != null) tag.putString("CurrentProject", currentProjectName);
         tag.putLong("CurrentTime", currentTime);
         tag.putBoolean("Playing", playing);
         saveBlockPosList(tag);
@@ -79,22 +86,33 @@ public class BlockNetInterface extends BlockEntity implements BlockNetPole {
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
-        this.blockNetProject.loadAdditional(tag.getCompound(DATA_KEY));
+        if(tag.contains("CurrentProject")) this.currentProjectName = tag.getString("CurrentProject");
+        CompoundTag projects = tag.getCompound("SavedProjects");
+        savedProjects.clear();
+        int i = 0;
+        for(String key : projects.getAllKeys()) {
+            if(i>=8) break;
+            var project = new BlockNetProject();
+            project.loadAdditional(projects.getCompound(key));
+            savedProjects.put(key,project);
+            if(key.equals(currentProjectName)) currentProject = project;
+            i++;
+        }
         this.currentTime = tag.getLong("CurrentTime");
         this.playing = tag.getBoolean("Playing");
         loadBlockPosList(tag);
     }
 
     public void tick() {
-        if(!playing || level == null || level.isClientSide) return;
-        var frame = blockNetProject.get(currentTime);
+        if(!playing || level == null || level.isClientSide || currentProject == null) return;
+        var frame = currentProject.get(currentTime);
         if(frame != null) {
             frame.forEach((pos, tag) -> {
                 if(!(level.getBlockEntity(pos) instanceof BlockNetConfigurable bnc)) return;
                 bnc.updateSettings(tag);
             });
         }
-        setCurrentTime(Math.clamp(currentTime+1, 0, blockNetProject.duration));
+        setCurrentTime(Math.clamp(currentTime+1, 0, currentProject.getDuration()));
     }
 
     public void setCurrentTime(long currentTime) {

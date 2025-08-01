@@ -59,7 +59,7 @@ public class BNLBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return VoxelShapes.javaBB(4,4,4,8,8,8).build();
+        return box(4,4,4,12,12,12);
     }
 
     @Override

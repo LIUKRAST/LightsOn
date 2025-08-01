@@ -1,7 +1,10 @@
 package net.liukrast.lights.on.platform;
 
 import net.liukrast.lights.LightsOnConstants;
+import net.liukrast.lights.on.TestScreen;
 import net.liukrast.lights.on.platform.services.IPlatformHelper;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.fml.ModList;
 
@@ -16,5 +19,10 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
     @Override
     public CreativeModeTab.Builder getCreativeTabBuilder() {
         return CreativeModeTab.builder();
+    }
+
+    @Override
+    public Screen createExampleScreen() {
+        return new TestScreen(Component.empty());
     }
 }

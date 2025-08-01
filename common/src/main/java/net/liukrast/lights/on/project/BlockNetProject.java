@@ -3,15 +3,15 @@ package net.liukrast.lights.on.project;
 import io.netty.util.collection.LongObjectHashMap;
 import net.minecraft.nbt.CompoundTag;
 
-public class BlockNetProject extends LongObjectHashMap<BlockNetKeyframe> {
+import java.util.Collections;
 
-    public long duration;
+public class BlockNetProject extends LongObjectHashMap<BlockNetKeyframe> {
+    private long duration;
 
     public CompoundTag saveAdditional() {
         CompoundTag tag = new CompoundTag();
         CompoundTag frames = new CompoundTag();
         forEach((time, frame) -> frames.put(time.toString(), frame.save()));
-        tag.putLong("Duration", duration);
         tag.put("KeyFrames", frames);
         return tag;
     }
@@ -25,6 +25,11 @@ public class BlockNetProject extends LongObjectHashMap<BlockNetKeyframe> {
             put(Long.parseLong(key), frame);
             frame.load(frames.getCompound(key));
         }
-        this.duration = compound.getLong("Duration");
+        long max = Collections.max(keySet());
+        duration = max + get(max).getMaxDuration();
+    }
+
+    public long getDuration() {
+        return duration;
     }
 }

@@ -1,8 +1,6 @@
 package net.liukrast.lights.on.network.protocol.game;
 
 import net.liukrast.lights.LightsOnConstants;
-import net.liukrast.lights.on.client.gui.screens.BlockNetScreen;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -27,6 +25,6 @@ public record EditorUpdatePacket(CompoundTag tag) implements CustomPacketPayload
     }
 
     public void handle() {
-        if(Minecraft.getInstance().screen instanceof BlockNetScreen screen) screen.update(tag);
+        //TODO: if(Minecraft.getInstance().screen instanceof BlockNetScreen screen) screen.update(tag);
     }
 }

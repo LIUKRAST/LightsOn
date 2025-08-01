@@ -16,20 +16,16 @@ public class BlockNetMenu extends AbstractContainerMenu {
     public final ContainerLevelAccess access;
     public final DataSlot timeSlot;
     public final DataSlot playingSlot;
-    public final DataSlot rawTimeSlot;
-    public final DataSlot durationSlot;
 
     public BlockNetMenu(int containerId, Inventory ignored) {
-        this(containerId, new SimpleContainerData(4), ContainerLevelAccess.NULL, null);
+        this(containerId, new SimpleContainerData(2), ContainerLevelAccess.NULL, null);
     }
 
     public BlockNetMenu(int containerId, ContainerData containerData, ContainerLevelAccess access, @Nullable BlockNetInterface blockEntity) {
         super(RegisterMenuTypes.BLOCK_NET, containerId);
-        checkContainerDataCount(containerData, 4);
+        checkContainerDataCount(containerData, 2);
         this.timeSlot = addDataSlot(DataSlot.forContainer(containerData, 0));
         this.playingSlot = addDataSlot(DataSlot.forContainer(containerData, 1));
-        this.rawTimeSlot = addDataSlot(DataSlot.forContainer(containerData, 2));
-        this.durationSlot = addDataSlot(DataSlot.forContainer(containerData, 3));
         this.access = access;
         this.blockEntity = blockEntity;
     }
