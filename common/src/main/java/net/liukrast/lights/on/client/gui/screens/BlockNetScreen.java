@@ -3,6 +3,7 @@ package net.liukrast.lights.on.client.gui.screens;
 import net.liukrast.lights.LightsOnConstants;
 import net.liukrast.lights.on.world.inventory.BlockNetMenu;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.MenuAccess;
 import net.minecraft.network.chat.Component;
@@ -17,7 +18,7 @@ import java.util.List;
 @NonnullDefault
 public class BlockNetScreen extends Screen implements MenuAccess<BlockNetMenu> {
     /* All data is stored statically so that it can be updated through packets */
-    public static List<String> PROJECTS = new ArrayList<>();
+    public static String[] PROJECTS = new String[8];
     public static String CURRENT_PROJECT = null;
 
     private static final ResourceLocation TEXTURE = LightsOnConstants.id("textures/gui/blocknet_interface.png");
@@ -32,8 +33,7 @@ public class BlockNetScreen extends Screen implements MenuAccess<BlockNetMenu> {
     }
 
     @Override
-    protected void repositionElements() {
-        super.repositionElements();
+    protected void init() {
         int top = 16;
         int right = 7;
         int left = 7;
@@ -45,6 +45,8 @@ public class BlockNetScreen extends Screen implements MenuAccess<BlockNetMenu> {
         hbb = height/bottom;
         wbl = width/left;
         wbr = width/right;
+
+        //addRenderableWidget(new EditBox());
     }
 
     @Override
@@ -76,6 +78,9 @@ public class BlockNetScreen extends Screen implements MenuAccess<BlockNetMenu> {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if(mouseX > wbl-10 && mouseX < wbl && mouseY > hbt && mouseY < hbt+10 && PROJECTS.length < 8) {
+             //projectEditor = true;
+        }
         return super.mouseClicked(mouseX, mouseY, button);
     }
 

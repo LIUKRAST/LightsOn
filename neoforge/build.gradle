@@ -29,6 +29,10 @@ dependencies {
 
     implementation("net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_version}")
     jarJar("net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:[${ponder_version},)")
+
+    implementation "curse.maven:sodium-394468:6382651"
+    implementation "curse.maven:irisshaders-455508:6661598"
+    implementation "curse.maven:euphoria-patches-915902:6653765"
 }
 
 neoForge {

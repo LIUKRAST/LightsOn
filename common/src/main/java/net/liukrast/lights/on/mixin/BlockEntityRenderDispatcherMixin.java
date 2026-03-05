@@ -22,12 +22,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * @author LiukRast
  * */
 @Mixin(BlockEntityRenderDispatcher.class)
-public class BlockEntityRenderDispatcherMixin<E extends BlockEntity> {
+public class BlockEntityRenderDispatcherMixin {
 
     @Shadow public Level level;
 
-    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;getRenderer(Lnet/minecraft/world/level/block/entity/BlockEntity;)Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderer;", shift = At.Shift.AFTER))
-    private void lights_on$renderWrenchConnection(E blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, CallbackInfo ci) {
+    @Inject(method = "render", at = @At("HEAD"))
+    private <E extends BlockEntity> void render(E blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, CallbackInfo ci) {
         if(!(blockEntity instanceof BlockNetPole)) return;
         Level level = blockEntity.getLevel();
         int i;
